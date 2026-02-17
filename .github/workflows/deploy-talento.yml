@@ -10,7 +10,6 @@ on:
       - '.scripts/**'
       - 'docs/**'
       - 'core/**'
-      - '.htaccess'
       - 'INSTALL.md'
       - 'SEO_*.md'
       - 'llms.txt'
@@ -42,7 +41,6 @@ jobs:
           --exclude='core/' \
           --exclude='docs/' \
           --exclude='uploads/' \
-          --exclude='.htaccess' \
           --exclude='INSTALL.md' \
           --exclude='SEO_*.md' \
           --exclude='llms.txt' \
