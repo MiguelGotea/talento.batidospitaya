@@ -10,9 +10,6 @@ on:
       - '.scripts/**'
       - 'docs/**'
       - 'core/**'
-      - 'INSTALL.md'
-      - 'SEO_*.md'
-      - 'llms.txt'
 
 jobs:
   deploy:
@@ -41,9 +38,6 @@ jobs:
           --exclude='core/' \
           --exclude='docs/' \
           --exclude='uploads/' \
-          --exclude='INSTALL.md' \
-          --exclude='SEO_*.md' \
-          --exclude='llms.txt' \
           -e "ssh -o StrictHostKeyChecking=no -p 65002" \
           ./ \
           ${{ secrets.HOSTINGER_USER }}@${{ secrets.HOSTINGER_HOST }}:${{ secrets.HOSTINGER_PATH_TALENTO }}/
