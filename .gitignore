@@ -18,10 +18,6 @@ uploads/
 
 # Documentación Técnica (Mantenida en ERP o local)
 docs/
-INSTALL.md
-SEO_CONFIG.md
-SEO_RECOMMENDATIONS.md
-llms.txt
 
 # Scripts de Deploy
 .scripts/
