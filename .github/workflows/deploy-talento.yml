@@ -3,13 +3,6 @@ name: 🚀 Deploy Talento - Batidos Pitaya
 on:
   push:
     branches: [ main ]
-    # Se activa ante cualquier cambio en la raíz o carpetas principales
-    paths-ignore:
-      - 'uploads/**'
-      - '.agent/**'
-      - '.scripts/**'
-      - 'docs/**'
-      - 'core/**'
 
 jobs:
   deploy:
