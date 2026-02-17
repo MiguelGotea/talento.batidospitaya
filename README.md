@@ -13,10 +13,16 @@ Repositorio del portal de talento para Batidos Pitaya.
 
 Este repositorio utiliza **GitHub Actions** para desplegar automáticamente los cambios en el servidor de producción Hostinger.
 
-### Exclusiones de Deploy
-Por seguridad y consistencia, el deploy **NO** sincroniza:
-- `.agent`, `.scripts`, `core`, `docs`, `uploads`, `.htaccess`.
-- Archivos de documentación y configuración de Git.
+### Gestión de Archivos (Estandarización)
+Para mantener el repositorio limpio y seguro, se aplican las siguientes reglas:
+
+| Carpeta/Archivo | Subir a GitHub | Subir al Host |
+| :--- | :---: | :---: |
+| `.agent/`, `core/`, `docs/`, `uploads/` | ❌ No | ❌ No |
+| `.scripts/` | ✅ Sí | ❌ No |
+| `.github/`, `.gitignore` | ✅ Sí | ❌ No |
+| `ajax/`, `assets/`, `css/`, `js/`, etc. | ✅ Sí | ✅ Sí |
+| Raíz (`default.php`, `README.md`, `.htaccess`) | ✅ Sí | ✅ Sí |
 
 ### Documentación de Deploy
 
