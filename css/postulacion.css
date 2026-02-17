@@ -1,0 +1,395 @@
+/**
+ * Estilos del Formulario de Postulación
+ * talento.batidospitaya.com
+ */
+
+/* ==================== Header ==================== */
+.postulacion-header {
+    background: var(--color-header);
+    padding: 1.5rem 0;
+    box-shadow: var(--sombra-sm);
+}
+
+.btn-volver {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    padding: 0.5rem 1.5rem;
+    border-radius: 50px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.btn-volver:hover {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    transform: translateX(-5px);
+}
+
+.brand-text {
+    color: #FFD700;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+/* ==================== Formulario Section ==================== */
+.formulario-section {
+    padding: var(--espaciado-xl) 0;
+    min-height: calc(100vh - 200px);
+}
+
+/* ==================== Plaza Info Card ==================== */
+.plaza-info-card {
+    background: var(--color-principal);
+    color: white;
+    padding: var(--espaciado-md);
+    border-radius: 8px;
+    box-shadow: var(--sombra-sm);
+}
+
+.plaza-info-titulo {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.plaza-info-detalles {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--espaciado-md);
+    margin-top: var(--espaciado-sm);
+}
+
+.detalle-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(255, 255, 255, 0.15);
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.detalle-item i {
+    font-size: 1.2rem;
+    color: white;
+}
+
+/* ==================== Formulario Card ==================== */
+.formulario-card {
+    background: var(--color-blanco);
+    padding: var(--espaciado-lg);
+    border-radius: 16px;
+    box-shadow: var(--sombra-md);
+}
+
+.formulario-header {
+    text-align: center;
+    margin-bottom: var(--espaciado-lg);
+    padding-bottom: var(--espaciado-md);
+    border-bottom: 2px solid var(--color-borde);
+}
+
+.formulario-titulo {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--color-header);
+    margin-bottom: 0.5rem;
+}
+
+.formulario-titulo i {
+    color: var(--color-principal);
+}
+
+.formulario-subtitulo {
+    color: var(--color-texto-secundario);
+    font-size: 1.1rem;
+    margin: 0;
+}
+
+/* ==================== Form Sections ==================== */
+.form-section {
+    margin-bottom: var(--espaciado-lg);
+    padding-bottom: var(--espaciado-md);
+    border-bottom: 1px solid var(--color-borde);
+}
+
+.form-section:last-of-type {
+    border-bottom: none;
+}
+
+.section-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--color-header);
+    margin-bottom: var(--espaciado-md);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.section-title i {
+    color: var(--color-principal);
+}
+
+/* ==================== Form Controls ==================== */
+.form-label {
+    font-weight: 500;
+    color: var(--color-texto);
+    margin-bottom: 0.5rem;
+}
+
+.form-control,
+.form-select {
+    border-radius: 8px;
+    border: 1px solid var(--color-borde);
+    padding: 0.75rem 1rem;
+    transition: all 0.3s ease;
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--color-principal);
+    box-shadow: 0 0 0 0.2rem rgba(81, 184, 172, 0.25);
+}
+
+.form-control.is-invalid,
+.form-select.is-invalid {
+    border-color: var(--color-critico);
+}
+
+.form-control.is-valid,
+.form-select.is-valid {
+    border-color: var(--color-normal);
+}
+
+textarea.form-control {
+    resize: vertical;
+    min-height: 100px;
+}
+
+/* ==================== Upload Zone ==================== */
+.upload-zone {
+    border: 2px dashed var(--color-borde);
+    border-radius: 12px;
+    padding: var(--espaciado-lg);
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: var(--color-fondo);
+    position: relative;
+}
+
+.upload-zone:hover {
+    border-color: var(--color-principal);
+    background: rgba(81, 184, 172, 0.05);
+}
+
+.upload-zone.dragover {
+    border-color: var(--color-principal);
+    background: rgba(81, 184, 172, 0.1);
+    transform: scale(1.02);
+}
+
+.upload-content {
+    pointer-events: none;
+}
+
+.upload-icon {
+    font-size: 4rem;
+    color: var(--color-principal);
+    margin-bottom: 1rem;
+}
+
+.upload-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--color-header);
+    margin-bottom: 0.5rem;
+}
+
+.upload-subtitle {
+    color: var(--color-texto-secundario);
+    margin-bottom: 0.5rem;
+}
+
+/* ==================== Upload Preview ==================== */
+.upload-preview {
+    display: flex;
+    align-items: center;
+    gap: var(--espaciado-md);
+    background: white;
+    padding: var(--espaciado-md);
+    border-radius: 8px;
+    border: 1px solid var(--color-borde);
+}
+
+.file-info {
+    flex: 1;
+    text-align: left;
+}
+
+.file-name {
+    font-weight: 600;
+    color: var(--color-header);
+    word-break: break-word;
+}
+
+.file-size {
+    color: var(--color-texto-secundario);
+}
+
+.btn-remove-file {
+    background: none;
+    border: none;
+    color: var(--color-critico);
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 0.5rem;
+}
+
+.btn-remove-file:hover {
+    transform: scale(1.2);
+}
+
+/* ==================== Checkbox ==================== */
+.form-check-input {
+    width: 1.25rem;
+    height: 1.25rem;
+    border-radius: 4px;
+    border: 2px solid var(--color-borde);
+    cursor: pointer;
+}
+
+.form-check-input:checked {
+    background-color: var(--color-principal);
+    border-color: var(--color-principal);
+}
+
+.form-check-input:focus {
+    box-shadow: 0 0 0 0.2rem rgba(81, 184, 172, 0.25);
+}
+
+.form-check-label {
+    cursor: pointer;
+    user-select: none;
+}
+
+/* ==================== Buttons ==================== */
+.btn-primary {
+    background: var(--color-principal);
+    border: none;
+    padding: 1rem 2rem;
+    font-weight: 600;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    background: var(--color-principal-hover);
+    transform: translateY(-2px);
+    box-shadow: var(--sombra-md);
+}
+
+.btn-primary:disabled {
+    background: var(--color-texto-secundario);
+    cursor: not-allowed;
+    transform: none;
+}
+
+.btn-outline-secondary {
+    border: 2px solid var(--color-borde);
+    color: var(--color-texto);
+    padding: 0.75rem 2rem;
+    font-weight: 600;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+}
+
+.btn-outline-secondary:hover {
+    background: var(--color-fondo);
+    border-color: var(--color-texto-secundario);
+    color: var(--color-texto);
+}
+
+/* ==================== Loading State ==================== */
+.btn-loading {
+    position: relative;
+    pointer-events: none;
+}
+
+.btn-loading::after {
+    content: '';
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    top: 50%;
+    left: 50%;
+    margin-left: -8px;
+    margin-top: -8px;
+    border: 2px solid white;
+    border-radius: 50%;
+    border-top-color: transparent;
+    animation: spinner 0.6s linear infinite;
+}
+
+@keyframes spinner {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* ==================== Footer Simple ==================== */
+.footer-simple {
+    background: var(--color-fondo);
+    padding: var(--espaciado-md) 0;
+    margin-top: var(--espaciado-xl);
+    border-top: 1px solid var(--color-borde);
+    color: var(--color-texto-secundario);
+}
+
+/* ==================== Responsive ==================== */
+@media (max-width: 768px) {
+    .formulario-card {
+        padding: var(--espaciado-md);
+    }
+
+    .formulario-titulo {
+        font-size: 1.5rem;
+    }
+
+    .plaza-info-detalles {
+        flex-direction: column;
+    }
+
+    .upload-zone {
+        padding: var(--espaciado-md);
+    }
+
+    .upload-icon {
+        font-size: 3rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .postulacion-header {
+        padding: 1rem 0;
+    }
+
+    .btn-volver {
+        font-size: 0.9rem;
+        padding: 0.5rem 1rem;
+    }
+
+    .brand-text {
+        font-size: 1.2rem;
+    }
+
+    .formulario-section {
+        padding: var(--espaciado-md) 0;
+    }
+}

@@ -1,0 +1,27 @@
+# Configuración de Entorno
+.env
+.agent/
+.gemini/
+
+# Dependencias
+node_modules/
+vendor/
+
+# Archivos de Sistema / IDE
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Subidas (Carpeta dinámica no gestionada por Git)
+uploads/
+
+# Documentación Técnica (Mantenida en ERP o local)
+docs/
+INSTALL.md
+SEO_CONFIG.md
+SEO_RECOMMENDATIONS.md
+llms.txt
+
+# Scripts de Deploy
+.scripts/

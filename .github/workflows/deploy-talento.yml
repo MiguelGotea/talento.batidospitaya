@@ -1,0 +1,74 @@
+name: 🚀 Deploy Talento - Batidos Pitaya
+
+on:
+  push:
+    branches: [ main ]
+    # Se activa ante cualquier cambio en la raíz o carpetas principales
+    paths-ignore:
+      - 'uploads/**'
+      - '.agent/**'
+      - '.scripts/**'
+      - 'docs/**'
+      - 'core/**'
+      - '.htaccess'
+      - 'INSTALL.md'
+      - 'SEO_*.md'
+      - 'llms.txt'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 📥 Checkout código
+      uses: actions/checkout@v4
+      
+    - name: 🔑 Configurar SSH
+      uses: webfactory/ssh-agent@v0.8.0
+      with:
+        ssh-private-key: ${{ secrets.HOSTINGER_SSH_KEY }}
+        
+    - name: 📤 Sincronizar archivos (rsync)
+      run: |
+        echo "🔄 Sincronizando archivos..."
+        
+        rsync -avz \
+          --delete \
+          --exclude='.git/' \
+          --exclude='.github/' \
+          --exclude='.agent/' \
+          --exclude='.scripts/' \
+          --exclude='core/' \
+          --exclude='docs/' \
+          --exclude='uploads/' \
+          --exclude='.htaccess' \
+          --exclude='INSTALL.md' \
+          --exclude='SEO_*.md' \
+          --exclude='llms.txt' \
+          -e "ssh -o StrictHostKeyChecking=no -p 65002" \
+          ./ \
+          ${{ secrets.HOSTINGER_USER }}@${{ secrets.HOSTINGER_HOST }}:${{ secrets.HOSTINGER_PATH_TALENTO }}/
+          
+    - name: 🔧 Configurar permisos
+      run: |
+        echo "🔧 Configurando permisos en el servidor..."
+        
+        ssh -o StrictHostKeyChecking=no -p 65002 ${{ secrets.HOSTINGER_USER }}@${{ secrets.HOSTINGER_HOST }} << 'EOF'
+          cd ${{ secrets.HOSTINGER_PATH_TALENTO }}
+          # Directorios a 755
+          find . -maxdepth 1 -type d ! -path "." -exec chmod 755 {} \;
+          # Archivos a 644
+          find . -maxdepth 1 -type f -exec chmod 644 {} \;
+          
+          # Carpetas específicas (si existen y se sincronizaron)
+          [ -d "ajax" ] && chmod 755 ajax && find ajax -type f -exec chmod 644 {} \;
+          [ -d "assets" ] && chmod 755 assets && find assets -type f -exec chmod 644 {} \;
+          [ -d "css" ] && chmod 755 css && find css -type f -exec chmod 644 {} \;
+          [ -d "js" ] && chmod 755 js && find js -type f -exec chmod 644 {} \;
+          
+          echo "✅ Permisos actualizados."
+        EOF
+        
+    - name: ✅ Verificar deploy
+      run: |
+        echo "✅ Deploy completado exitosamente para talento.batidospitaya.com"

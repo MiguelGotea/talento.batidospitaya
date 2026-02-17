@@ -1,0 +1,35 @@
+# robots.txt - Portal de Empleo Batidos Pitaya
+# https://talento.batidospitaya.com
+
+User-agent: *
+
+# Permitir indexación de páginas públicas
+Allow: /
+Allow: /index.php
+Allow: /assets/
+
+# Bloquear carpetas sensibles
+Disallow: /core/
+Disallow: /ajax/
+Disallow: /uploads/
+Disallow: /database/
+Disallow: /docs/
+Disallow: /.agent/
+
+# Bloquear parámetros de búsqueda y filtros
+Disallow: /*?busqueda=
+Disallow: /*?categoria=
+Disallow: /*?ubicacion=
+Disallow: /*?pagina=
+
+# Bloquear formulario de postulación (no indexar)
+Disallow: /postular.php
+
+# Sitemap
+Sitemap: https://batidospitaya.com/sitemap.xml.php
+
+# LLMs/AI Information
+# https://batidospitaya.com/llms.txt
+
+# Crawl-delay para no sobrecargar el servidor
+Crawl-delay: 10
