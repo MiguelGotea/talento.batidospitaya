@@ -21,4 +21,4 @@ uploads/
 docs/
 
 # Scripts de Deploy
-.scripts/
+# .scripts/ (Versionado en GitHub pero excluido del host)
