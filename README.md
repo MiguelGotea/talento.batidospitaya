@@ -18,11 +18,11 @@ Para mantener el repositorio limpio y seguro, se aplican las siguientes reglas:
 
 | Carpeta/Archivo | Subir a GitHub | Subir al Host |
 | :--- | :---: | :---: |
-| `.agent/`, `core/`, `docs/`, `uploads/` | ❌ No | ❌ No |
 | `.scripts/` | ✅ Sí | ❌ No |
 | `.github/`, `.gitignore` | ✅ Sí | ❌ No |
 | `ajax/`, `assets/`, `css/`, `js/`, etc. | ✅ Sí | ✅ Sí |
-| Raíz (`default.php`, `README.md`, `.htaccess`) | ✅ Sí | ✅ Sí |
+| Raíz (`README.md`, `.htaccess`) | ✅ Sí | ✅ Sí |
+| `.agent/`, `core/`, `docs/`, `uploads/` | ❌ No | ❌ No |
 
 ### Documentación de Deploy
 
