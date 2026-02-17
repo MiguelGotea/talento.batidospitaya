@@ -2,6 +2,7 @@
 
 Repositorio del portal de talento para Batidos Pitaya.
 
+
 ## 📦 Estructura del Proyecto
 
 - `ajax/`, `assets/`, `css/`, `js/`: Recursos y handlers del frontend.
