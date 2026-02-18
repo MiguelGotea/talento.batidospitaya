@@ -11,7 +11,7 @@ require_once '../core/database/conexion.php';
 date_default_timezone_set('America/Managua');
 
 // Configuración: ¿Bloquear postulaciones duplicadas? (mismo cargo y sucursal en 30 días)
-$BLOQUEAR_DUPLICADOS = true; // Cambiar a false para desactivar la validación
+$BLOQUEAR_DUPLICADOS = false; // Cambiar a false para desactivar la validación
 
 try {
     // Validar método POST
