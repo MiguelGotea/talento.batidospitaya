@@ -163,10 +163,10 @@ function validarYMostrarArchivo(file) {
         return;
     }
 
-    // Validar tamaño (5MB)
-    const maxSize = 5 * 1024 * 1024; // 5MB en bytes
+    // Validar tamaño (10MB)
+    const maxSize = 10 * 1024 * 1024; // 10MB en bytes
     if (file.size > maxSize) {
-        mostrarErrorCV('El archivo no debe superar los 5MB');
+        mostrarErrorCV('El archivo no debe superar los 10MB');
         return;
     }
 

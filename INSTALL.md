@@ -82,7 +82,7 @@ WHERE id IN (1, 2, 3); -- IDs de las plazas que quieres mostrar
 - [ ] Probar carga de plazas: `ajax/get_plazas.php`
 - [ ] Probar detalle de plaza: `ajax/get_plaza_detalle.php?id=1`
 - [ ] Probar formulario de postulación completo
-- [ ] Verificar upload de CV (PDF, max 5MB)
+- [ ] Verificar upload de CV (PDF, max 10MB)
 - [ ] Probar en diferentes navegadores
 - [ ] Probar en dispositivos móviles
 
@@ -156,8 +156,8 @@ AddType application/pdf .pdf
 
 ```ini
 ; Tamaño máximo de upload
-upload_max_filesize = 5M
-post_max_size = 6M
+upload_max_filesize = 10M
+post_max_size = 12M
 
 ; Tiempo de ejecución
 max_execution_time = 30
@@ -230,7 +230,7 @@ ORDER BY pc.nivel_urgencia DESC;
 
 **Solución**:
 1. Verificar permisos de carpeta `uploads/cv/` (755)
-2. Verificar tamaño del archivo (max 5MB)
+2. Verificar tamaño del archivo (max 10MB)
 3. Verificar que es formato PDF
 4. Revisar configuración PHP (`upload_max_filesize`)
 
