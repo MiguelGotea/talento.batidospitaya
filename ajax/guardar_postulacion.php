@@ -10,6 +10,9 @@ require_once '../core/database/conexion.php';
 // Configurar zona horaria Nicaragua
 date_default_timezone_set('America/Managua');
 
+// Configuración: ¿Bloquear postulaciones duplicadas? (mismo cargo y sucursal en 30 días)
+$BLOQUEAR_DUPLICADOS = true; // Cambiar a false para desactivar la validación
+
 try {
     // Validar método POST
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -111,18 +114,22 @@ try {
         throw new Exception('Esta plaza ya no tiene vacantes disponibles');
     }
 
-    // Verificar duplicados
-    $sql_duplicado = "
-        SELECT id FROM postulacion_plaza
-        WHERE correo = ? AND cargo_aplicado = ?
-        AND fecha_postulacion >= DATE_SUB(NOW(), INTERVAL 30 DAY)
-    ";
+    // Verificar duplicados si la opción está activa
+    if ($BLOQUEAR_DUPLICADOS) {
+        $sql_duplicado = "
+            SELECT id FROM postulacion_plaza
+            WHERE correo = ? 
+            AND cargo_aplicado = ? 
+            AND sucursal_aplicada = ?
+            AND fecha_postulacion >= DATE_SUB(NOW(), INTERVAL 30 DAY)
+        ";
 
-    $stmt_dup = $conn->prepare($sql_duplicado);
-    $stmt_dup->execute([$correo, $cargo_id]);
+        $stmt_dup = $conn->prepare($sql_duplicado);
+        $stmt_dup->execute([$correo, $cargo_id, $sucursal_id]);
 
-    if ($stmt_dup->fetch()) {
-        throw new Exception('Ya has aplicado a esta plaza recientemente');
+        if ($stmt_dup->fetch()) {
+            throw new Exception('Ya has aplicado a esta plaza recientemente');
+        }
     }
 
     // Crear directorio de uploads si no existe
