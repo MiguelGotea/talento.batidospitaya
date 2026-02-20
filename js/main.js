@@ -269,10 +269,10 @@ function renderizarPlazas() {
  * Crear card de plaza
  */
 function crearCardPlaza(plaza) {
-    const salarioFormateado = formatearMoneda(plaza.salario_propuesto);
+    const bannerAttr = plaza.ruta_banner_cargo ? `data-banner="${plaza.ruta_banner_cargo}"` : '';
 
     return `
-        <div class="vacante-card" onclick="verDetallePlaza(${plaza.id})">
+        <div class="vacante-card" ${bannerAttr} onclick="abrirBannerPlaza(this, ${plaza.id}, ${plaza.cargo_id}, ${plaza.sucursal_id})">
             <div class="vacante-header">
                 <span class="vacante-categoria">${plaza.especialidad_area}</span>
             </div>
@@ -282,13 +282,6 @@ function crearCardPlaza(plaza) {
             <div class="vacante-ubicacion">
                 <i class="bi bi-geo-alt-fill"></i>
                 ${plaza.departamento}
-            </div>
-            
-            <div class="vacante-info">
-                <div class="info-item">
-                    <i class="bi bi-cash-coin"></i>
-                    ${salarioFormateado}
-                </div>
             </div>
             
             <div class="plazas-badge">
@@ -305,31 +298,36 @@ function crearCardPlaza(plaza) {
 }
 
 /**
- * Ver detalle de plaza en modal
+ * Abrir banner de la plaza al hacer click en la card
  */
-async function verDetallePlaza(plazaId) {
-    try {
-        const response = await fetch(`ajax/get_plaza_detalle.php?id=${plazaId}`);
-        const data = await response.json();
+function abrirBannerPlaza(cardEl, plazaId, cargoId, sucursalId) {
+    const rutaBanner = cardEl.getAttribute('data-banner');
 
-        if (data.success) {
-            const plaza = data.plaza;
+    if (rutaBanner) {
+        // Construir la URL del banner
+        const bannerUrl = `https://erp.batidospitaya.com/modulos/reclutamiento/banner_puesto/${rutaBanner}`;
 
-            // Actualizar modal
-            $('#modalTitulo').text(plaza.cargo_nombre);
-            $('#modalContenido').html(crearContenidoModal(plaza));
-            $('#btnPostularModal').data('plaza-id', plaza.id);
-            $('#btnPostularModal').data('cargo-id', plaza.cargo_id);
-            $('#btnPostularModal').data('sucursal-id', plaza.sucursal_id);
-
-            // Mostrar modal
-            new bootstrap.Modal(document.getElementById('modalDetallePlaza')).show();
-        } else {
-            mostrarError(data.error);
-        }
-    } catch (error) {
-        console.error('Error:', error);
-        mostrarError('Error al cargar el detalle de la plaza');
+        // Mostrar el banner en un modal de imagen
+        const modalHtml = `
+            <div id="modalBanner" style="
+                position:fixed; top:0; left:0; width:100%; height:100%; 
+                background:rgba(0,0,0,0.85); z-index:9999; 
+                display:flex; align-items:center; justify-content:center; cursor:pointer;
+            " onclick="document.getElementById('modalBanner').remove()">
+                <img src="${bannerUrl}" 
+                     alt="Banner del puesto" 
+                     style="max-width:90%; max-height:90vh; border-radius:12px; box-shadow:0 8px 32px rgba(0,0,0,0.5);"
+                     onerror="document.getElementById('modalBanner').remove(); postularDirecto(${plazaId}, ${cargoId}, ${sucursalId});">
+                <button onclick="event.stopPropagation(); document.getElementById('modalBanner').remove();" 
+                        style="position:absolute; top:20px; right:24px; background:rgba(255,255,255,0.15); border:none; border-radius:50%; width:44px; height:44px; color:#fff; font-size:22px; cursor:pointer; display:flex; align-items:center; justify-content:center;">
+                    &times;
+                </button>
+            </div>
+        `;
+        document.body.insertAdjacentHTML('beforeend', modalHtml);
+    } else {
+        // Si no hay banner, redirigir directamente a postulación
+        postularDirecto(plazaId, cargoId, sucursalId);
     }
 }
 

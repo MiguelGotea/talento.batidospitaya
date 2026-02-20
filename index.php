@@ -139,8 +139,8 @@
                 </div>
             </div>
 
-            <!-- Enlaces Rápidos -->
-            <div class="quick-links-section">
+            <!-- Enlaces Rápidos (ocultos) -->
+            <div class="quick-links-section" style="display: none;">
                 <h2 class="quick-links-title">Explora Oportunidades Laborales</h2>
                 <div class="quick-links-grid">
                     <a href="#vacantes" class="quick-link-card" data-categoria="Operaciones">
