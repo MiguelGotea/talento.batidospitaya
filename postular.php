@@ -87,10 +87,18 @@
                                         <div class="invalid-feedback">Por favor ingresa tu nombre completo</div>
                                     </div>
 
-                                    <div class="col-md-6 mb-3">
-                                        <label for="correo" class="form-label">Correo Electrónico <span
+                                    <div class="col-md-12 mb-3">
+                                        <label for="direccion" class="form-label">Dirección <span
                                                 class="text-danger">*</span></label>
-                                        <input type="email" class="form-control" id="correo" name="correo" required
+                                        <input type="text" class="form-control" id="direccion" name="direccion" required
+                                            placeholder="Ej: Bo. San Juan, 2c al sur, Managua">
+                                        <div class="invalid-feedback">Por favor ingresa tu dirección</div>
+                                    </div>
+
+                                    <div class="col-md-6 mb-3">
+                                        <label for="correo" class="form-label">Correo Electrónico <small
+                                                class="text-muted">(Opcional)</small></label>
+                                        <input type="email" class="form-control" id="correo" name="correo"
                                             placeholder="correo@ejemplo.com">
                                         <div class="invalid-feedback">Ingresa un correo válido</div>
                                     </div>

@@ -20,7 +20,7 @@ try {
     }
 
     // Validar campos requeridos
-    $camposRequeridos = ['plaza_id', 'cargo_id', 'nombre', 'correo', 'telefono', 'experiencia', 'aspiracion'];
+    $camposRequeridos = ['plaza_id', 'cargo_id', 'nombre', 'direccion', 'telefono', 'experiencia', 'aspiracion'];
     foreach ($camposRequeridos as $campo) {
         if (!isset($_POST[$campo]) || trim($_POST[$campo]) === '') {
             throw new Exception("El campo {$campo} es requerido");
@@ -37,15 +37,21 @@ try {
     $cargo_id = intval($_POST['cargo_id']);
     $sucursal_id = !empty($_POST['sucursal_id']) ? intval($_POST['sucursal_id']) : null;
     $nombre = trim($_POST['nombre']);
-    $correo = filter_var(trim($_POST['correo']), FILTER_VALIDATE_EMAIL);
+    $direccion = trim($_POST['direccion']);
     $telefono = trim($_POST['telefono']);
     $experiencia = trim($_POST['experiencia']);
     $aspiracion = floatval($_POST['aspiracion']);
     $comentario = isset($_POST['comentario']) ? trim($_POST['comentario']) : null;
 
-    // Validar email
-    if (!$correo) {
-        throw new Exception('Correo electrónico inválido');
+    // Correo es opcional; validar formato solo si fue enviado
+    $correoRaw = isset($_POST['correo']) ? trim($_POST['correo']) : '';
+    if ($correoRaw !== '') {
+        $correo = filter_var($correoRaw, FILTER_VALIDATE_EMAIL);
+        if (!$correo) {
+            throw new Exception('Correo electrónico inválido');
+        }
+    } else {
+        $correo = null;
     }
 
     // Validar aspiración salarial
@@ -154,16 +160,17 @@ try {
     // Insertar postulación
     $sql_insert = "
         INSERT INTO postulacion_plaza (
-            nombre, correo, telefono, ruta_cv, comentario,
+            nombre, direccion, correo, telefono, ruta_cv, comentario,
             aspiracion_salarial, experiencia_laboral,
             status, cargo_aplicado, sucursal_aplicada,
             fecha_postulacion, ip_postulacion, user_agent
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, 'solicitado', ?, ?, NOW(), ?, ?)
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'solicitado', ?, ?, NOW(), ?, ?)
     ";
 
     $stmt = $conn->prepare($sql_insert);
     $resultado = $stmt->execute([
         $nombre,
+        $direccion,
         $correo,
         $telefono,
         $rutaDestino,
