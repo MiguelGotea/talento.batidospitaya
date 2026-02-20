@@ -32,7 +32,7 @@
                     <i class="bi bi-arrow-left"></i> Volver a vacantes
                 </a>
                 <div class="logo">
-                    <span class="brand-text">Batidos Pitaya</span>
+                    <img src="assets/img/logo.png" alt="Batidos Pitaya" style="height: 48px;">
                 </div>
             </div>
         </div>
