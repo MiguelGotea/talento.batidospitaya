@@ -74,14 +74,6 @@ function mostrarInfoPlaza() {
                 <span>${plazaData.departamento} - ${plazaData.sucursal_nombre}</span>
             </div>
             <div class="detalle-item">
-                <i class="bi bi-cash-coin"></i>
-                <span>${formatearMoneda(plazaData.salario_propuesto)}</span>
-            </div>
-            <div class="detalle-item">
-                <i class="bi bi-people-fill"></i>
-                <span>${plazaData.plazas_disponibles} ${plazaData.plazas_disponibles === 1 ? 'plaza' : 'plazas'}</span>
-            </div>
-            <div class="detalle-item">
                 <i class="bi bi-tag-fill"></i>
                 <span>${plazaData.especialidad_area}</span>
             </div>

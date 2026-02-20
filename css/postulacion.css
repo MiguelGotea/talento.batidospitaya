@@ -5,7 +5,8 @@
 
 /* ==================== Header ==================== */
 .postulacion-header {
-    background: var(--color-header);
+    background: #0E544C;
+    background-image: none;
     padding: 1.5rem 0;
     box-shadow: var(--sombra-sm);
 }
