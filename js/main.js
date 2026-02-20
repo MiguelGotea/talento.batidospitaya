@@ -305,7 +305,7 @@ function abrirBannerPlaza(cardEl, plazaId, cargoId, sucursalId) {
 
     if (!rutaBanner) return; // Sin banner: no hace nada, el boton "Postular Ahora" es el que redirige
 
-    const bannerUrl = `https://erp.batidospitaya.com/modulos/reclutamiento/banner_puesto/${rutaBanner}`;
+    const bannerUrl = `ajax/get_banner.php?archivo=${encodeURIComponent(rutaBanner)}`;
 
     // Mostrar el banner en un overlay de pantalla completa
     const modalHtml = `
