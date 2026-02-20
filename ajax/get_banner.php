@@ -28,7 +28,7 @@ if (!in_array($ext, $extensionesPermitidas)) {
 // Ruta del filesystem en Hostinger
 // __DIR__ = /home/u839374897/domains/talento.batidospitaya.com/public_html/ajax
 // dirname(__DIR__, 3) = /home/u839374897/domains
-$rutaBase = dirname(__DIR__, 3) . '/erp.batidospitaya.com/public_html/modulos/reclutamiento/banner_puesto/';
+$rutaBase = dirname(__DIR__, 3) . '/erp.batidospitaya.com/public_html/modulos/reclutamiento/uploads/banner_puesto/';
 
 $rutaCompleta = $rutaBase . $archivo;
 
