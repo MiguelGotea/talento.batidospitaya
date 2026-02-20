@@ -246,7 +246,6 @@
         </div>
     </footer>
 
-
     <!-- Modal de Detalle de Plaza -->
     <div class="modal fade" id="modalDetallePlaza" tabindex="-1">
         <div class="modal-dialog modal-lg">
