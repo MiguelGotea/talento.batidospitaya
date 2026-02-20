@@ -303,32 +303,28 @@ function crearCardPlaza(plaza) {
 function abrirBannerPlaza(cardEl, plazaId, cargoId, sucursalId) {
     const rutaBanner = cardEl.getAttribute('data-banner');
 
-    if (rutaBanner) {
-        // Construir la URL del banner
-        const bannerUrl = `https://erp.batidospitaya.com/modulos/reclutamiento/banner_puesto/${rutaBanner}`;
+    if (!rutaBanner) return; // Sin banner: no hace nada, el boton "Postular Ahora" es el que redirige
 
-        // Mostrar el banner en un modal de imagen
-        const modalHtml = `
-            <div id="modalBanner" style="
-                position:fixed; top:0; left:0; width:100%; height:100%; 
-                background:rgba(0,0,0,0.85); z-index:9999; 
-                display:flex; align-items:center; justify-content:center; cursor:pointer;
-            " onclick="document.getElementById('modalBanner').remove()">
-                <img src="${bannerUrl}" 
-                     alt="Banner del puesto" 
-                     style="max-width:90%; max-height:90vh; border-radius:12px; box-shadow:0 8px 32px rgba(0,0,0,0.5);"
-                     onerror="document.getElementById('modalBanner').remove(); postularDirecto(${plazaId}, ${cargoId}, ${sucursalId});">
-                <button onclick="event.stopPropagation(); document.getElementById('modalBanner').remove();" 
-                        style="position:absolute; top:20px; right:24px; background:rgba(255,255,255,0.15); border:none; border-radius:50%; width:44px; height:44px; color:#fff; font-size:22px; cursor:pointer; display:flex; align-items:center; justify-content:center;">
-                    &times;
-                </button>
-            </div>
-        `;
-        document.body.insertAdjacentHTML('beforeend', modalHtml);
-    } else {
-        // Si no hay banner, redirigir directamente a postulación
-        postularDirecto(plazaId, cargoId, sucursalId);
-    }
+    const bannerUrl = `https://erp.batidospitaya.com/modulos/reclutamiento/banner_puesto/${rutaBanner}`;
+
+    // Mostrar el banner en un overlay de pantalla completa
+    const modalHtml = `
+        <div id="modalBanner" style="
+            position:fixed; top:0; left:0; width:100%; height:100%; 
+            background:rgba(0,0,0,0.85); z-index:9999; 
+            display:flex; align-items:center; justify-content:center; cursor:pointer;
+        " onclick="document.getElementById('modalBanner').remove()">
+            <img src="${bannerUrl}" 
+                 alt="Banner del puesto" 
+                 style="max-width:90%; max-height:90vh; border-radius:12px; box-shadow:0 8px 32px rgba(0,0,0,0.5);"
+                 onerror="document.getElementById('modalBanner').remove();">
+            <button onclick="event.stopPropagation(); document.getElementById('modalBanner').remove();" 
+                    style="position:absolute; top:20px; right:24px; background:rgba(255,255,255,0.15); border:none; border-radius:50%; width:44px; height:44px; color:#fff; font-size:22px; cursor:pointer; display:flex; align-items:center; justify-content:center;">
+                &times;
+            </button>
+        </div>
+    `;
+    document.body.insertAdjacentHTML('beforeend', modalHtml);
 }
 
 /**
