@@ -312,6 +312,7 @@ async function enviarPostulacion() {
         formData.append('cargo_id', $('#cargoId').val());
         formData.append('sucursal_id', $('#sucursalId').val());
         formData.append('nombre', $('#nombre').val().trim());
+        formData.append('direccion', $('#direccion').val().trim());
         formData.append('correo', $('#correo').val().trim());
         formData.append('telefono', $('#telefono').val().trim());
         formData.append('experiencia', $('#experiencia').val().trim());
