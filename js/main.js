@@ -291,7 +291,7 @@ function crearCardPlaza(plaza) {
 
             <div class="vacante-actions">
                 <button class="btn-vr-plaza" onclick="abrirBannerPlaza('${plaza.ruta_banner_cargo || ''}')">
-                    <i class="bi bi-eye-fill"></i> Vr plaza
+                    <i class="bi bi-eye-fill"></i> Ver Plaza
                 </button>
                 
                 <button class="btn-postular" onclick="postularDirecto(${plaza.id}, ${plaza.cargo_id}, ${plaza.sucursal_id})">

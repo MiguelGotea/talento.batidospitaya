@@ -144,7 +144,7 @@ try {
 
     // Obtener categorías
     $sql_categorias = "
-        SELECT nc.especialidad_area, COUNT(*) as count
+        SELECT nc.especialidad_area, COUNT(DISTINCT pc.cargo) as count
         FROM plazas_cargos pc
         INNER JOIN NivelesCargos nc ON nc.CodNivelesCargos = pc.cargo
         INNER JOIN sucursales s ON s.codigo = CAST(pc.sucursal AS CHAR)
