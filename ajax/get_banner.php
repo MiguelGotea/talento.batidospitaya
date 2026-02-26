@@ -25,14 +25,29 @@ if (!in_array($ext, $extensionesPermitidas)) {
     exit('Tipo de archivo no permitido');
 }
 
-// Ruta del filesystem en Hostinger
-// __DIR__ = /home/u839374897/domains/talento.batidospitaya.com/public_html/ajax
-// dirname(__DIR__, 3) = /home/u839374897/domains
-$rutaBase = dirname(__DIR__, 3) . '/erp.batidospitaya.com/public_html/modulos/reclutamiento/uploads/banner_puesto/';
+// Determinar ruta del filesystem
+// En Hostinger: /home/u.../domains/talento.batidospitaya.com/public_html/ajax
+// En Local: C:\...\VisualCode\talento.batidospitaya.com\ajax
 
-$rutaCompleta = $rutaBase . $archivo;
+$directoriosPosibles = [
+    // Opción 1: Producción (Hostinger)
+    dirname(__DIR__, 3) . '/erp.batidospitaya.com/public_html/modulos/reclutamiento/uploads/banner_puesto/',
+    // Opción 2: Local (Si erp y talento están en la misma carpeta raíz como VisualCode/)
+    dirname(__DIR__, 2) . '/erp.batidospitaya.com/modulos/reclutamiento/uploads/banner_puesto/',
+    // Opción 3: Local con public_html
+    dirname(__DIR__, 2) . '/erp.batidospitaya.com/public_html/modulos/reclutamiento/uploads/banner_puesto/',
+];
 
-if (!file_exists($rutaCompleta)) {
+$rutaCompleta = '';
+foreach ($directoriosPosibles as $rutaBase) {
+    if (file_exists($rutaBase . $archivo)) {
+        $rutaCompleta = $rutaBase . $archivo;
+        break;
+    }
+}
+
+if (empty($rutaCompleta) || !file_exists($rutaCompleta)) {
+    error_log("Banner no encontrado: " . $archivo . " - Buscado en: " . implode(', ', $directoriosPosibles));
     http_response_code(404);
     exit('Banner no encontrado');
 }

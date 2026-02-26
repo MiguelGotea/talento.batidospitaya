@@ -492,9 +492,9 @@ body {
   padding: 6px 14px;
   border-radius: 0 0 0 12px;
   font-weight: 700;
-  font-size: 0.85rem;
-  box-shadow: var(--sombra-sm);
-  z-index: 10;
+  font-size: 0.8rem;
+  box-shadow: 0 2px 8px rgba(255, 107, 0, 0.3);
+  z-index: 5;
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
@@ -502,8 +502,9 @@ body {
 .vacante-actions {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
   margin-top: var(--espaciado-md);
+  width: 100%;
 }
 
 .btn-vr-plaza {
@@ -522,10 +523,10 @@ body {
 }
 
 .btn-vr-plaza:hover {
-  background: var(--color-principal);
-  color: white;
+  background: rgba(81, 184, 172, 0.05);
+  color: var(--color-principal);
   transform: translateY(-2px);
-  box-shadow: var(--sombra-md);
+  box-shadow: var(--sombra-sm);
 }
 
 .btn-postular {
@@ -533,20 +534,21 @@ body {
   background: var(--color-principal);
   color: white;
   border: none;
-  padding: 0.75rem;
+  padding: 0.85rem;
   border-radius: 8px;
-  font-weight: 600;
+  font-weight: 700;
   transition: all 0.3s ease;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
+  box-shadow: 0 4px 12px rgba(81, 184, 172, 0.2);
 }
 
 .btn-postular:hover {
   background: var(--color-principal-hover);
   transform: translateY(-2px);
-  box-shadow: var(--sombra-md);
+  box-shadow: 0 6px 16px rgba(14, 84, 76, 0.3);
 }
 
 /* ==================== Loader ==================== */
