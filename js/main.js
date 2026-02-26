@@ -319,20 +319,14 @@ function abrirBannerPlaza(rutaBanner) {
 
     const bannerUrl = `ajax/get_banner.php?archivo=${encodeURIComponent(rutaBanner)}`;
 
-    // Mostrar el banner en un overlay de pantalla completa
     const modalHtml = `
-        <div id="modalBanner" style="
-            position:fixed; top:0; left:0; width:100%; height:100%; 
-            background:rgba(0,0,0,0.85); z-index:9999; 
-            display:flex; align-items:center; justify-content:center; cursor:pointer;
-        " onclick="document.getElementById('modalBanner').remove()">
-            <div style="position:relative; max-width:90%; max-height:90vh;">
+        <div id="modalBanner" class="banner-overlay" onclick="document.getElementById('modalBanner').remove()">
+            <div class="banner-modal-content">
                 <img src="${bannerUrl}" 
                      alt="Banner del puesto" 
-                     style="width:100%; height:auto; border-radius:12px; box-shadow:0 8px 32px rgba(0,0,0,0.5);"
+                     class="banner-img"
                      onerror="handleBannerError(this)">
-                <button onclick="event.stopPropagation(); document.getElementById('modalBanner').remove();" 
-                        style="position:absolute; top:-20px; right:-20px; background:#fff; border:none; border-radius:50%; width:40px; height:40px; color:#333; font-size:24px; cursor:pointer; display:flex; align-items:center; justify-content:center; box-shadow: 0 2px 10px rgba(0,0,0,0.2);">
+                <button class="banner-close-btn" onclick="event.stopPropagation(); document.getElementById('modalBanner').remove();">
                     &times;
                 </button>
             </div>
@@ -341,18 +335,15 @@ function abrirBannerPlaza(rutaBanner) {
     document.body.insertAdjacentHTML('beforeend', modalHtml);
 }
 
-/**
- * Manejar error al cargar banner
- */
 function handleBannerError(img) {
-    const errorHtml = `
-        <div style="background:#fff;padding:2rem;border-radius:12px;text-align:center;max-width:350px;">
-            <i class="bi bi-exclamation-triangle" style="font-size:3rem;color:#f39c12;"></i>
-            <h3 style="margin-top:1rem;color:#333;font-weight:700;">Banner no disponible</h3>
-            <p style="color:#666;">No se pudo cargar la imagen del banner descriptivo.</p>
-        </div>
+    const errorContainer = document.createElement('div');
+    errorContainer.className = 'banner-error-msg';
+    errorContainer.innerHTML = `
+        <i class="bi bi-exclamation-triangle"></i>
+        <h3>Banner no disponible</h3>
+        <p>No se pudo visualizar la imagen descriptiva.</p>
     `;
-    img.parentElement.innerHTML = errorHtml;
+    img.replaceWith(errorContainer);
 }
 
 /**

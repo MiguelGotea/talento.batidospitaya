@@ -30,16 +30,18 @@ if (!in_array($ext, $extensionesPermitidas)) {
 // En Local: C:\...\VisualCode\talento.batidospitaya.com\ajax
 
 $directoriosPosibles = [
-    // Opción 1: Producción RECLUTAMIENTO (Si existe)
+    // Opción 1: Producción RECLUTAMIENTO (Carpeta hermana bajo domains)
     dirname(__DIR__, 3) . '/erp.batidospitaya.com/public_html/modulos/reclutamiento/uploads/banner_puesto/',
-    // Opción 2: Producción RH
+    // Opción 1b: Producción RECLUTAMIENTO (Carpeta hermana sin public_html intermedio)
+    dirname(__DIR__, 3) . '/erp.batidospitaya.com/modulos/reclutamiento/uploads/banner_puesto/',
+    // Opción 2: Producción RH (Bajo domains)
     dirname(__DIR__, 3) . '/erp.batidospitaya.com/public_html/modulos/rh/uploads/banner_puesto/',
-    // Opción 3: Producción RH Fotos Perfil (En caso de que perfil.png sea eso)
-    dirname(__DIR__, 3) . '/erp.batidospitaya.com/public_html/modulos/rh/uploads/fotos_perfil/',
-    // Opción 4: Local RH
+    // Opción 3: Caso Hostinger donde el ERP es el dominio principal (/home/u.../public_html)
+    dirname(__DIR__, 4) . '/public_html/modulos/reclutamiento/uploads/banner_puesto/',
+    dirname(__DIR__, 4) . '/public_html/modulos/rh/uploads/banner_puesto/',
+    // Opción 4: Local (Suponiendo estructura sibling)
+    dirname(__DIR__, 2) . '/erp.batidospitaya.com/modulos/reclutamiento/uploads/banner_puesto/',
     dirname(__DIR__, 2) . '/erp.batidospitaya.com/modulos/rh/uploads/banner_puesto/',
-    // Opción 5: Local RH Fotos
-    dirname(__DIR__, 2) . '/erp.batidospitaya.com/modulos/rh/uploads/fotos_perfil/',
 ];
 
 $rutaCompleta = '';
