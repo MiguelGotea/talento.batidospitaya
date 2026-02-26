@@ -269,10 +269,15 @@ function renderizarPlazas() {
  * Crear card de plaza
  */
 function crearCardPlaza(plaza) {
-    const bannerAttr = plaza.ruta_banner_cargo ? `data-banner="${plaza.ruta_banner_cargo}"` : '';
+    const today = new Date();
+    const formattedDate = `${String(today.getDate()).padStart(2, '0')}/${String(today.getMonth() + 1).padStart(2, '0')}/${today.getFullYear()}`;
 
     return `
         <div class="vacante-card">
+            <div class="vigente-box">
+                VIGENTE: ${formattedDate}
+            </div>
+            
             <div class="vacante-header">
                 <span class="vacante-categoria">${plaza.especialidad_area}</span>
             </div>
@@ -285,11 +290,9 @@ function crearCardPlaza(plaza) {
             </div>
 
             <div class="vacante-actions">
-                ${plaza.ruta_banner_cargo ? `
-                    <button class="btn-vr-plaza" onclick="abrirBannerPlaza('${plaza.ruta_banner_cargo}')">
-                        <i class="bi bi-eye-fill"></i> Vr plaza
-                    </button>
-                ` : ''}
+                <button class="btn-vr-plaza" onclick="abrirBannerPlaza('${plaza.ruta_banner_cargo || ''}')">
+                    <i class="bi bi-eye-fill"></i> Vr plaza
+                </button>
                 
                 <button class="btn-postular" onclick="postularDirecto(${plaza.id}, ${plaza.cargo_id}, ${plaza.sucursal_id})">
                     <i class="bi bi-send-fill"></i>

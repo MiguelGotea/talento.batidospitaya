@@ -61,11 +61,6 @@
     <!-- Hero Section -->
     <section class="hero-section">
         <div class="container position-relative">
-            <!-- Caja de Plazas Vigente -->
-            <div class="vigente-box">
-                VIGENTE: <?php echo date('d/m/Y'); ?>
-            </div>
-
             <div class="hero-content text-center">
                 <img src="assets/img/logo.png" alt="Batidos Pitaya - Empleos Nicaragua" class="hero-logo">
                 <h1 class="hero-title-seo">Empleos en Batidos Pitaya Nicaragua - Vacantes Disponibles</h1>
