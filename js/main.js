@@ -330,7 +330,7 @@ function abrirBannerPlaza(rutaBanner) {
                 <img src="${bannerUrl}" 
                      alt="Banner del puesto" 
                      style="width:100%; height:auto; border-radius:12px; box-shadow:0 8px 32px rgba(0,0,0,0.5);"
-                     onerror="this.parentElement.innerHTML='<div style=\'background:#fff;padding:2rem;border-radius:12px;text-align:center;\'><i class=\'bi bi-exclamation-triangle\' style=\'font-size:3rem;color:#f39c12;\'></i><h3 style=\'margin-top:1rem;\'>Banner no disponible</h3><p>No se pudo cargar la imagen del banner.</p></div>';">
+                     onerror="handleBannerError(this)">
                 <button onclick="event.stopPropagation(); document.getElementById('modalBanner').remove();" 
                         style="position:absolute; top:-20px; right:-20px; background:#fff; border:none; border-radius:50%; width:40px; height:40px; color:#333; font-size:24px; cursor:pointer; display:flex; align-items:center; justify-content:center; box-shadow: 0 2px 10px rgba(0,0,0,0.2);">
                     &times;
@@ -339,6 +339,20 @@ function abrirBannerPlaza(rutaBanner) {
         </div>
     `;
     document.body.insertAdjacentHTML('beforeend', modalHtml);
+}
+
+/**
+ * Manejar error al cargar banner
+ */
+function handleBannerError(img) {
+    const errorHtml = `
+        <div style="background:#fff;padding:2rem;border-radius:12px;text-align:center;max-width:350px;">
+            <i class="bi bi-exclamation-triangle" style="font-size:3rem;color:#f39c12;"></i>
+            <h3 style="margin-top:1rem;color:#333;font-weight:700;">Banner no disponible</h3>
+            <p style="color:#666;">No se pudo cargar la imagen del banner descriptivo.</p>
+        </div>
+    `;
+    img.parentElement.innerHTML = errorHtml;
 }
 
 /**

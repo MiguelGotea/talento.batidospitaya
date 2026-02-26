@@ -30,12 +30,16 @@ if (!in_array($ext, $extensionesPermitidas)) {
 // En Local: C:\...\VisualCode\talento.batidospitaya.com\ajax
 
 $directoriosPosibles = [
-    // Opción 1: Producción (Hostinger)
+    // Opción 1: Producción RECLUTAMIENTO (Si existe)
     dirname(__DIR__, 3) . '/erp.batidospitaya.com/public_html/modulos/reclutamiento/uploads/banner_puesto/',
-    // Opción 2: Local (Si erp y talento están en la misma carpeta raíz como VisualCode/)
-    dirname(__DIR__, 2) . '/erp.batidospitaya.com/modulos/reclutamiento/uploads/banner_puesto/',
-    // Opción 3: Local con public_html
-    dirname(__DIR__, 2) . '/erp.batidospitaya.com/public_html/modulos/reclutamiento/uploads/banner_puesto/',
+    // Opción 2: Producción RH
+    dirname(__DIR__, 3) . '/erp.batidospitaya.com/public_html/modulos/rh/uploads/banner_puesto/',
+    // Opción 3: Producción RH Fotos Perfil (En caso de que perfil.png sea eso)
+    dirname(__DIR__, 3) . '/erp.batidospitaya.com/public_html/modulos/rh/uploads/fotos_perfil/',
+    // Opción 4: Local RH
+    dirname(__DIR__, 2) . '/erp.batidospitaya.com/modulos/rh/uploads/banner_puesto/',
+    // Opción 5: Local RH Fotos
+    dirname(__DIR__, 2) . '/erp.batidospitaya.com/modulos/rh/uploads/fotos_perfil/',
 ];
 
 $rutaCompleta = '';
