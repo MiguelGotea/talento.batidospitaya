@@ -60,7 +60,12 @@
 
     <!-- Hero Section -->
     <section class="hero-section">
-        <div class="container">
+        <div class="container position-relative">
+            <!-- Caja de Plazas Vigente -->
+            <div class="vigente-box">
+                VIGENTE: <?php echo date('d/m/Y'); ?>
+            </div>
+
             <div class="hero-content text-center">
                 <img src="assets/img/logo.png" alt="Batidos Pitaya - Empleos Nicaragua" class="hero-logo">
                 <h1 class="hero-title-seo">Empleos en Batidos Pitaya Nicaragua - Vacantes Disponibles</h1>
@@ -73,7 +78,7 @@
     </section>
 
     <!-- Filtros y Búsqueda -->
-    <section class="filters-section">
+    <section class="filters-section" style="display: none;">
         <div class="container">
             <div class="filters-card">
                 <div class="row g-3">
@@ -108,6 +113,7 @@
     <!-- Tabs de Categorías -->
     <section class="categories-section">
         <div class="container">
+
             <div class="category-tabs" id="categoryTabs">
                 <button class="category-tab active" data-categoria="">
                     <i class="bi bi-grid-3x3-gap"></i>
@@ -115,8 +121,8 @@
                 </button>
             </div>
 
-            <!-- Estadísticas -->
-            <div class="stats-container">
+            <!-- Estadísticas (Ocultas/Eliminadas según requerimiento) -->
+            <div class="stats-container d-none">
                 <div class="stat-card-modern">
                     <div class="stat-icon">
                         <i class="bi bi-briefcase-fill"></i>

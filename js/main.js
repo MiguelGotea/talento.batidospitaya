@@ -272,7 +272,7 @@ function crearCardPlaza(plaza) {
     const bannerAttr = plaza.ruta_banner_cargo ? `data-banner="${plaza.ruta_banner_cargo}"` : '';
 
     return `
-        <div class="vacante-card" ${bannerAttr} onclick="abrirBannerPlaza(this, ${plaza.id}, ${plaza.cargo_id}, ${plaza.sucursal_id})">
+        <div class="vacante-card">
             <div class="vacante-header">
                 <span class="vacante-categoria">${plaza.especialidad_area}</span>
             </div>
@@ -283,16 +283,19 @@ function crearCardPlaza(plaza) {
                 <i class="bi bi-geo-alt-fill"></i>
                 ${plaza.departamento}
             </div>
-            
-            <div class="plazas-badge">
-                <i class="bi bi-people-fill"></i>
-                ${plaza.plazas_disponibles} ${plaza.plazas_disponibles === 1 ? 'plaza disponible' : 'plazas disponibles'}
+
+            <div class="vacante-actions">
+                ${plaza.ruta_banner_cargo ? `
+                    <button class="btn-vr-plaza" onclick="abrirBannerPlaza('${plaza.ruta_banner_cargo}')">
+                        <i class="bi bi-eye-fill"></i> Vr plaza
+                    </button>
+                ` : ''}
+                
+                <button class="btn-postular" onclick="postularDirecto(${plaza.id}, ${plaza.cargo_id}, ${plaza.sucursal_id})">
+                    <i class="bi bi-send-fill"></i>
+                    Postular Ahora
+                </button>
             </div>
-            
-            <button class="btn-postular" onclick="event.stopPropagation(); postularDirecto(${plaza.id}, ${plaza.cargo_id}, ${plaza.sucursal_id})">
-                <i class="bi bi-send-fill"></i>
-                Postular Ahora
-            </button>
         </div>
     `;
 }
@@ -300,10 +303,8 @@ function crearCardPlaza(plaza) {
 /**
  * Abrir banner de la plaza al hacer click en la card
  */
-function abrirBannerPlaza(cardEl, plazaId, cargoId, sucursalId) {
-    const rutaBanner = cardEl.getAttribute('data-banner');
-
-    if (!rutaBanner) return; // Sin banner: no hace nada, el boton "Postular Ahora" es el que redirige
+function abrirBannerPlaza(rutaBanner) {
+    if (!rutaBanner) return;
 
     const bannerUrl = `ajax/get_banner.php?archivo=${encodeURIComponent(rutaBanner)}`;
 
@@ -314,14 +315,16 @@ function abrirBannerPlaza(cardEl, plazaId, cargoId, sucursalId) {
             background:rgba(0,0,0,0.85); z-index:9999; 
             display:flex; align-items:center; justify-content:center; cursor:pointer;
         " onclick="document.getElementById('modalBanner').remove()">
-            <img src="${bannerUrl}" 
-                 alt="Banner del puesto" 
-                 style="max-width:90%; max-height:90vh; border-radius:12px; box-shadow:0 8px 32px rgba(0,0,0,0.5);"
-                 onerror="document.getElementById('modalBanner').remove();">
-            <button onclick="event.stopPropagation(); document.getElementById('modalBanner').remove();" 
-                    style="position:absolute; top:20px; right:24px; background:rgba(255,255,255,0.15); border:none; border-radius:50%; width:44px; height:44px; color:#fff; font-size:22px; cursor:pointer; display:flex; align-items:center; justify-content:center;">
-                &times;
-            </button>
+            <div style="position:relative; max-width:90%; max-height:90vh;">
+                <img src="${bannerUrl}" 
+                     alt="Banner del puesto" 
+                     style="width:100%; height:auto; border-radius:12px; box-shadow:0 8px 32px rgba(0,0,0,0.5);"
+                     onerror="document.getElementById('modalBanner').remove();">
+                <button onclick="event.stopPropagation(); document.getElementById('modalBanner').remove();" 
+                        style="position:absolute; top:-20px; right:-20px; background:#fff; border:none; border-radius:50%; width:40px; height:40px; color:#333; font-size:24px; cursor:pointer; display:flex; align-items:center; justify-content:center; box-shadow: 0 2px 10px rgba(0,0,0,0.2);">
+                    &times;
+                </button>
+            </div>
         </div>
     `;
     document.body.insertAdjacentHTML('beforeend', modalHtml);
