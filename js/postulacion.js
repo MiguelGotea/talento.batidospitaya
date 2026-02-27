@@ -238,13 +238,17 @@ function validarCampo(campo) {
 
     if (requerido && !valor) {
         valido = false;
+    } else if (campo.attr('id') === 'nombre') {
+        // Al menos 2 palabras
+        const palabras = valor.split(/\s+/).filter(p => p.length > 0);
+        valido = palabras.length >= 2;
     } else if (tipo === 'email' && valor) {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        valido = emailRegex.test(valor);
+        // Tiene que tener @
+        valido = valor.includes('@');
     } else if (tipo === 'tel' && valor) {
-        // Validación simple: al menos 8 dígitos
-        const telRegex = /\d{8,}/;
-        valido = telRegex.test(valor);
+        // Nicaragua: 8 números, solo números
+        const telRegex = /^[0-9]{8}$/;
+        valido = telRegex.test(valor.replace(/\s/g, ''));
     } else if (tipo === 'number' && valor) {
         valido = !isNaN(valor) && parseFloat(valor) >= 0;
     }

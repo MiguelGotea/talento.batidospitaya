@@ -38,9 +38,20 @@ try {
     $sucursal_id = !empty($_POST['sucursal_id']) ? intval($_POST['sucursal_id']) : null;
     $nombre = trim($_POST['nombre']);
     $direccion = trim($_POST['direccion']);
-    $telefono = trim($_POST['telefono']);
+    $telefono = preg_replace('/\D/', '', $_POST['telefono']); // Solo números
     $experiencia = trim($_POST['experiencia']);
     $aspiracion = floatval($_POST['aspiracion']);
+
+    // Validar nombre (al menos 2 palabras)
+    $palabrasNombre = explode(' ', preg_replace('/\s+/', ' ', $nombre));
+    if (count($palabrasNombre) < 2) {
+        throw new Exception('El nombre completo debe tener al menos dos palabras');
+    }
+
+    // Validar teléfono (8 dígitos)
+    if (strlen($telefono) !== 8) {
+        throw new Exception('El teléfono debe tener exactamente 8 números');
+    }
     $comentario = isset($_POST['comentario']) ? trim($_POST['comentario']) : null;
 
     // Correo es opcional; validar formato solo si fue enviado

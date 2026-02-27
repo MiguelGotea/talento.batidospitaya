@@ -113,35 +113,6 @@
                                 </div>
                             </div>
 
-                            <!-- Currículum Vitae -->
-                            <div class="form-section">
-                                <h5 class="section-title">
-                                    <i class="bi bi-file-earmark-pdf"></i>
-                                    Currículum Vitae
-                                </h5>
-
-                                <div class="upload-zone" id="uploadZone">
-                                    <input type="file" id="cv" name="cv" accept=".pdf" hidden>
-                                    <div class="upload-content">
-                                        <i class="bi bi-cloud-upload upload-icon"></i>
-                                        <h6 class="upload-title">Arrastra tu CV aquí</h6>
-                                        <p class="upload-subtitle">o haz clic para seleccionar</p>
-                                        <small class="text-muted">Solo archivos PDF, máximo 5MB</small>
-                                    </div>
-                                    <div class="upload-preview" id="uploadPreview" style="display: none;">
-                                        <i class="bi bi-file-pdf-fill text-danger" style="font-size: 3rem;"></i>
-                                        <div class="file-info">
-                                            <p class="file-name mb-1" id="fileName"></p>
-                                            <small class="file-size text-muted" id="fileSize"></small>
-                                        </div>
-                                        <button type="button" class="btn-remove-file" id="btnRemoveFile">
-                                            <i class="bi bi-x-circle"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                                <div class="invalid-feedback" id="cvError"></div>
-                            </div>
-
                             <!-- Experiencia y Aspiraciones -->
                             <div class="form-section">
                                 <h5 class="section-title">
@@ -174,6 +145,35 @@
                                             placeholder="¿Por qué quieres trabajar en Batidos Pitaya?"></textarea>
                                     </div>
                                 </div>
+                            </div>
+
+                            <!-- Currículum Vitae -->
+                            <div class="form-section">
+                                <h5 class="section-title">
+                                    <i class="bi bi-file-earmark-pdf"></i>
+                                    Currículum Vitae
+                                </h5>
+
+                                <div class="upload-zone" id="uploadZone">
+                                    <input type="file" id="cv" name="cv" accept=".pdf" hidden>
+                                    <div class="upload-content">
+                                        <i class="bi bi-cloud-upload upload-icon"></i>
+                                        <h6 class="upload-title">Arrastra tu CV aquí</h6>
+                                        <p class="upload-subtitle">o haz clic para seleccionar</p>
+                                        <small class="text-muted">Solo archivos PDF, máximo 5MB</small>
+                                    </div>
+                                    <div class="upload-preview" id="uploadPreview" style="display: none;">
+                                        <i class="bi bi-file-pdf-fill text-danger" style="font-size: 3rem;"></i>
+                                        <div class="file-info">
+                                            <p class="file-name mb-1" id="fileName"></p>
+                                            <small class="file-size text-muted" id="fileSize"></small>
+                                        </div>
+                                        <button type="button" class="btn-remove-file" id="btnRemoveFile">
+                                            <i class="bi bi-x-circle"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="invalid-feedback" id="cvError"></div>
                             </div>
 
                             <!-- Términos y Condiciones -->
