@@ -12,6 +12,10 @@ git add .
 # Commit
 git commit -m "$message"
 
+# Pull previo por si hubo cambios remotos (sync)
+Write-Host "Sincronizando con cambios remotos..." -ForegroundColor Yellow
+git pull origin main --rebase
+
 # Push
 Write-Host "Subiendo a GitHub..." -ForegroundColor Yellow
 git push origin main
