@@ -14,22 +14,33 @@ jobs:
           token: ${{ secrets.SYNC_TOKEN }}
           fetch-depth: 0
 
-      - name: 📥 Checkout PitayaCore en SHA específico
-        uses: actions/checkout@v4
-        with:
-          repository: MiguelGotea/PitayaCore
-          token: ${{ secrets.SYNC_TOKEN }}
-          ref: main
-          path: _pitayacore
+      - name: 📥 Clonación Manual (Iron Sync)
+        run: |
+          echo "🚀 Clonando PitayaCore de forma fresca para romper caché..."
+          git clone --depth 1 https://x-access-token:${{ secrets.SYNC_TOKEN }}@github.com/MiguelGotea/PitayaCore.git _pitayacore
+          
+          # 🔍 Validación de DNI (SHA) del commit
+          LOCAL_SHA=$(git -C _pitayacore rev-parse HEAD)
+          TARGET_SHA="${{ github.event.client_payload.sha }}"
+          
+          echo "🆔 SHA Esperado: $TARGET_SHA"
+          echo "🆔 SHA Descargado: $LOCAL_SHA"
+          
+          # Si no coinciden, forzamos el fallo del Action (Rojo)
+          if [ "$LOCAL_SHA" != "$TARGET_SHA" ]; then
+            echo "❌ ERROR: El servidor de GitHub devolvió una versión obsoleta."
+            exit 1
+          fi
+          echo "✅ SHA validado correctamente."
 
-      - name: 🔄 Actualizar las 3 carpetas desde PitayaCore
+      - name: 🔄 Aplicar cambios al núcleo
         run: |
           rsync -av --delete _pitayacore/core/   ./core/
           rsync -av --delete _pitayacore/docs/   ./docs/
           rsync -av --delete _pitayacore/.agent/ ./.agent/
           rm -rf _pitayacore
 
-      - name: 💾 Commit y push si hay cambios reales
+      - name: 💾 Guardar cambios en GitHub
         run: |
           git config user.name "PitayaCore Bot"
           git config user.email "bot@batidospitaya.com"
@@ -48,17 +59,14 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.HOSTINGER_SSH_KEY }}
 
-      - name: 📤 Deploy core/ → HOST (SOLO core/, nunca docs/ ni .agent/)
+      - name: 📤 Deploy core/ → HOST
         run: |
-          echo "📤 Deploying core/ to ${{ secrets.HOSTINGER_PATH_TALENTO }}/core/"
-
+          # Solo deployamos core/ al host
           rsync -avz --delete \
             -e "ssh -o StrictHostKeyChecking=no -p 65002" \
             ./core/ \
-            ${{ secrets.HOSTINGER_USER }}@${{ secrets.HOSTINGER_HOST }}:${{ secrets.HOSTINGER_PATH_TALENTO }}/core/
+            ${{ secrets.HOSTINGER_USER }}@${{ secrets.HOSTINGER_HOST }}:${{ secrets.HOSTINGER_PATH }}/core/
 
-      - name: ✅ Verificar deploy
+      - name: ✅ Finalizado
         run: |
-          echo "✅ core/ deployado exitosamente al host"
-          echo "📁 docs/ y .agent/ solo en GitHub, no en host"
-          echo "🌐 Repositorio: ${{ github.repository }}"
+          echo "✅ Sincronización de Hierro completada exitosamente."
