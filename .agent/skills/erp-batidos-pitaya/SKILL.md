@@ -24,19 +24,19 @@ El ecosistema de Batidos Pitaya utiliza un sistema de sincronización centraliza
 - **Regla de Oro**: Todo cambio en componentes globales o documentación debe nacer o consolidarse en `PitayaCore`.
 
 ### 🚀 Flujo de Trabajo del Desarrollador (IA)
-1. **Modificación Local**: Puedes realizar cambios en `/core` desde cualquier repositorio (PitayaCore, ERP, API, etc.).
-2. **Push Individual**: Usa el script `.\.scripts\gitpush.ps1` de la carpeta en la que estés trabajando. 
-   - **Nube**: GitHub se encargará de arbitrar y enviar los cambios a los demás repositorios.
-3. **Sincronización Local (Bajo Demanda)**: Para traer los cambios de un repositorio local a otro, **NO copies a mano**. Usa el script quirúrgico en la raíz:
+1. **Modificación Única**: Siempre que necesites cambiar un componente global (ej: `AIService.php`, `global_tools.css`), realiza el cambio en el repositorio `PitayaCore`.
+2. **Despliegue Maestro**: Utiliza **SIEMPRE** el script principal para subir cambios:
    ```powershell
-   # Desde c:\...\VisualCode
-   .\gitsync-local.ps1
+   # Desde c:\...\VisualCode\PitayaCore
+   .\.scripts\gitpush.ps1
    ```
-   - Este comando descarga ÚNICAMENTE `core/`, `docs/` y `.agent/` desde la nube a todos tus repositorios locales de forma segura.
+   - **Nube**: Este comando dispara GitHub Actions que actualizan automáticamente los remotos de todos los subdominios.
+   - **Local**: El script utiliza `robocopy` para espejar instantáneamente los cambios en tus carpetas locales de `erp.batidospitaya.com`, `api.batidospitaya.com`, etc.
+3. **Cambios en Subdominios**: Si detectas cambios en `/core` dentro de un subdominio, estos deben integrarse de vuelta a `PitayaCore` para evitar divergencias. El sistema de GitHub te avisará si hay una propuesta de actualización pendiente.
 
 ### 🛠️ Herramientas de Control
-- `Individual gitpush.ps1`: Envía tus cambios locales a la nube.
-- `gitsync-local.ps1`: Trae la versión oficial de la nube a todas tus carpetas locales simultáneamente.
+- `PitayaCore/.scripts/gitpush.ps1`: Única vía recomendada para subir cambios al núcleo.
+- **Sincronización Quirúrgica**: Si un repositorio local se desfasa, usa `git checkout origin/main -- core/` para traer solo el núcleo sin afectar el resto del módulo.
 
 ## 📋 Antes de Empezar
 
