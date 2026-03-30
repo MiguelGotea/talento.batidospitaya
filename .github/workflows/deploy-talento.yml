@@ -19,7 +19,7 @@ jobs:
         
     - name: 📤 Sincronizar archivos (rsync)
       run: |
-        echo "🔄 Sincronizando archivos..."
+        echo "🔄 Sincronizando archivos v13..."
         
         rsync -avz \
           --delete \
@@ -28,33 +28,29 @@ jobs:
           --exclude='.gitignore' \
           --exclude='.agent/' \
           --exclude='.scripts/' \
-          --exclude='core/' \
-          --exclude='docs/' \
           --exclude='uploads/' \
           -e "ssh -o StrictHostKeyChecking=no -p 65002" \
           ./ \
           ${{ secrets.HOSTINGER_USER }}@${{ secrets.HOSTINGER_HOST }}:${{ secrets.HOSTINGER_PATH_TALENTO }}/
           
-    - name: 🔧 Configurar permisos
+    - name: 🔧 Configurar permisos (v13)
       run: |
         echo "🔧 Configurando permisos en el servidor..."
         
         ssh -o StrictHostKeyChecking=no -p 65002 ${{ secrets.HOSTINGER_USER }}@${{ secrets.HOSTINGER_HOST }} << 'EOF'
           cd ${{ secrets.HOSTINGER_PATH_TALENTO }}
-          # Directorios a 755
+          # Directorios a 755 (ajustado para incluir core y docs)
           find . -maxdepth 1 -type d ! -path "." -exec chmod 755 {} \;
+          find core docs ajax assets css js -type d -exec chmod 755 {} \; 2>/dev/null || true
+          
           # Archivos a 644
           find . -maxdepth 1 -type f -exec chmod 644 {} \;
+          find core docs ajax assets css js -type f -exec chmod 644 {} \; 2>/dev/null || true
           
-          # Carpetas específicas (si existen y se sincronizaron)
-          [ -d "ajax" ] && chmod 755 ajax && find ajax -type f -exec chmod 644 {} \;
-          [ -d "assets" ] && chmod 755 assets && find assets -type f -exec chmod 644 {} \;
-          [ -d "css" ] && chmod 755 css && find css -type f -exec chmod 644 {} \;
-          [ -d "js" ] && chmod 755 js && find js -type f -exec chmod 644 {} \;
-          
-          echo "✅ Permisos actualizados."
+          echo "✅ Permisos actualizados para Core y Docs."
         EOF
         
     - name: ✅ Verificar deploy
       run: |
-        echo "✅ Deploy completado exitosamente para talento.batidospitaya.com"
+        echo "✅ Deploy completado para talento.batidospitaya.com"
+        echo "🌐 Sitio: https://talento.batidospitaya.com"
