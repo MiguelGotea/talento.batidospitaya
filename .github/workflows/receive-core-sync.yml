@@ -12,27 +12,32 @@ jobs:
   sync-and-deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: 📥 1. Checkout Subdominio
+      - name: 📥 1. Checkout
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.SYNC_TOKEN }}
           fetch-depth: 0
 
-      - name: 🛡️ 2. Iron Sync v8.1 (Wait for Propagation)
+      - name: 🛡️ 2. Iron Sync v9 (LÃ¡ser ls-remote)
         run: |
           TARGET_SHA="${{ github.event.client_payload.sha }}"
-          ATTEMPTS=0; MAX_ATTEMPTS=10; SUCCESS=false
+          echo "🚀 Buscando SHA: $TARGET_SHA vía ls-remote..."
+          ATTEMPTS=0; MAX_ATTEMPTS=15; SUCCESS=false
           while [ $ATTEMPTS -lt $MAX_ATTEMPTS ]; do
             ATTEMPTS=$((ATTEMPTS+1))
-            rm -rf _pitayacore
-            git clone --depth 1 https://x-access-token:${{ secrets.SYNC_TOKEN }}@github.com/MiguelGotea/PitayaCore.git _pitayacore
-            LOCAL_SHA=$(git -C _pitayacore rev-parse HEAD)
-            if [ "$LOCAL_SHA" == "$TARGET_SHA" ]; then
+            echo "⚡ Intento $ATTEMPTS/$MAX_ATTEMPTS: Validando en GitHub..."
+            CURRENT_REMOTE_SHA=$(git ls-remote https://x-access-token:${{ secrets.SYNC_TOKEN }}@github.com/MiguelGotea/PitayaCore.git HEAD | awk '{print $1}')
+            if [ "$CURRENT_REMOTE_SHA" == "$TARGET_SHA" ]; then
+              echo "✅ SHA validado instantÃ¡neamente."
               SUCCESS=true; break
             fi
-            sleep 15
+            echo "⏱️ PropagaciÃ³n en curso... Reintentando en 10s"
+            sleep 10
           done
           if [ "$SUCCESS" = false ]; then exit 1; fi
+          
+          echo "📥 Descargando PitayaCore (Contenido Validado)..."
+          git clone --depth 1 https://x-access-token:${{ secrets.SYNC_TOKEN }}@github.com/MiguelGotea/PitayaCore.git _pitayacore
 
       - name: 🛠️ 3. Aplicar cambios Quirúrgicos
         run: |
@@ -62,4 +67,7 @@ jobs:
           DEST_USER="${{ secrets.HOSTINGER_USER }}"
           DEST_HOST="${{ secrets.HOSTINGER_HOST }}"
           DEST_PATH="${{ secrets.HOSTINGER_PATH }}${{ secrets.HOSTINGER_PATH_API }}${{ secrets.HOSTINGER_PATH_ERP }}${{ secrets.HOSTINGER_PATH_TALENTO }}"
-          rsync -avz --delete -e "ssh -o StrictHostKeyChecking=no -p 65002" ./core/ $DEST_USER@$DEST_HOST:$DEST_PATH/core/
+          rsync -avz --delete \
+            -e "ssh -o StrictHostKeyChecking=no -o ConnectTimeout=15 -p 65002" \
+            ./core/ \
+            $DEST_USER@$DEST_HOST:$DEST_PATH/core/
