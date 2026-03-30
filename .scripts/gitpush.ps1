@@ -1,23 +1,22 @@
-# Script de Deploy Automatico - Talento Batidos Pitaya
-# Uso: .\.scripts\gitpush.ps1
+﻿# Auto-navegar a la raíz (GPS Interno)
+Set-Location $PSScriptRoot
+Set-Location ..
 
-$date = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
-$message = "$date"
-
-Write-Host "Iniciando proceso de push para Talento..." -ForegroundColor Cyan
-
-# Agregar cambios
+# Script Tanque v7 (Anti-Choque)
 git add .
+$msg = "Human Push $(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')"
+git commit -m "$msg" 2>$null
 
-# Commit
-git commit -m "$message"
-
-# Pull previo por si hubo cambios remotos (sync)
-Write-Host "Sincronizando con cambios remotos..." -ForegroundColor Yellow
+Write-Host "🚀 Intentando sincronizar y subir cambios..." -ForegroundColor Cyan
 git pull origin main --rebase
 
-# Push
-Write-Host "Subiendo a GitHub..." -ForegroundColor Yellow
-git push origin main
+if ($LASTEXITCODE -ne 0) {
+    Write-Host "⚠️ Conflicto con el Bot detectado. Aplicando reparaciÃ³n de Hierro..." -ForegroundColor Yellow
+    git rebase --abort 2>$null
+    git pull origin main --no-rebase -X ours
+    git add .
+    git commit -m "$msg (Conflict Resolved)" 2>$null
+}
 
-Write-Host "Proceso completado. GitHub Actions iniciara el deploy en breve." -ForegroundColor Green
+git push origin main
+Write-Host "✅ ¡Subida completada con éxito!" -ForegroundColor Green
