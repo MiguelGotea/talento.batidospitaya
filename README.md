@@ -1,6 +1,6 @@
 # 🚀 Talento Batidos Pitaya
 
-Repositorio del portal de talento para Batidos Pitaya.
+Repositorio del portal de talento para Batidos Pitaya. Integraod Codespace
 
 
 ## 📦 Estructura del Proyecto
