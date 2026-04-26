@@ -13,6 +13,7 @@ try {
         throw new Exception('ID de plaza no especificado');
     }
 
+    
     $plaza_id = intval($_GET['id']);
 
     // Obtener información de la plaza
