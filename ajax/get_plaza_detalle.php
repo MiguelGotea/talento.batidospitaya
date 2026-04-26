@@ -25,7 +25,7 @@ try {
             pc.sucursal,
             s.id as sucursal_id,
             s.nombre as sucursal_nombre,
-            IF(s.codigo = '18', s.departamento, s.nombre) as departamento,
+            IF(s.codigo IN ('18', '6'), s.departamento, s.nombre) as departamento,
             pc.cantidad_real,
             pc.cantidad_adicional,
             pc.salario_propuesto,
