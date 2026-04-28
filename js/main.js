@@ -7,6 +7,7 @@
 let paginaActual = 1;
 let registrosPorPagina = 24;
 let totalPlazas = 0;
+let totalVacantesAPI = 0;
 let plazasData = [];
 let categoriasData = [];
 let ubicacionesData = [];
@@ -132,6 +133,7 @@ async function cargarPlazas() {
         if (data.success) {
             plazasData = data.plazas;
             totalPlazas = data.total;
+            totalVacantesAPI = data.total_vacantes;
             categoriasData = data.categorias;
             ubicacionesData = data.ubicaciones;
 
@@ -198,12 +200,12 @@ function animarContador(selector, valorFinal) {
 function renderizarCategorias() {
     const container = $('#categoryTabs');
 
-    // Botón "Todas"
+    // Botón "Todas" - Mostramos el total de vacantes (filas en el grid)
     let html = `
         <button class="category-tab ${filtros.categoria === '' ? 'active' : ''}" 
                 onclick="filtrarPorCategoria('')">
             <i class="bi bi-grid-3x3-gap"></i>
-            Todas
+            Todas (${totalVacantesAPI || totalPlazas || 0})
         </button>
     `;
 
@@ -570,7 +572,8 @@ function obtenerIconoCategoria(categoria) {
         'Marketing': 'megaphone',
         'Recursos Humanos': 'people',
         'Finanzas': 'cash-stack',
-        'Operaciones': 'diagram-3'
+        'Operaciones': 'diagram-3',
+        'Otros': 'patch-question'
     };
     return iconos[categoria] || 'circle';
 }
