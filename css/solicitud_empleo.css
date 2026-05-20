@@ -202,6 +202,18 @@ body {
     box-shadow: 0 5px 15px rgba(255,107,0,0.3);
 }
 
+.btn-primary:disabled,
+.btn-primary.disabled,
+.btn-success:disabled,
+.btn-success.disabled {
+    background-color: #e0e0e0 !important;
+    border-color: #e0e0e0 !important;
+    color: #a0a0a0 !important;
+    transform: none !important;
+    box-shadow: none !important;
+    cursor: not-allowed;
+}
+
 /* Loader */
 .loader-wrapper {
     position: fixed;
