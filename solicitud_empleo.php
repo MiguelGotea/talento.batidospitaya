@@ -987,18 +987,18 @@ $referencias = $stmtRef->fetchAll(PDO::FETCH_ASSOC);
                     </section>
 
                     <!-- Botonera de Navegación -->
-                    <div class="form-navigation d-flex justify-content-between align-items-center flex-wrap gap-3 mt-5">
-                        <button type="button" class="btn btn-outline-secondary btn-lg btn-nav" id="btnPrev" disabled>
+                    <div class="form-navigation d-flex flex-column-reverse flex-md-row justify-content-between align-items-center gap-3 mt-5">
+                        <button type="button" class="btn btn-outline-secondary btn-lg btn-nav w-100 w-md-auto" id="btnPrev" disabled>
                             <i class="bi bi-chevron-left"></i> Anterior
                         </button>
-                        <div class="d-flex gap-2">
-                            <button type="button" class="btn btn-light btn-lg btn-nav" id="btnSaveDraft">
+                        <div class="d-flex flex-column-reverse flex-md-row w-100 w-md-auto gap-2">
+                            <button type="button" class="btn btn-outline-secondary btn-lg btn-nav w-100 w-md-auto" id="btnSaveDraft">
                                 <i class="bi bi-save"></i> Guardar Progreso
                             </button>
-                            <button type="button" class="btn btn-primary btn-lg btn-nav" id="btnNext">
+                            <button type="button" class="btn btn-primary btn-lg btn-nav w-100 w-md-auto" id="btnNext">
                                 Siguiente <i class="bi bi-chevron-right"></i>
                             </button>
-                            <button type="submit" class="btn btn-success btn-lg btn-nav d-none" id="btnSubmit">
+                            <button type="submit" class="btn btn-success btn-lg btn-nav w-100 w-md-auto d-none" id="btnSubmit">
                                 <i class="bi bi-check-circle"></i> Finalizar Solicitud
                             </button>
                         </div>
