@@ -77,13 +77,7 @@ $(document).ready(function () {
 
         // Actualizar botones
         $('#btnPrev').prop('disabled', currentStep === 1);
-        if (currentStep === totalSteps) {
-            $('#btnNext').addClass('d-none');
-            $('#btnSubmit').removeClass('d-none');
-        } else {
-            $('#btnNext').removeClass('d-none');
-            $('#btnSubmit').addClass('d-none');
-        }
+        $('#btnNext').prop('disabled', currentStep === totalSteps);
     }
 
     function showSection(step) {
@@ -117,96 +111,10 @@ $(document).ready(function () {
         return isValid;
     }
 
-    function validateAllSections() {
-        let firstInvalidStep = null;
-
-        for (let step = 1; step <= totalSteps; step++) {
-            const section = $(`#section-${step}`);
-            section.find('[required]').each(function () {
-                if (!$(this).val()) {
-                    $(this).addClass('is-invalid');
-                    if (firstInvalidStep === null) {
-                        firstInvalidStep = step;
-                    }
-                } else {
-                    $(this).removeClass('is-invalid');
-                }
-            });
-        }
-
-        if (firstInvalidStep !== null) {
-            Swal.fire({
-                icon: 'warning',
-                title: 'Campos requeridos',
-                text: 'Por favor completa todos los campos marcados antes de continuar.',
-                confirmButtonColor: '#ff6b00'
-            }).then(() => {
-                currentStep = firstInvalidStep;
-                updateStepper();
-                showSection(currentStep);
-            });
-            return false;
-        }
-        return true;
-    }
-
-    // Submit del formulario (Finalizar Solicitud)
+    // Prevenir el envío nativo del formulario al presionar Enter en los inputs
     $('#formSolicitud').on('submit', function (e) {
         e.preventDefault();
-
-        if (validateAllSections()) {
-            Swal.fire({
-                title: '¿Estás seguro?',
-                text: 'Una vez enviada la solicitud, no podrás realizar más cambios.',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#ff6b00',
-                cancelButtonColor: '#6c757d',
-                confirmButtonText: 'Sí, enviar',
-                cancelButtonText: 'Cancelar'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    submitSolicitud();
-                }
-            });
-        }
     });
-
-    async function submitSolicitud() {
-        const formData = new FormData($('#formSolicitud')[0]);
-        formData.append('action', 'submit_solicitud');
-        formData.append('current_step', currentStep);
-
-        Swal.fire({
-            title: 'Enviando...',
-            allowOutsideClick: false,
-            didOpen: () => { Swal.showLoading(); }
-        });
-
-        try {
-            const response = await fetch('ajax/solicitud_empleo_handler.php', {
-                method: 'POST',
-                body: formData
-            });
-            const data = await response.json();
-
-            if (data.success) {
-                Swal.fire({
-                    icon: 'success',
-                    title: '¡Solicitud completada!',
-                    text: 'Tu solicitud de empleo ha sido enviada con éxito.',
-                    confirmButtonColor: '#ff6b00'
-                }).then(() => {
-                    window.location.reload();
-                });
-            } else {
-                Swal.fire('Error', 'No se pudo enviar la solicitud: ' + data.message, 'error');
-            }
-        } catch (error) {
-            console.error('Error al enviar:', error);
-            Swal.fire('Error', 'Hubo un problema de conexión con el servidor.', 'error');
-        }
-    }
 
     async function saveProgress(manual = false) {
         const formData = new FormData($('#formSolicitud')[0]);

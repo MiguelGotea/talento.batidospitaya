@@ -1002,9 +1002,6 @@ $referencias = $stmtRef->fetchAll(PDO::FETCH_ASSOC);
                             <button type="button" class="btn btn-primary btn-lg btn-nav w-100" id="btnNext">
                                 <span class="d-none d-md-inline">Siguiente</span><span class="d-inline d-md-none">Sig.</span> <i class="bi bi-chevron-right"></i>
                             </button>
-                            <button type="submit" class="btn btn-success btn-lg btn-nav w-100 d-none" id="btnSubmit">
-                                <i class="bi bi-check-circle"></i> <span class="d-none d-md-inline">Finalizar Solicitud</span><span class="d-inline d-md-none">Finalizar</span>
-                            </button>
                         </div>
                     </div>
                 </form>

@@ -23,7 +23,7 @@ try {
 
     $id = $solicitud['id'];
 
-    if ($action === 'save_progress' || $action === 'submit_solicitud') {
+    if ($action === 'save_progress') {
 
         $conn->beginTransaction();
 
@@ -289,11 +289,6 @@ try {
         $porcentaje = round(($rellenos / count($camposClave)) * 100);
         $conn->prepare("UPDATE solicitud_empleo SET porcentaje_completitud = :p WHERE id = :id")
             ->execute([':p' => $porcentaje, ':id' => $id]);
-
-        if ($action === 'submit_solicitud') {
-            $stmtSubmit = $conn->prepare("UPDATE solicitud_empleo SET fecha_aplicacion = NOW(), link_status = 'deshabilitado' WHERE id = :id");
-            $stmtSubmit->execute([':id' => $id]);
-        }
 
         $conn->commit();
         echo json_encode(['success' => true, 'message' => 'Progreso guardado', 'porcentaje' => $porcentaje]);
