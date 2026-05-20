@@ -74,7 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     header('Content-Type: application/json');
     $inputCode = trim($_POST['code'] ?? '');
 
-    if ($inputCode === $solicitud['codigo_acceso']) {
+    if ($inputCode == $solicitud['codigo_acceso']) {
         $_SESSION['verified_token_' . $token] = true;
         echo json_encode(['success' => true]);
     } else {

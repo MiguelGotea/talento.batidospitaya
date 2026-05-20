@@ -4,6 +4,9 @@
 */
 
 $(document).ready(function () {
+    // Ocultar Loader al cargar el DOM
+    $('#loader').fadeOut('slow');
+
     let currentStep = 1;
     const totalSteps = 6;
 
@@ -172,15 +175,10 @@ $(document).ready(function () {
 
     // Limpiar flag de verificación de la URL para que el próximo refresh pida código
     if (window.location.search.includes('v=1')) {
-        const url = new URL(window.location);
+        const url = new URL(window.location.href);
         url.searchParams.delete('v');
         window.history.replaceState({}, document.title, url.pathname + url.search);
     }
-
-    // Ocultar Loader al cargar todo
-    window.onload = function () {
-        $('#loader').fadeOut('slow');
-    };
 });
 
 // Función global para verificar el código de acceso (2FA)
