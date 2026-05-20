@@ -987,19 +987,23 @@ $referencias = $stmtRef->fetchAll(PDO::FETCH_ASSOC);
                     </section>
 
                     <!-- Botonera de Navegación -->
-                    <div class="form-navigation d-flex flex-column-reverse flex-md-row justify-content-between align-items-center gap-3 mt-5">
-                        <button type="button" class="btn btn-outline-secondary btn-lg btn-nav w-100 w-md-auto" id="btnPrev" disabled>
-                            <i class="bi bi-chevron-left"></i> Anterior
-                        </button>
-                        <div class="d-flex flex-column-reverse flex-md-row w-100 w-md-auto gap-2">
-                            <button type="button" class="btn btn-outline-secondary btn-lg btn-nav w-100 w-md-auto" id="btnSaveDraft">
-                                <i class="bi bi-save"></i> Guardar Progreso
+                    <div class="form-navigation row g-2 justify-content-between align-items-center mt-5">
+                        <div class="col-4 col-md-3 text-start">
+                            <button type="button" class="btn btn-primary btn-lg btn-nav w-100" id="btnPrev" disabled>
+                                <i class="bi bi-chevron-left"></i> <span class="d-none d-md-inline">Anterior</span><span class="d-inline d-md-none">Ant.</span>
                             </button>
-                            <button type="button" class="btn btn-primary btn-lg btn-nav w-100 w-md-auto" id="btnNext">
-                                Siguiente <i class="bi bi-chevron-right"></i>
+                        </div>
+                        <div class="col-4 col-md-4 text-center">
+                            <button type="button" class="btn btn-outline-secondary btn-lg btn-nav w-100" id="btnSaveDraft">
+                                <i class="bi bi-save"></i> <span class="d-none d-md-inline">Guardar Progreso</span><span class="d-inline d-md-none">Guardar</span>
                             </button>
-                            <button type="submit" class="btn btn-success btn-lg btn-nav w-100 w-md-auto d-none" id="btnSubmit">
-                                <i class="bi bi-check-circle"></i> Finalizar Solicitud
+                        </div>
+                        <div class="col-4 col-md-3 text-end">
+                            <button type="button" class="btn btn-primary btn-lg btn-nav w-100" id="btnNext">
+                                <span class="d-none d-md-inline">Siguiente</span><span class="d-inline d-md-none">Sig.</span> <i class="bi bi-chevron-right"></i>
+                            </button>
+                            <button type="submit" class="btn btn-success btn-lg btn-nav w-100 d-none" id="btnSubmit">
+                                <i class="bi bi-check-circle"></i> <span class="d-none d-md-inline">Finalizar Solicitud</span><span class="d-inline d-md-none">Finalizar</span>
                             </button>
                         </div>
                     </div>
