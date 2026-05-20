@@ -987,7 +987,7 @@ $referencias = $stmtRef->fetchAll(PDO::FETCH_ASSOC);
                     </section>
 
                     <!-- Botonera de Navegación -->
-                    <div class="form-navigation mt-5">
+                    <div class="form-navigation d-flex justify-content-between align-items-center flex-wrap gap-3 mt-5">
                         <button type="button" class="btn btn-outline-secondary btn-lg btn-nav" id="btnPrev" disabled>
                             <i class="bi bi-chevron-left"></i> Anterior
                         </button>
