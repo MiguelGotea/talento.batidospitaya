@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- SEO Básico -->
-    <title>Empleos Batidos Pitaya Nicaragua - Vacantes 2026</title>
+    <title>Empleos Batidos Pitaya Nicaragua - Vacantes</title>
     <meta name="description"
         content="Encuentra empleo en Batidos Pitaya. Vacantes en Managua, Granada, Masaya. Únete a nuestro equipo de energía natural y experiencia WOW.">
     <meta name="keywords"
@@ -19,7 +19,10 @@
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-BEJV259C10"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
         gtag('js', new Date());
         gtag('config', 'G-BEJV259C10');
     </script>
@@ -301,14 +304,14 @@
 
     <!-- Schema.org JobPosting (se generará dinámicamente) -->
     <script type="application/ld+json" id="schemaJobPostings">
-    {
-        "@context": "https://schema.org/",
-        "@type": "Organization",
-        "name": "Batidos Pitaya",
-        "url": "https://batidospitaya.com",
-        "logo": "https://talento.batidospitaya.com/assets/img/logo.png",
-        "description": "Disfrutá los mejores batidos de pura fruta. Energía natural, hábitos positivos y experiencia WOW."
-    }
+        {
+            "@context": "https://schema.org/",
+            "@type": "Organization",
+            "name": "Batidos Pitaya",
+            "url": "https://batidospitaya.com",
+            "logo": "https://talento.batidospitaya.com/assets/img/logo.png",
+            "description": "Disfrutá los mejores batidos de pura fruta. Energía natural, hábitos positivos y experiencia WOW."
+        }
     </script>
 
 </body>
