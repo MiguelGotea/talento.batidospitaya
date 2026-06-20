@@ -115,7 +115,7 @@
                 <p class="mb-2">¿Necesitas ayuda?</p>
                 <p class="mb-0">
                     <i class="bi bi-envelope"></i> seleccion@batidospitaya.com |
-                    <i class="bi bi-telephone"></i> +505 8409 2477
+                    <i class="bi bi-telephone"></i> +505 8590 8544
                 </p>
             </div>
         </div>
