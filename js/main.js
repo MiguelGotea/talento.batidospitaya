@@ -27,6 +27,7 @@ $(document).ready(function () {
     cargarPlazas();
     inicializarEventos();
     inicializarQuickLinks();
+    inicializarNavegacionTabs(); // Inicializa la navegación por pestañas de la página principal
 });
 
 /**
@@ -79,6 +80,23 @@ function inicializarEventos() {
         // Redirigir a formulario de postulación
         window.location.href = `postular.php?plaza=${plazaId}&cargo=${cargoId}&sucursal=${sucursalId}`;
     });
+
+    // ── Botón flotante "Aplicar" ──
+    // Cambia la pestaña a "Únete al Equipo" y hace scroll suave hasta las vacantes
+    $('#btn-apply-float').on('click', function () {
+        // Activamos el tab directamente con trigger para evitar problemas de scope
+        $('#btn-tab-unete').trigger('click');
+
+        // Scroll suave hasta la sección de vacantes (leve delay para que el tab ya esté visible)
+        setTimeout(() => {
+            const target = $('.vacantes-section');
+            if (target.length) {
+                $('html, body').animate({
+                    scrollTop: target.offset().top - 100
+                }, 550);
+            }
+        }, 350);
+    });
 }
 
 /**
@@ -105,6 +123,188 @@ function inicializarQuickLinks() {
         $('html, body').animate({
             scrollTop: $('.vacantes-section').offset().top - 100
         }, 500);
+    });
+}
+
+/**
+ * Inicializar la navegación por pestañas (Sobre Nosotros / Únete al Equipo)
+ * Proporciona transiciones fluidas de opacidad y desplazamiento vertical
+ */
+function inicializarNavegacionTabs() {
+    const btnUnete = $('#btn-tab-unete');
+    const btnNosotros = $('#btn-tab-nosotros');
+    const sectionUnete = $('#section-unete-equipo');
+    const sectionNosotros = $('#section-sobre-nosotros');
+
+    function cambiarPestaña(target) {
+        if (target === 'unete') {
+            btnNosotros.removeClass('active');
+            btnUnete.addClass('active');
+
+            // Ocultar sección Sobre Nosotros con animación (fade-out)
+            sectionNosotros.removeClass('active-tab');
+            setTimeout(() => {
+                sectionNosotros.hide();
+                sectionUnete.show();
+                // Forzar reflujo para que el navegador reconozca el cambio de display
+                sectionUnete[0].offsetHeight;
+                sectionUnete.addClass('active-tab'); // Inicia fade-in
+            }, 300);
+        } else if (target === 'nosotros') {
+            btnUnete.removeClass('active');
+            btnNosotros.addClass('active');
+
+            // Ocultar sección Únete al Equipo con animación (fade-out)
+            sectionUnete.removeClass('active-tab');
+            setTimeout(() => {
+                sectionUnete.hide();
+                sectionNosotros.show();
+                // Forzar reflujo para que el navegador reconozca el cambio de display
+                sectionNosotros[0].offsetHeight;
+                sectionNosotros.addClass('active-tab'); // Inicia fade-in
+
+                // Reiniciar y re-observar los contadores cada vez que se muestre esta pestaña
+                resetearContadoresCorporativos();
+                observarContadoresCorporativos();
+            }, 300);
+        }
+    }
+
+    btnUnete.on('click', function () {
+        cambiarPestaña('unete');
+    });
+
+    btnNosotros.on('click', function () {
+        cambiarPestaña('nosotros');
+    });
+
+    // ── Carga diferida del SVG grupal ──
+    // La imagen de 14MB solo se descarga cuando el usuario abre "Sobre Nosotros"
+    let svgYaCargado = false;
+
+    function cargarSVGGrupal() {
+        if (svgYaCargado) return;
+        svgYaCargado = true;
+
+        const $img      = $('#grupo-svg');
+        const $skeleton = $('#grupo-svg-skeleton');
+        const $badge    = $('#grupo-svg-badge');
+        const dataSrc   = $img.data('src');
+
+        if (!dataSrc) return;
+
+        // Cuando la imagen termine de cargar: ocultar skeleton, mostrar imagen + badge
+        $img.on('load', function () {
+            $skeleton.fadeOut(300, function () { $(this).hide(); });
+            $img.css('opacity', 0).show().animate({ opacity: 1 }, 500);
+            $badge.delay(200).fadeIn(400);
+        });
+
+        // Disparar la descarga asignando src
+        $img.attr('src', dataSrc);
+    }
+
+    // Prefetch: si el usuario pasa el cursor por el tab "Sobre Nosotros",
+    // empezamos a descargar en segundo plano antes de que haga clic
+    btnNosotros.on('mouseenter touchstart', function () {
+        if (!svgYaCargado) {
+            // Usamos un link de prefetch dinámico para no bloquear el hilo principal
+            const link = document.createElement('link');
+            link.rel  = 'prefetch';
+            link.href = 'assets/img/grupo_pitaya.svg';
+            document.head.appendChild(link);
+        }
+    });
+
+    // Cargar la imagen cuando se abre la pestaña por primera vez
+    // (La función cambiarPestaña ya llama a observarContadoresCorporativos al final del timeout;
+    //  cargarSVGGrupal se llama aquí de forma independiente para mejor control)
+    btnNosotros.on('click', function () {
+        cargarSVGGrupal();
+    });
+}
+
+/**
+ * Configura un IntersectionObserver para vigilar la sección de estadísticas
+ * y disparar la animación de los números solo cuando estén visibles en pantalla.
+ * Se puede llamar múltiples veces (se limpia el observer previo antes de crear uno nuevo).
+ * Compatible con cualquier resolución y dispositivo (móviles, tabletas, iOS, etc.).
+ */
+let statsObserver = null;
+
+function observarContadoresCorporativos() {
+    const statsSection = document.querySelector('.corp-stats-grid');
+    if (!statsSection) return;
+
+    // Crear el observador
+    statsObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            // entry.isIntersecting es true cuando el elemento entra al viewport
+            if (entry.isIntersecting) {
+                animarContadoresCorporativos();
+                
+                // Dejamos de observar una vez disparada la animación en esta visita
+                if (statsObserver) {
+                    statsObserver.unobserve(statsSection);
+                    statsObserver = null;
+                }
+            }
+        });
+    }, {
+        threshold: 0.15 // Dispara cuando al menos el 15% del elemento es visible en pantalla
+    });
+
+    statsObserver.observe(statsSection);
+}
+
+/**
+ * Resetea los contadores al valor inicial (0) y limpia el observer previo.
+ * Se llama cada vez que el usuario cambia a la pestaña "Sobre Nosotros".
+ */
+function resetearContadoresCorporativos() {
+    // Cancelar observer previo si existe
+    if (statsObserver) {
+        statsObserver.disconnect();
+        statsObserver = null;
+    }
+
+    // Devolver cada contador a su valor inicial (0 + sufijo)
+    $('.corp-stat-number[data-target]').each(function () {
+        const sufijo = $(this).data('suffix') || '';
+        $(this).text('0' + sufijo);
+    });
+}
+
+/**
+ * Anima los contadores de estadísticas corporativas en la sección "Sobre Nosotros".
+ * Lee data-target (número final) y data-suffix (ej: +, %) de cada elemento.
+ * Puede llamarse múltiples veces — el reset previo (resetearContadoresCorporativos) garantiza
+ * que siempre parte de 0.
+ */
+function animarContadoresCorporativos() {
+    const duracion = 1800;  // Duración total de la animación en milisegundos
+    const pasos = 50;       // Cantidad de pasos / frames de la animación
+    const intervaloMs = duracion / pasos;
+
+    // Recorre cada elemento con la clase corp-stat-number que tenga data-target
+    $('.corp-stat-number[data-target]').each(function () {
+        const $el = $(this);
+        const valorFinal = parseInt($el.data('target'), 10);
+        const sufijo = $el.data('suffix') || ''; // Ej: '+', '%', o '' (vacío)
+        let valorActual = 0;
+        const incremento = valorFinal / pasos;
+
+        // Limpia cualquier intervalo previo en este elemento
+        const intervalo = setInterval(function () {
+            valorActual += incremento;
+            if (valorActual >= valorFinal) {
+                // Llega al número exacto y detiene la animación
+                $el.text(valorFinal + sufijo);
+                clearInterval(intervalo);
+            } else {
+                $el.text(Math.floor(valorActual) + sufijo);
+            }
+        }, intervaloMs);
     });
 }
 
@@ -450,7 +650,7 @@ $(document).ready(function () {
     const whatsappButton = $('#whatsappButton');
     const whatsappPopup = $('#whatsappPopup');
     const sendWhatsapp = $('#sendWhatsapp');
-    const whatsappNumber = '50584092477'; // Número de reclutamiento
+    const whatsappNumber = '50585908544'; // Número de reclutamiento actualizado
 
     // Toggle popup
     whatsappButton.on('click', function (e) {
