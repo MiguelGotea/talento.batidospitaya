@@ -650,7 +650,7 @@ $(document).ready(function () {
     const whatsappButton = $('#whatsappButton');
     const whatsappPopup = $('#whatsappPopup');
     const sendWhatsapp = $('#sendWhatsapp');
-    const whatsappNumber = '50585908544'; // Número de reclutamiento actualizado
+    const whatsappNumber = '50588520629'; // Número de reclutamiento actualizado
 
     // Toggle popup
     whatsappButton.on('click', function (e) {
