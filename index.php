@@ -265,49 +265,45 @@
                         <h2 class="nosotros-title-main">Batidos Pitaya Nicaragua</h2>
                         
                         <p class="nosotros-paragraph">
-                            Somos la marca líder de batidos 100% de pura fruta en Nicaragua, dedicados a ofrecer una alternativa saludable, deliciosa y llena de vitalidad. Desde nuestros inicios, nuestro propósito ha sido claro: <strong>impulsar la energía natural, fomentar hábitos de vida saludables y positivos, y brindar una experiencia WOW</strong> a cada persona que visita nuestras sucursales.
+                            En Batidos Pitaya creemos que llevar un estilo de vida saludable puede ser sencillo y delicioso. Elaboramos batidos de pura fruta e ingredientes naturales para acompañar a las personas con opciones prácticas, frescas y llenas de energía.
                         </p>
                         
                         <p class="nosotros-paragraph">
-                            Nos sentimos orgullosos de contar con una amplia presencia a nivel nacional en las ciudades de Managua, Granada, Masaya, León, Estelí, Matagalpa y Rivas. En cada uno de nuestros puntos de venta, nuestro equipo se compromete a elaborar bebidas frescas de calidad insuperable con un estándar de servicio excepcional.
+                            Nos mueve el compromiso de crear experiencias memorables, actuando con integridad, innovación y un fuerte espíritu de trabajo en equipo. Cada interacción es una oportunidad para sorprender y generar un impacto positivo.
+                        </p>
+
+                        <p class="nosotros-paragraph">
+                            Hoy seguimos creciendo con una visión clara: convertirnos en el referente de batidos de pura fruta en Centroamérica, impulsados por el talento de nuestra gente y la pasión por hacer las cosas bien.
                         </p>
                     </div>
 
                     <!-- Columna Derecha: Valores Corporativos -->
                     <div class="nosotros-col-valores">
-                        <h3 class="valores-title">Nuestros Valores</h3>
+                        <h3 class="valores-title">Valores Modulares</h3>
                         <div class="valores-grid">
                             <!-- Valor 1 -->
                             <div class="valor-card">
                                 <div class="valor-header">
-                                    <span class="valor-icon"><i class="bi bi-lightning-charge-fill"></i></span>
-                                    <h4 class="valor-title-name">Energía Positiva</h4>
+                                    <span class="valor-icon"><i class="bi bi-stars"></i></span>
+                                    <h4 class="valor-title-name">Factor WOW</h4>
                                 </div>
-                                <p class="valor-desc">Transmitimos vitalidad, alegría y actitud positiva en todo lo que hacemos.</p>
+                                <p class="valor-desc">En cada interacción, superando expectativas y creando momentos memorables.</p>
                             </div>
                             <!-- Valor 2 -->
                             <div class="valor-card">
                                 <div class="valor-header">
-                                    <span class="valor-icon"><i class="bi bi-heart-pulse-fill"></i></span>
-                                    <h4 class="valor-title-name">Hábitos Saludables</h4>
+                                    <span class="valor-icon"><i class="bi bi-shield-check"></i></span>
+                                    <h4 class="valor-title-name">Integridad</h4>
                                 </div>
-                                <p class="valor-desc">Promovemos un estilo de vida activo y balanceado mediante nutrición real.</p>
+                                <p class="valor-desc">En cada acción, guiados por la honestidad, la transparencia y la coherencia.</p>
                             </div>
                             <!-- Valor 3 -->
                             <div class="valor-card">
                                 <div class="valor-header">
-                                    <span class="valor-icon"><i class="bi bi-emoji-laughing-fill"></i></span>
-                                    <h4 class="valor-title-name">Experiencia WOW</h4>
+                                    <span class="valor-icon"><i class="bi bi-people-fill"></i></span>
+                                    <h4 class="valor-title-name">Todos Ganamos</h4>
                                 </div>
-                                <p class="valor-desc">Superamos las expectativas de nuestros clientes con un servicio y atención memorables.</p>
-                            </div>
-                            <!-- Valor 4 -->
-                            <div class="valor-card">
-                                <div class="valor-header">
-                                    <span class="valor-icon"><i class="bi bi-award-fill"></i></span>
-                                    <h4 class="valor-title-name">Calidad y Frescura</h4>
-                                </div>
-                                <p class="valor-desc">Utilizamos frutas nacionales de la más alta calidad, cosechadas con esmero.</p>
+                                <p class="valor-desc">Sumando esfuerzos para que el crecimiento y el éxito sean de todos.</p>
                             </div>
                         </div>
                     </div>

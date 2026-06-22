@@ -1150,6 +1150,13 @@ body {
   gap: var(--espaciado-sm);
 }
 
+@media (min-width: 577px) {
+  .valores-grid .valor-card:last-child {
+    grid-column: span 2;
+  }
+}
+
+
 .valor-card {
   background: var(--color-fondo);
   padding: var(--espaciado-sm);
