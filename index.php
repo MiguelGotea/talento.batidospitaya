@@ -247,10 +247,10 @@
                         <div class="nosotros-group-skeleton" id="grupo-svg-skeleton"></div>
                         <!-- data-src: la imagen NO se descarga hasta que el JS la active -->
                         <img id="grupo-svg"
-                             data-src="assets/img/grupo_pitaya.svg"
-                             alt="Líderes de Tienda Batidos Pitaya"
-                             class="nosotros-group-svg"
-                             style="display:none;">
+                            data-src="assets/img/grupo_pitaya.svg"
+                            alt="Líderes de Tienda Batidos Pitaya"
+                            class="nosotros-group-svg"
+                            style="display:none;">
                         <div class="nosotros-group-badge" id="grupo-svg-badge" style="display:none;">
                             <i class="bi bi-stars"></i>
                             <span>Líderes que hacen posible la Experiencia WOW</span>
@@ -263,11 +263,11 @@
                     <div class="nosotros-col-text">
                         <span class="nosotros-subtitle-brand">¿Quiénes Somos?</span>
                         <h2 class="nosotros-title-main">Batidos Pitaya Nicaragua</h2>
-                        
+
                         <p class="nosotros-paragraph">
                             En Batidos Pitaya creemos que llevar un estilo de vida saludable puede ser sencillo y delicioso. Elaboramos batidos de pura fruta e ingredientes naturales para acompañar a las personas con opciones prácticas, frescas y llenas de energía.
                         </p>
-                        
+
                         <p class="nosotros-paragraph">
                             Nos mueve el compromiso de crear experiencias memorables, actuando con integridad, innovación y un fuerte espíritu de trabajo en equipo. Cada interacción es una oportunidad para sorprender y generar un impacto positivo.
                         </p>
@@ -308,7 +308,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <!-- Estadísticas de Impacto (Indicadores Destacados) -->
                 <!-- data-target: número final | data-suffix: símbolo que se agrega al final (ej: +, %) -->
                 <div class="corp-stats-grid">
