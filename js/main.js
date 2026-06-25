@@ -24,10 +24,34 @@ let filtros = {
 
 // ==================== Inicialización ====================
 $(document).ready(function () {
-    cargarPlazas();
+    // Cargar plazas si estamos en la página de vacantes (index.php)
+    if ($('#section-unete-equipo').length) {
+        cargarPlazas();
+    }
+    
     inicializarEventos();
     inicializarQuickLinks();
-    inicializarNavegacionTabs(); // Inicializa la navegación por pestañas de la página principal
+    
+    // Cargar SVG y contadores si estamos en Sobre Nosotros (nosotros.php)
+    if ($('#section-sobre-nosotros').length) {
+        cargarSVGGrupal();
+        observarContadoresCorporativos();
+    }
+
+    // Inicializar comportamiento de menú hamburguesa móvil
+    inicializarMenuMovil();
+
+    // Scroll suave a vacantes si viene un hash en la URL
+    if (window.location.hash === '#vacantes') {
+        setTimeout(() => {
+            const target = $('#vacantes');
+            if (target.length) {
+                $('html, body').animate({
+                    scrollTop: target.offset().top - 100
+                }, 600);
+            }
+        }, 400);
+    }
 });
 
 /**
@@ -80,23 +104,6 @@ function inicializarEventos() {
         // Redirigir a formulario de postulación
         window.location.href = `postular.php?plaza=${plazaId}&cargo=${cargoId}&sucursal=${sucursalId}`;
     });
-
-    // ── Botón flotante "Aplicar" ──
-    // Cambia la pestaña a "Únete al Equipo" y hace scroll suave hasta las vacantes
-    $('#btn-apply-float').on('click', function () {
-        // Activamos el tab directamente con trigger para evitar problemas de scope
-        $('#btn-tab-unete').trigger('click');
-
-        // Scroll suave hasta la sección de vacantes (leve delay para que el tab ya esté visible)
-        setTimeout(() => {
-            const target = $('.vacantes-section');
-            if (target.length) {
-                $('html, body').animate({
-                    scrollTop: target.offset().top - 100
-                }, 550);
-            }
-        }, 350);
-    });
 }
 
 /**
@@ -127,101 +134,51 @@ function inicializarQuickLinks() {
 }
 
 /**
- * Inicializar la navegación por pestañas (Sobre Nosotros / Únete al Equipo)
- * Proporciona transiciones fluidas de opacidad y desplazamiento vertical
+ * Inicializar menú móvil toggle (hamburguesa)
  */
-function inicializarNavegacionTabs() {
-    const btnUnete = $('#btn-tab-unete');
-    const btnNosotros = $('#btn-tab-nosotros');
-    const sectionUnete = $('#section-unete-equipo');
-    const sectionNosotros = $('#section-sobre-nosotros');
+function inicializarMenuMovil() {
+    const toggleBtn = $('#navbarToggleBtn');
+    const tabsWrapper = $('#navbarTabsWrapper');
 
-    function cambiarPestaña(target) {
-        if (target === 'unete') {
-            btnNosotros.removeClass('active');
-            btnUnete.addClass('active');
-
-            // Ocultar sección Sobre Nosotros con animación (fade-out)
-            sectionNosotros.removeClass('active-tab');
-            setTimeout(() => {
-                sectionNosotros.hide();
-                sectionUnete.show();
-                // Forzar reflujo para que el navegador reconozca el cambio de display
-                sectionUnete[0].offsetHeight;
-                sectionUnete.addClass('active-tab'); // Inicia fade-in
-            }, 300);
-        } else if (target === 'nosotros') {
-            btnUnete.removeClass('active');
-            btnNosotros.addClass('active');
-
-            // Ocultar sección Únete al Equipo con animación (fade-out)
-            sectionUnete.removeClass('active-tab');
-            setTimeout(() => {
-                sectionUnete.hide();
-                sectionNosotros.show();
-                // Forzar reflujo para que el navegador reconozca el cambio de display
-                sectionNosotros[0].offsetHeight;
-                sectionNosotros.addClass('active-tab'); // Inicia fade-in
-
-                // Reiniciar y re-observar los contadores cada vez que se muestre esta pestaña
-                resetearContadoresCorporativos();
-                observarContadoresCorporativos();
-            }, 300);
-        }
-    }
-
-    btnUnete.on('click', function () {
-        cambiarPestaña('unete');
+    toggleBtn.on('click', function (e) {
+        e.stopPropagation();
+        tabsWrapper.toggleClass('menu-fixed');
     });
 
-    btnNosotros.on('click', function () {
-        cambiarPestaña('nosotros');
-    });
-
-    // ── Carga diferida del SVG grupal ──
-    // La imagen de 14MB solo se descarga cuando el usuario abre "Sobre Nosotros"
-    let svgYaCargado = false;
-
-    function cargarSVGGrupal() {
-        if (svgYaCargado) return;
-        svgYaCargado = true;
-
-        const $img      = $('#grupo-svg');
-        const $skeleton = $('#grupo-svg-skeleton');
-        const $badge    = $('#grupo-svg-badge');
-        const dataSrc   = $img.data('src');
-
-        if (!dataSrc) return;
-
-        // Cuando la imagen termine de cargar: ocultar skeleton, mostrar imagen + badge
-        $img.on('load', function () {
-            $skeleton.fadeOut(300, function () { $(this).hide(); });
-            $img.css('opacity', 0).show().animate({ opacity: 1 }, 500);
-            $badge.delay(200).fadeIn(400);
-        });
-
-        // Disparar la descarga asignando src
-        $img.attr('src', dataSrc);
-    }
-
-    // Prefetch: si el usuario pasa el cursor por el tab "Sobre Nosotros",
-    // empezamos a descargar en segundo plano antes de que haga clic
-    btnNosotros.on('mouseenter touchstart', function () {
-        if (!svgYaCargado) {
-            // Usamos un link de prefetch dinámico para no bloquear el hilo principal
-            const link = document.createElement('link');
-            link.rel  = 'prefetch';
-            link.href = 'assets/img/grupo_pitaya.svg';
-            document.head.appendChild(link);
+    $(document).on('click', function (e) {
+        if (!$(e.target).closest('.navbar-menu-container').length) {
+            tabsWrapper.removeClass('menu-fixed');
         }
     });
 
-    // Cargar la imagen cuando se abre la pestaña por primera vez
-    // (La función cambiarPestaña ya llama a observarContadoresCorporativos al final del timeout;
-    //  cargarSVGGrupal se llama aquí de forma independiente para mejor control)
-    btnNosotros.on('click', function () {
-        cargarSVGGrupal();
+    $(document).on('keydown', function (e) {
+        if (e.key === 'Escape') {
+            tabsWrapper.removeClass('menu-fixed');
+        }
     });
+}
+
+// ── Carga diferida del SVG grupal ──
+let svgYaCargado = false;
+
+function cargarSVGGrupal() {
+    if (svgYaCargado) return;
+    svgYaCargado = true;
+
+    const $img      = $('#grupo-svg');
+    const $skeleton = $('#grupo-svg-skeleton');
+    const $badge    = $('#grupo-svg-badge');
+    const dataSrc   = $img.data('src');
+
+    if (!dataSrc) return;
+
+    $img.on('load', function () {
+        $skeleton.fadeOut(300, function () { $(this).hide(); });
+        $img.css('opacity', 0).show().animate({ opacity: 1 }, 500);
+        $badge.delay(200).fadeIn(400);
+    });
+
+    $img.attr('src', dataSrc);
 }
 
 /**
@@ -764,18 +721,7 @@ function formatearFecha(fecha) {
 }
 
 function obtenerIconoCategoria(categoria) {
-    const iconos = {
-        'Tecnología': 'laptop',
-        'Administración': 'briefcase',
-        'Ventas': 'cart',
-        'Producción': 'gear',
-        'Marketing': 'megaphone',
-        'Recursos Humanos': 'people',
-        'Finanzas': 'cash-stack',
-        'Operaciones': 'diagram-3',
-        'Otros': 'patch-question'
-    };
-    return iconos[categoria] || 'circle';
+    return 'geo-alt';
 }
 
 function obtenerIconoUrgencia(nivel) {

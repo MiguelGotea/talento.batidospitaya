@@ -11,22 +11,42 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 ?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
 
-    <!-- Página principal -->
+    <!-- Página principal de Empleo -->
     <url>
-        <loc>https://batidospitaya.com/</loc>
-        <lastmod>
-            <?php echo date('Y-m-d'); ?>
-        </lastmod>
+        <loc>https://talento.batidospitaya.com/</loc>
+        <lastmod><?php echo date('Y-m-d'); ?></lastmod>
         <changefreq>daily</changefreq>
         <priority>1.0</priority>
+    </url>
+
+    <!-- Sobre Nosotros -->
+    <url>
+        <loc>https://talento.batidospitaya.com/nosotros.php</loc>
+        <lastmod><?php echo date('Y-m-d'); ?></lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <!-- Nuestro Equipo -->
+    <url>
+        <loc>https://talento.batidospitaya.com/equipo.php</loc>
+        <lastmod><?php echo date('Y-m-d'); ?></lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <!-- Noticias -->
+    <url>
+        <loc>https://talento.batidospitaya.com/noticias.php</loc>
+        <lastmod><?php echo date('Y-m-d'); ?></lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
     </url>
 
     <!-- Página de postulación -->
     <url>
         <loc>https://talento.batidospitaya.com/postular.php</loc>
-        <lastmod>
-            <?php echo date('Y-m-d'); ?>
-        </lastmod>
+        <lastmod><?php echo date('Y-m-d'); ?></lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
@@ -45,17 +65,13 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 
     $result = $conn->query($sql);
 
-    while ($row = $result->fetch_assoc()) {
+    while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
         $lastmod = $row['fecha_actualizacion'] ?? $row['fecha_creacion'];
         $lastmodFormatted = date('Y-m-d', strtotime($lastmod));
         ?>
         <url>
-            <loc>https://talento.batidospitaya.com/?plaza=
-                <?php echo $row['id']; ?>
-            </loc>
-            <lastmod>
-                <?php echo $lastmodFormatted; ?>
-            </lastmod>
+            <loc>https://talento.batidospitaya.com/?plaza=<?php echo $row['id']; ?></loc>
+            <lastmod><?php echo $lastmodFormatted; ?></lastmod>
             <changefreq>weekly</changefreq>
             <priority>0.7</priority>
         </url>
