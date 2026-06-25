@@ -944,7 +944,7 @@ $referencias = $stmtRef->fetchAll(PDO::FETCH_ASSOC);
                                         accept=".pdf,.jpg,.jpeg,.png">
                                 </div>
                                 <div class="col-md-6">
-                                    <label class="form-label fw-semibold">Record Policial (Ley 510)</label>
+                                    <label class="form-label fw-semibold">Record Laboral</label>
                                     <?php if (!empty($solicitud['adjunto_record_ley510'])): ?>
                                         <div class="alert alert-success py-2 small mb-2"><i
                                                 class="bi bi-check-circle me-1"></i>Archivo ya subido. <a

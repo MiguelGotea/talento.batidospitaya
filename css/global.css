@@ -963,6 +963,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: relative;
 }
 
 .navbar-brand-img {
@@ -975,36 +976,190 @@ body {
   transform: scale(1.05);
 }
 
-.navbar-nav-tabs {
+/* HEADER REESTRUCTURADO Y RESPONSIVO */
+.navbar-menu-container {
   display: flex;
-  gap: var(--espaciado-sm);
   align-items: center;
+  gap: var(--espaciado-sm);
 }
 
+.navbar-nav-tabs-wrapper {
+  display: block;
+}
+
+/* Pestañas en fila en escritorio */
+.navbar-nav-tabs {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Ocultar el botón hamburguesa por defecto en escritorio */
+.navbar-toggle-btn {
+  display: none;
+}
+
+.btn-aplicar-header {
+  background: var(--color-principal);
+  color: #fff;
+  border: none;
+  font-weight: 700;
+  font-size: 0.9rem;
+  padding: 0.55rem 1.25rem;
+  border-radius: 50px;
+  text-decoration: none !important;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(81, 184, 172, 0.2);
+}
+
+.btn-aplicar-header:hover {
+  background-color: var(--color-principal-hover);
+  color: #fff;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 14px rgba(14, 84, 76, 0.25);
+}
+
+.btn-aplicar-header:active {
+  transform: scale(0.97);
+}
+
+/* Efectos estilo hover animado para las pestañas */
 .nav-tab-btn {
+  position: relative;
   background: transparent;
   border: none;
-  color: rgba(255, 255, 255, 0.85);
+  color: rgba(255, 255, 255, 0.8) !important;
   font-size: 0.95rem;
   font-weight: 600;
   padding: 0.6rem 1.2rem;
   border-radius: 30px;
   cursor: pointer;
-  transition: all 0.3s ease;
+  text-decoration: none !important;
+  transition: color 0.3s ease;
+  z-index: 1;
   display: flex;
   align-items: center;
   gap: 0.5rem;
 }
 
+.nav-tab-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.12);
+  border-radius: 30px;
+  transform: scale(0.8);
+  opacity: 0;
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
+  z-index: -1;
+}
+
 .nav-tab-btn:hover {
-  color: var(--color-blanco);
-  background-color: rgba(255, 255, 255, 0.1);
+  color: #fff !important;
+}
+
+.nav-tab-btn:hover::before {
+  transform: scale(1);
+  opacity: 1;
 }
 
 .nav-tab-btn.active {
-  color: var(--color-header);
+  color: var(--color-header) !important;
   background-color: var(--color-blanco);
-  box-shadow: var(--sombra-sm);
+  box-shadow: var(--sombra-md);
+  transform: scale(1.02);
+}
+
+.nav-tab-btn.active::before {
+  display: none;
+}
+
+/* Centrado de pestañas absoluto en pantallas de escritorio */
+@media (min-width: 992px) {
+  .navbar-nav-tabs-wrapper {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+/* Responsividad para pantallas móviles y tablets */
+@media (max-width: 991px) {
+  .navbar-toggle-btn {
+    display: inline-flex;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    color: white;
+    font-size: 1.5rem;
+    padding: 4px 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .navbar-toggle-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: white;
+  }
+
+  .navbar-nav-tabs-wrapper {
+    position: absolute;
+    top: 100%;
+    right: 15px;
+    background-color: var(--color-header);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 12px;
+    padding: 10px;
+    min-width: 210px;
+    box-shadow: var(--sombra-lg);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 1001;
+  }
+
+  /* Desplegado por hover sobre el contenedor o clase menu-fixed */
+  .navbar-menu-container:hover .navbar-nav-tabs-wrapper,
+  .navbar-nav-tabs-wrapper.menu-fixed {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  .navbar-nav-tabs {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 6px;
+    padding: 0;
+  }
+
+  .nav-tab-btn {
+    width: 100%;
+    justify-content: flex-start;
+    border-radius: 8px;
+    padding: 0.6rem 1rem;
+  }
+
+  .nav-tab-btn::before {
+    border-radius: 8px;
+  }
+
+  .nav-tab-btn.active {
+    transform: none;
+    border-radius: 8px;
+  }
 }
 
 /* ==================== Transición de Pestañas ==================== */
@@ -1377,4 +1532,239 @@ body {
     padding: 0 16px;
     font-size: 0.85rem;
   }
+}
+
+/* Ocultar botones flotantes obsoletos */
+.whatsapp-float,
+.apply-float {
+  display: none !important;
+}
+
+/* ==================== DISEÑO PROPÓSITO ==================== */
+.proposito-container {
+  margin-top: 2rem;
+}
+
+.proposito-card {
+  background: linear-gradient(135deg, rgba(81, 184, 172, 0.04) 0%, rgba(14, 84, 76, 0.04) 100%);
+  border: 1px solid rgba(81, 184, 172, 0.12);
+  border-left: 5px solid var(--color-principal);
+  padding: var(--espaciado-md);
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+.proposito-card:hover {
+  transform: translateY(-3px);
+  background: linear-gradient(135deg, rgba(81, 184, 172, 0.07) 0%, rgba(14, 84, 76, 0.07) 100%);
+  border-left-color: var(--color-header);
+  box-shadow: var(--sombra-md);
+}
+
+.proposito-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 0.75rem;
+}
+
+.proposito-icon {
+  font-size: 1.5rem;
+  color: var(--color-principal);
+  display: flex;
+  align-items: center;
+}
+
+.proposito-title-name {
+  font-weight: 700;
+  color: var(--color-header);
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.proposito-desc {
+  font-size: 0.95rem;
+  color: var(--color-texto-secundario);
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* ==================== SECCIÓN EQUIPO ==================== */
+.equipo-section {
+  background-color: var(--color-fondo);
+  padding: 4rem 0;
+}
+
+.section-title-custom {
+  font-size: clamp(2rem, 3.5vw, 2.5rem);
+  font-weight: 700;
+  color: var(--color-header);
+  margin-bottom: 1rem;
+}
+
+.section-desc-custom {
+  font-size: 1.1rem;
+  color: var(--color-texto-secundario);
+  max-width: 700px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+.equipo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: var(--espaciado-lg);
+  margin-top: 3rem;
+}
+
+.equipo-card {
+  background: var(--color-blanco);
+  border-radius: 16px;
+  padding: var(--espaciado-lg) var(--espaciado-md);
+  box-shadow: var(--sombra-sm);
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid rgba(0, 0, 0, 0.03);
+}
+
+.equipo-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: var(--sombra-lg);
+  border-color: rgba(81, 184, 172, 0.2);
+}
+
+.equipo-card-inner {
+  text-align: center;
+}
+
+.equipo-icon-wrapper {
+  width: 65px;
+  height: 65px;
+  background-color: rgba(81, 184, 172, 0.1);
+  color: var(--color-principal);
+  font-size: 1.75rem;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: var(--espaciado-md);
+  transition: all 0.3s ease;
+}
+
+.equipo-card:hover .equipo-icon-wrapper {
+  background-color: var(--color-principal);
+  color: var(--color-blanco);
+  transform: rotate(360deg);
+}
+
+.equipo-card-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-header);
+  margin-bottom: 0.75rem;
+}
+
+.equipo-card-desc {
+  font-size: 0.95rem;
+  color: var(--color-texto-secundario);
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* ==================== SECCIÓN NOTICIAS ==================== */
+.noticias-section {
+  background-color: var(--color-fondo);
+  padding: 4rem 0;
+}
+
+.noticias-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+  gap: var(--espaciado-lg);
+  margin-top: 3rem;
+}
+
+.noticia-card {
+  background: var(--color-blanco);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: var(--sombra-sm);
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid rgba(0, 0, 0, 0.03);
+  display: flex;
+  flex-direction: column;
+}
+
+.noticia-card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--sombra-lg);
+  border-color: rgba(81, 184, 172, 0.2);
+}
+
+.noticia-img-placeholder {
+  position: relative;
+  height: 200px;
+  overflow: hidden;
+}
+
+.noticia-img-gradient {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 3.5rem;
+  transition: transform 0.5s ease;
+}
+
+.noticia-card:hover .noticia-img-gradient {
+  transform: scale(1.1);
+}
+
+.noticia-badge {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  padding: 6px 14px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  border-radius: 50px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.noticia-content {
+  padding: var(--espaciado-md);
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.noticia-date {
+  font-size: 0.85rem;
+  color: var(--color-texto-secundario);
+  margin-bottom: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.noticia-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-header);
+  margin-bottom: 0.75rem;
+  line-height: 1.4;
+  transition: color 0.3s ease;
+}
+
+.noticia-card:hover .noticia-title {
+  color: var(--color-principal);
+}
+
+.noticia-excerpt {
+  font-size: 0.95rem;
+  color: var(--color-texto-secundario);
+  line-height: 1.6;
+  margin: 0;
 }

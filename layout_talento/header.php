@@ -1,0 +1,104 @@
+<?php
+// layout_talento/header.php
+// Plantilla de cabecera compartida para el portal de Talento de Batidos Pitaya
+?>
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- SEO Dinámico -->
+    <title><?php echo isset($page_title) ? htmlspecialchars($page_title) : 'Empleos Batidos Pitaya Nicaragua - Vacantes'; ?></title>
+    <meta name="description" content="<?php echo isset($page_description) ? htmlspecialchars($page_description) : 'Encuentra empleo en Batidos Pitaya. Únete a nuestro equipo de energía natural y experiencia WOW.'; ?>">
+    <meta name="keywords" content="<?php echo isset($page_keywords) ? htmlspecialchars($page_keywords) : 'empleo batidos pitaya, trabajo batidos pitaya nicaragua, vacantes batidos pitaya'; ?>">
+    <meta name="author" content="Batidos Pitaya">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://talento.batidospitaya.com/<?php echo isset($page_canonical) ? htmlspecialchars($page_canonical) : ''; ?>">
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-BEJV259C10"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+        gtag('config', 'G-BEJV259C10');
+    </script>
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="<?php echo isset($page_title) ? htmlspecialchars($page_title) : 'Trabaja en Batidos Pitaya'; ?>">
+    <meta property="og:description" content="<?php echo isset($page_description) ? htmlspecialchars($page_description) : 'Impulsando energía natural, hábitos positivos y experiencia WOW.'; ?>">
+    <meta property="og:image" content="https://talento.batidospitaya.com/assets/img/og-image.jpg">
+    <meta property="og:url" content="https://talento.batidospitaya.com/<?php echo isset($page_canonical) ? htmlspecialchars($page_canonical) : ''; ?>">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Batidos Pitaya - Portal de Empleo">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="<?php echo isset($page_title) ? htmlspecialchars($page_title) : 'Trabaja en Batidos Pitaya'; ?>">
+    <meta name="twitter:description" content="<?php echo isset($page_description) ? htmlspecialchars($page_description) : 'Impulsando energía natural, hábitos positivos y experiencia WOW.'; ?>">
+    <meta name="twitter:image" content="https://talento.batidospitaya.com/assets/img/og-image.jpg">
+
+    <!-- Favicon -->
+    <link rel="icon" href="assets/img/favicon.png" type="image/png">
+
+    <!-- CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="css/global.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="css/stats-modern.css?v=<?php echo time(); ?>">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- SEO H1 Oculto para motores de búsqueda -->
+    <h1 class="visually-hidden">Empleos en Batidos Pitaya Nicaragua - Vacantes Disponibles</h1>
+
+    <!-- ==================== BARRA DE NAVEGACIÓN (STICKY NAVBAR) ==================== -->
+    <nav class="navbar-pitaya">
+        <div class="container">
+            <a href="index.php" class="navbar-brand">
+                <img src="assets/img/logo.png" alt="Batidos Pitaya - Empleos" class="navbar-brand-img">
+            </a>
+            
+            <!-- Contenedor del menú y acciones -->
+            <div class="navbar-menu-container">
+                <!-- Envoltorio de pestañas (es un menú flotante en móviles) -->
+                <div class="navbar-nav-tabs-wrapper" id="navbarTabsWrapper">
+                    <div class="navbar-nav-tabs" id="navbarTabs">
+                        <a href="nosotros.php" class="nav-tab-btn <?php echo (isset($active_tab) && $active_tab === 'nosotros') ? 'active' : ''; ?>" id="btn-tab-nosotros">
+                            Sobre Nosotros
+                        </a>
+                        <a href="index.php" class="nav-tab-btn <?php echo (isset($active_tab) && $active_tab === 'unete') ? 'active' : ''; ?>" id="btn-tab-unete">
+                            Únete al Equipo
+                        </a>
+                        <a href="equipo.php" class="nav-tab-btn <?php echo (isset($active_tab) && $active_tab === 'equipo') ? 'active' : ''; ?>" id="btn-tab-equipo">
+                            Nuestro Equipo
+                        </a>
+                        <a href="noticias.php" class="nav-tab-btn <?php echo (isset($active_tab) && $active_tab === 'noticias') ? 'active' : ''; ?>" id="btn-tab-noticias">
+                            Noticias
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Botón de Aplicar (se muestra condicionalmente) -->
+                <a href="index.php#vacantes" class="btn-aplicar-header" id="btn-aplicar-header" <?php echo (isset($active_tab) && $active_tab === 'unete') ? 'style="display: none;"' : ''; ?>>
+                    <i class="bi bi-briefcase-fill"></i> Aplicar
+                </a>
+
+                <!-- Botón toggle hamburguesa para móviles -->
+                <button class="navbar-toggle-btn" id="navbarToggleBtn" aria-label="Menú de Navegación">
+                    <i class="bi bi-list"></i>
+                </button>
+            </div>
+        </div>
+    </nav>

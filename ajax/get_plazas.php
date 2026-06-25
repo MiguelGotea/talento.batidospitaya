@@ -140,7 +140,7 @@ try {
                 $group_key = $cargo_id . '_' . $row['sucursal'];
             }
 
-            $cat_nombre = !empty($row['especialidad_area']) ? trim($row['especialidad_area']) : 'Otros';
+            $cat_nombre = !empty($row['departamento']) ? trim($row['departamento']) : 'Otros';
 
             if (!isset($vistos_grupos[$group_key])) {
                 // Nueva tarjeta
@@ -149,7 +149,7 @@ try {
                     'cargo_id' => $cargo_id_estandar,
                     'cargo_original' => $cargo_id,
                     'cargo_nombre' => $row['cargo_nombre'],
-                    'especialidad_area' => $cat_nombre,
+                    'especialidad_area' => !empty($row['especialidad_area']) ? trim($row['especialidad_area']) : 'Otros',
                     'sucursal_id' => intval($row['sucursal']),
                     'sucursal_nombre' => ($es_vendedor || $es_lider) ? "Múltiples sucursales ({$row['departamento']})" : $row['sucursal_nombre'],
                     'departamento' => $row['departamento'],
@@ -183,9 +183,9 @@ try {
         }
     }
 
-    // Filtrar resultados por categoría si se solicitó
+    // Filtrar resultados por categoría (departamento) si se solicitó
     foreach ($vistos_grupos as $plaza) {
-        if (empty($categoria) || $plaza['especialidad_area'] === $categoria) {
+        if (empty($categoria) || $plaza['departamento'] === $categoria) {
             $plazas_temp[] = $plaza;
         }
     }
