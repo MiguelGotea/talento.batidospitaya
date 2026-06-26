@@ -38,7 +38,7 @@ El sistema de deploy está estandarizado. La documentación completa se encuentr
 
 ### Scripts de Ayuda
 Usa el script en `.scripts/` para realizar pushes rápidos:
-- `.\.scripts\gitpush.ps1`: Sube todos los cambios y activa el deploy.
+- `.\.scripts\gitpush_talento.ps1`: Sube todos los cambios y activa el deploy.
 
 ---
 

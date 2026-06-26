@@ -1,53 +1,74 @@
 <?php
-// noticias.php - Página "Noticias"
+// noticias.php - Página "Noticias" (Dinámica)
 $page_title = "Noticias y Novedades - Batidos Pitaya Nicaragua";
 $page_description = "Mantente al día con las últimas noticias, aperturas de sucursales y eventos de Batidos Pitaya Nicaragua.";
-$page_keywords = "noticias batidos pitaya, eventos batidos pitaya, novedades batidos pitaya";
+$page_keywords = "noticias batidos pitaya, eventos batidos pitaya, novedades batidos pitaya, expansion pitaya";
 $page_canonical = "noticias.php";
 $active_tab = "noticias";
 
+// Cargar la conexión
+require_once 'core/database/conexion.php';
+
+// Obtener las noticias publicadas
+$noticias = [];
+try {
+    $stmt = $conn->prepare("SELECT id, titulo, resumen, imagen_principal, categoria, fecha_publicacion FROM noticias_talento WHERE estado = 'publicado' ORDER BY fecha_publicacion DESC, id DESC");
+    $stmt->execute();
+    $noticias = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} catch (Exception $e) {
+    // Si la tabla no está creada aún, se maneja vacío
+    $noticias = [];
+}
+
+// Helpers para cuando no hay imagen de portada (generar visual premium por categoría)
+function obtenerGradientePorCategoria(string $cat): string {
+    switch (mb_strtolower(trim($cat))) {
+        case 'expansión':
+        case 'expansion':
+            return 'linear-gradient(135deg, #0E544C 0%, #51B8AC 100%)';
+        case 'bienestar':
+        case 'salud':
+            return 'linear-gradient(135deg, #FF6B00 0%, #FFA800 100%)';
+        case 'lanzamiento':
+        case 'producto':
+            return 'linear-gradient(135deg, #218838 0%, #74C043 100%)';
+        default:
+            return 'linear-gradient(135deg, #51B8AC 0%, #3d9a8f 100%)';
+    }
+}
+
+function obtenerIconoPorCategoria(string $cat): string {
+    switch (mb_strtolower(trim($cat))) {
+        case 'expansión':
+        case 'expansion':
+            return 'bi-shop-window';
+        case 'bienestar':
+        case 'salud':
+            return 'bi-heart-pulse-fill';
+        case 'lanzamiento':
+        case 'producto':
+            return 'bi-cup-straw';
+        default:
+            return 'bi-newspaper';
+    }
+}
+
+function formatearFechaEspanol(string $fecha): string {
+    if (empty($fecha)) return '';
+    $timestamp = strtotime($fecha);
+    $meses = [
+        1 => 'Enero', 2 => 'Febrero', 3 => 'Marzo', 4 => 'Abril',
+        5 => 'Mayo', 6 => 'Junio', 7 => 'Julio', 8 => 'Agosto',
+        9 => 'Septiembre', 10 => 'Octubre', 11 => 'Noviembre', 12 => 'Diciembre'
+    ];
+    $dia = date('d', $timestamp);
+    $mesN = intval(date('m', $timestamp));
+    $anio = date('Y', $timestamp);
+    
+    return "{$dia} de {$meses[$mesN]}, {$anio}";
+}
+
 include 'layout_talento/header.php';
-
-/* 
-================================================================================
-GUÍA DE INTEGRACIÓN CON BASE DE DATOS (FUTURA EXPANSIÓN)
-================================================================================
-Si en el futuro deseas que esta sección cargue dinámicamente desde la base de datos
-del ERP, puedes seguir estos pasos:
-
-1. Asegúrate de incluir la conexión en el core si no se ha cargado previamente:
-   require_once 'core/database/conexion.php';
-
-2. Crea una consulta SQL para traer las últimas noticias. Por ejemplo:
-   $stmt = $conn->prepare("SELECT * FROM noticias_talento WHERE estado = 'publicado' ORDER BY fecha_publicacion DESC");
-   $stmt->execute();
-   $noticias = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-3. Reemplaza el bloque HTML de abajo con un bucle foreach en PHP:
-   <?php foreach ($noticias as $item): ?>
-       <article class="noticia-card">
-           <div class="noticia-img-placeholder">
-               <?php if (!empty($item['imagen'])): ?>
-                   <img src="uploads/noticias/<?php echo htmlspecialchars($item['imagen']); ?>" alt="<?php echo htmlspecialchars($item['titulo']); ?>">
-               <?php else: ?>
-                   <div class="noticia-img-default">
-                       <i class="bi bi-newspaper"></i>
-                   </div>
-               <?php endif; ?>
-               <span class="noticia-badge"><?php echo htmlspecialchars($item['categoria']); ?></span>
-           </div>
-           <div class="noticia-content">
-               <span class="noticia-date">
-                   <i class="bi bi-calendar3"></i> 
-                   <?php echo date('d M, Y', strtotime($item['fecha_publicacion'])); ?>
-               </span>
-               <h3 class="noticia-title"><?php echo htmlspecialchars($item['titulo']); ?></h3>
-               <p class="noticia-excerpt"><?php echo htmlspecialchars($item['resumen']); ?></p>
-           </div>
-       </article>
-   <?php endforeach; ?>
-================================================================================
-*/
 ?>
 
 <!-- ==================== SECCIÓN: NOTICIAS ==================== -->
@@ -62,64 +83,49 @@ del ERP, puedes seguir estos pasos:
                 </p>
             </div>
 
-            <div class="noticias-grid">
-                <!-- Noticia 1: Sucursal Estelí -->
-                <article class="noticia-card">
-                    <div class="noticia-img-placeholder">
-                        <div class="noticia-img-gradient" style="background: linear-gradient(135deg, #1e5249 0%, #308375 100%);">
-                            <i class="bi bi-shop-window"></i>
-                        </div>
-                        <span class="noticia-badge bg-primary">Expansión</span>
-                    </div>
-                    <div class="noticia-content">
-                        <span class="noticia-date">
-                            <i class="bi bi-calendar3"></i> 20 de Junio, 2026
-                        </span>
-                        <h3 class="noticia-title">Nueva Apertura: Sucursal Estelí</h3>
-                        <p class="noticia-excerpt">
-                            ¡Llevamos nuestra energía natural al norte! Nos alegra anunciar la apertura de nuestra nueva sucursal en el corazón de Estelí. Ven a disfrutar de la mejor fruta y la Experiencia WOW.
-                        </p>
-                    </div>
-                </article>
-
-                <!-- Noticia 2: Carrera Run 2026 -->
-                <article class="noticia-card">
-                    <div class="noticia-img-placeholder">
-                        <div class="noticia-img-gradient" style="background: linear-gradient(135deg, #ff826e 0%, #ff523b 100%);">
-                            <i class="bi bi-trophy"></i>
-                        </div>
-                        <span class="noticia-badge bg-warning text-dark">Bienestar</span>
-                    </div>
-                    <div class="noticia-content">
-                        <span class="noticia-date">
-                            <i class="bi bi-calendar3"></i> 15 de Mayo, 2026
-                        </span>
-                        <h3 class="noticia-title">Carrera Pitaya Run 2026</h3>
-                        <p class="noticia-excerpt">
-                            Nos preparamos para nuestra carrera anual de 5K y 10K. Únete a nuestro equipo y clientes en esta gran jornada de salud, deporte y sana diversión familiar. ¡Inscripciones abiertas pronto!
-                        </p>
-                    </div>
-                </article>
-
-                <!-- Noticia 3: Nuevos Sabores -->
-                <article class="noticia-card">
-                    <div class="noticia-img-placeholder">
-                        <div class="noticia-img-gradient" style="background: linear-gradient(135deg, #a3cb38 0%, #1289a7 100%);">
-                            <i class="bi bi-cup-straw"></i>
-                        </div>
-                        <span class="noticia-badge bg-info text-white">Lanzamiento</span>
-                    </div>
-                    <div class="noticia-content">
-                        <span class="noticia-date">
-                            <i class="bi bi-calendar3"></i> 08 de Abril, 2026
-                        </span>
-                        <h3 class="noticia-title">Lanzamiento: Línea de Invierno</h3>
-                        <p class="noticia-excerpt">
-                            Inicia la época de lluvias y con ella nuevas cosechas. Descubre nuestras mezclas exclusivas de temporada con frutas locales seleccionadas bajo altos estándares de calidad. ¡Frescura asegurada!
-                        </p>
-                    </div>
-                </article>
-            </div>
+            <?php if (!empty($noticias)): ?>
+                <div class="noticias-grid">
+                    <?php foreach ($noticias as $item): 
+                        $fotoUrl = !empty($item['imagen_principal']) ? 'uploads/noticias/' . htmlspecialchars($item['imagen_principal']) : null;
+                    ?>
+                        <article class="noticia-card">
+                            <div class="noticia-img-placeholder">
+                                <?php if ($fotoUrl): ?>
+                                    <img src="<?= $fotoUrl ?>" alt="<?= htmlspecialchars($item['titulo']) ?>" class="noticia-img" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+                                    <div class="noticia-img-gradient" style="background: <?= obtenerGradientePorCategoria($item['categoria']) ?>; display: none;">
+                                        <i class="bi <?= obtenerIconoPorCategoria($item['categoria']) ?>"></i>
+                                    </div>
+                                <?php else: ?>
+                                    <div class="noticia-img-gradient" style="background: <?= obtenerGradientePorCategoria($item['categoria']) ?>;">
+                                        <i class="bi <?= obtenerIconoPorCategoria($item['categoria']) ?>"></i>
+                                    </div>
+                                <?php endif; ?>
+                                <span class="noticia-badge bg-primary"><?= htmlspecialchars($item['categoria']) ?></span>
+                            </div>
+                            <div class="noticia-content">
+                                <span class="noticia-date">
+                                    <i class="bi bi-calendar3"></i> 
+                                    <?= formatearFechaEspanol($item['fecha_publicacion']) ?>
+                                </span>
+                                <h3 class="noticia-title"><?= htmlspecialchars($item['titulo']) ?></h3>
+                                <p class="noticia-excerpt"><?= htmlspecialchars($item['resumen']) ?></p>
+                                
+                                <div class="noticia-actions mt-3">
+                                    <a href="noticia_detalle.php?id=<?= $item['id'] ?>" class="btn-leer-mas-noticia">
+                                        Leer Más <i class="bi bi-arrow-right"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </article>
+                    <?php endforeach; ?>
+                </div>
+            <?php else: ?>
+                <div class="text-center py-5">
+                    <i class="bi bi-journal-x fs-1 text-muted mb-3 d-block"></i>
+                    <h3 class="text-muted">No hay noticias publicadas en este momento</h3>
+                    <p class="text-muted">Próximamente compartiremos las novedades de la comunidad Batidos Pitaya.</p>
+                </div>
+            <?php endif; ?>
         </div>
     </section>
 </div>
