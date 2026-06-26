@@ -9,7 +9,7 @@
                 <div class="col-md-4 mb-4 mb-md-0">
                     <h5 class="footer-title">Batidos Pitaya</h5>
                     <p class="footer-text">
-                        Energía natural, hábitos positivos y experiencia WOW.
+                        <?php echo htmlspecialchars(obtener_config('footer_descripcion', 'Energía natural, hábitos positivos y experiencia WOW.')); ?>
                     </p>
                 </div>
                 <div class="col-md-4 mb-4 mb-md-0">

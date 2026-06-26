@@ -5,7 +5,7 @@
 $plaza_id = isset($_GET['plaza']) ? intval($_GET['plaza']) : 0;
 
 if ($plaza_id <= 0) {
-    header('Location: index.php');
+    header('Location: unete.php');
     exit();
 }
 
@@ -46,7 +46,7 @@ try {
 }
 
 if (!$detalle) {
-    header('Location: index.php');
+    header('Location: unete.php');
     exit();
 }
 
@@ -105,7 +105,7 @@ include 'layout_talento/header.php';
             <nav aria-label="breadcrumb" class="mb-4">
                 <ol class="breadcrumb vacante-breadcrumb">
                     <li class="breadcrumb-item">
-                        <a href="index.php"><i class="bi bi-house-fill"></i> Vacantes</a>
+                        <a href="unete.php"><i class="bi bi-house-fill"></i> Vacantes</a>
                     </li>
                     <li class="breadcrumb-item active" aria-current="page">
                         <?= htmlspecialchars($detalle['cargo_nombre']) ?>
@@ -138,9 +138,6 @@ include 'layout_talento/header.php';
                                     <i class="bi bi-calendar3"></i>
                                     Publicado el <?= $fechaCreacion ?>
                                 </span>
-                                <span class="meta-item badge-urgencia urgencia-badge-<?= $nivelUrgencia ?>">
-                                    <?= $urgenciaEmoji[$nivelUrgencia] ?? '' ?> <?= $urgenciaTexto ?>
-                                </span>
                             </div>
                         </div>
 
@@ -150,9 +147,9 @@ include 'layout_talento/header.php';
                             <h2 class="vacante-seccion-titulo">
                                 <i class="bi bi-person-lines-fill"></i> Sobre este cargo
                             </h2>
-                            <p class="vacante-seccion-texto">
-                                <?= nl2br(htmlspecialchars($detalle['descripcion'])) ?>
-                            </p>
+                            <div class="vacante-seccion-texto">
+                                <?= nl2br($detalle['descripcion']) ?>
+                            </div>
                         </div>
                         <?php endif; ?>
 
@@ -237,7 +234,7 @@ include 'layout_talento/header.php';
                                 Postular Ahora
                             </button>
 
-                            <a href="index.php" class="btn-leer-mas w-100 mt-2">
+                            <a href="unete.php" class="btn-leer-mas w-100 mt-2">
                                 <i class="bi bi-arrow-left"></i>
                                 Ver otras vacantes
                             </a>
@@ -286,7 +283,7 @@ function postularDesdeDetalle(plazaId, cargoId, sucursalId) {
         postularDirecto(plazaId, cargoId, sucursalId);
     } else {
         // Fallback: redirigir a index.php con parámetros
-        window.location.href = `index.php?postular=${plazaId}&cargo=${cargoId}&sucursal=${sucursalId}`;
+        window.location.href = `unete.php?postular=${plazaId}&cargo=${cargoId}&sucursal=${sucursalId}`;
     }
 }
 </script>

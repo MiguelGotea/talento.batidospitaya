@@ -126,7 +126,6 @@ include 'layout_talento/header.php';
     <section class="colaboradores-section py-5">
         <div class="container">
             <div class="text-center mb-5">
-                <span class="nosotros-subtitle-brand">Cara a Cara</span>
                 <h2 class="section-title-custom">Nuestro Talento</h2>
                 <p class="section-desc-custom">
                     Estas son las personas que dan vida a Batidos Pitaya todos los días. Conocelos de cerca.
@@ -175,12 +174,6 @@ include 'layout_talento/header.php';
                                     <div class="colaborador-info">
                                         <h4 class="colaborador-nombre"><?= htmlspecialchars($col['nombre']) ?></h4>
                                         <span class="colaborador-cargo"><?= htmlspecialchars($col['cargo']) ?></span>
-                                        <?php if (!empty($col['departamento'])): ?>
-                                        <span class="colaborador-dept">
-                                            <i class="bi bi-diagram-3"></i>
-                                            <?= htmlspecialchars($col['departamento']) ?>
-                                        </span>
-                                        <?php endif; ?>
                                         <?php if (!empty($col['testimonio'])): ?>
                                         <blockquote class="colaborador-testimonio">
                                             <i class="bi bi-quote colaborador-quote-icon"></i>
@@ -266,12 +259,6 @@ include 'layout_talento/header.php';
                             <div class="colaborador-info">
                                 <h4 class="colaborador-nombre"><?= htmlspecialchars($col['nombre']) ?></h4>
                                 <span class="colaborador-cargo"><?= htmlspecialchars($col['cargo']) ?></span>
-                                <?php if (!empty($col['departamento'])): ?>
-                                <span class="colaborador-dept">
-                                    <i class="bi bi-diagram-3"></i>
-                                    <?= htmlspecialchars($col['departamento']) ?>
-                                </span>
-                                <?php endif; ?>
                                 <?php if (!empty($col['testimonio'])): ?>
                                 <blockquote class="colaborador-testimonio">
                                     <i class="bi bi-quote colaborador-quote-icon"></i>
