@@ -35,7 +35,7 @@ function escapeHtml(text) {
 
 // ==================== Inicialización ====================
 $(document).ready(function () {
-    // Cargar plazas si estamos en la página de vacantes (index.php)
+    // Cargar plazas si estamos en la página de vacantes (unete.php)
     if ($('#section-unete-equipo').length) {
         cargarPlazas();
     }
@@ -43,7 +43,7 @@ $(document).ready(function () {
     inicializarEventos();
     inicializarQuickLinks();
     
-    // Cargar SVG y contadores si estamos en Sobre Nosotros (nosotros.php)
+    // Cargar SVG y contadores si estamos en Sobre Nosotros (index.php)
     if ($('#section-sobre-nosotros').length) {
         cargarSVGGrupal();
         observarContadoresCorporativos();
@@ -454,18 +454,30 @@ function renderizarPlazas() {
 }
 
 /**
+ * Extrae texto plano de un string HTML (strips all tags).
+ * Útil para mostrar previsualizaciones limpias de descripciones con formato.
+ */
+function stripHtml(html) {
+    if (!html) return '';
+    const tmp = document.createElement('div');
+    tmp.innerHTML = html;
+    return tmp.textContent || tmp.innerText || '';
+}
+
+/**
  * Crear card de plaza
  */
 function crearCardPlaza(plaza) {
     const today = new Date();
     const formattedDate = `${String(today.getDate()).padStart(2, '0')}/${String(today.getMonth() + 1).padStart(2, '0')}/${today.getFullYear()}`;
 
-    // Descripción breve (primeros ~120 caracteres)
+    // Descripción breve (primeros ~130 caracteres de texto plano, sin etiquetas HTML)
     let descHtml = '';
     if (plaza.descripcion && plaza.descripcion.trim()) {
-        const descCorta = plaza.descripcion.length > 120
-            ? plaza.descripcion.substring(0, 120).trim() + '…'
-            : plaza.descripcion;
+        const plainDesc = stripHtml(plaza.descripcion);
+        const descCorta = plainDesc.length > 130
+            ? plainDesc.substring(0, 130).trim() + '…'
+            : plainDesc;
         descHtml = `<p class="vacante-card-desc">${escapeHtml(descCorta)}</p>`;
     }
 
@@ -501,9 +513,6 @@ function crearCardPlaza(plaza) {
 
     return `
         <div class="vacante-card">
-            <div class="vigente-box">
-                VIGENTE: ${formattedDate}
-            </div>
             
             <div class="vacante-header">
                 <span class="vacante-categoria">${plaza.especialidad_area}</span>

@@ -19,12 +19,20 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
         <priority>1.0</priority>
     </url>
 
-    <!-- Sobre Nosotros -->
+    <!-- Sobre Nosotros (ahora es la página principal) -->
     <url>
-        <loc>https://talento.batidospitaya.com/nosotros.php</loc>
+        <loc>https://talento.batidospitaya.com/index.php</loc>
         <lastmod><?php echo date('Y-m-d'); ?></lastmod>
         <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
+        <priority>0.9</priority>
+    </url>
+
+    <!-- Únete al Equipo (Vacantes) -->
+    <url>
+        <loc>https://talento.batidospitaya.com/unete.php</loc>
+        <lastmod><?php echo date('Y-m-d'); ?></lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.9</priority>
     </url>
 
     <!-- Nuestro Equipo -->
@@ -70,7 +78,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
         $lastmodFormatted = date('Y-m-d', strtotime($lastmod));
         ?>
         <url>
-            <loc>https://talento.batidospitaya.com/?plaza=<?php echo $row['id']; ?></loc>
+            <loc>https://talento.batidospitaya.com/vacante_detalle.php?plaza=<?php echo $row['id']; ?></loc>
             <lastmod><?php echo $lastmodFormatted; ?></lastmod>
             <changefreq>weekly</changefreq>
             <priority>0.7</priority>

@@ -92,28 +92,34 @@ function obtener_config($clave, $default = '') {
                 <!-- Envoltorio de pestañas (es un menú flotante en móviles) -->
                 <div class="navbar-nav-tabs-wrapper" id="navbarTabsWrapper">
                     <div class="navbar-nav-tabs" id="navbarTabs">
-                        <a href="nosotros.php" class="nav-tab-btn <?php echo (isset($active_tab) && $active_tab === 'nosotros') ? 'active' : ''; ?>" id="btn-tab-nosotros">
+                        <a href="index.php" class="nav-tab-btn <?php echo (isset($active_tab) && $active_tab === 'nosotros') ? 'active' : ''; ?>" id="btn-tab-nosotros">
                             Sobre Nosotros
                         </a>
+                        <?php /* Beneficios: oculto temporalmente — descomentar para activar */ ?>
+                        <?php if (false): ?>
                         <a href="beneficios.php" class="nav-tab-btn <?php echo (isset($active_tab) && $active_tab === 'beneficios') ? 'active' : ''; ?>" id="btn-tab-beneficios">
                             Beneficios
                         </a>
-                        <a href="index.php" class="nav-tab-btn <?php echo (isset($active_tab) && $active_tab === 'unete') ? 'active' : ''; ?>" id="btn-tab-unete">
+                        <?php endif; ?>
+                        <a href="unete.php" class="nav-tab-btn <?php echo (isset($active_tab) && $active_tab === 'unete') ? 'active' : ''; ?>" id="btn-tab-unete">
                             Únete al Equipo
                         </a>
                         <a href="equipo.php" class="nav-tab-btn <?php echo (isset($active_tab) && $active_tab === 'equipo') ? 'active' : ''; ?>" id="btn-tab-equipo">
                             Nuestro Equipo
                         </a>
+                        <?php /* Noticias: oculto temporalmente — descomentar para activar */ ?>
+                        <?php if (false): ?>
                         <a href="noticias.php" class="nav-tab-btn <?php echo (isset($active_tab) && $active_tab === 'noticias') ? 'active' : ''; ?>" id="btn-tab-noticias">
                             Noticias
                         </a>
+                        <?php endif; ?>
                     </div>
                 </div>
 
 
 
                 <!-- Botón de Aplicar (se muestra condicionalmente) -->
-                <a href="index.php#vacantes" class="btn-aplicar-header" id="btn-aplicar-header" <?php echo (isset($active_tab) && $active_tab === 'unete') ? 'style="display: none;"' : ''; ?>>
+                <a href="unete.php#vacantes" class="btn-aplicar-header" id="btn-aplicar-header" <?php echo (isset($active_tab) && $active_tab === 'unete') ? 'style="display: none;"' : ''; ?>>
                     <i class="bi bi-briefcase-fill"></i> Aplicar
                 </a>
 

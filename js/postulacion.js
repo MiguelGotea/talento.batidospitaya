@@ -29,7 +29,7 @@ async function cargarDatosPlaza() {
             text: 'No se especificó la plaza a postular',
             confirmButtonColor: '#51B8AC'
         }).then(() => {
-            window.location.href = 'index.php';
+            window.location.href = 'unete.php';
         });
         return;
     }
@@ -57,7 +57,7 @@ async function cargarDatosPlaza() {
             text: 'No se pudo cargar la información de la plaza',
             confirmButtonColor: '#51B8AC'
         }).then(() => {
-            window.location.href = 'index.php';
+            window.location.href = 'unete.php';
         });
     }
 }
@@ -345,7 +345,7 @@ async function enviarPostulacion() {
                 confirmButtonColor: '#51B8AC',
                 confirmButtonText: 'Ver más vacantes'
             }).then(() => {
-                window.location.href = 'index.php';
+                window.location.href = 'unete.php';
             });
         } else {
             throw new Error(data.error || 'Error al enviar la postulación');

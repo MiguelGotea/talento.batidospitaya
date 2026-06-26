@@ -28,7 +28,7 @@
     <header class="postulacion-header">
         <div class="container">
             <div class="d-flex justify-content-between align-items-center">
-                <a href="index.php" class="btn-volver">
+                <a href="unete.php" class="btn-volver">
                     <i class="bi bi-arrow-left"></i> Volver a vacantes
                 </a>
                 <div class="logo">
@@ -192,7 +192,7 @@
                                     <i class="bi bi-send-fill"></i>
                                     Enviar Postulación
                                 </button>
-                                <a href="index.php" class="btn btn-outline-secondary">
+                                <a href="unete.php" class="btn btn-outline-secondary">
                                     <i class="bi bi-x-circle"></i>
                                     Cancelar
                                 </a>
