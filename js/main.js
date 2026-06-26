@@ -22,6 +22,17 @@ let filtros = {
     salario_max: 999999
 };
 
+// ==================== Utilidades ====================
+/**
+ * Escapa caracteres HTML para prevenir XSS al insertar texto en plantillas de string.
+ */
+function escapeHtml(text) {
+    if (!text) return '';
+    const div = document.createElement('div');
+    div.appendChild(document.createTextNode(String(text)));
+    return div.innerHTML;
+}
+
 // ==================== Inicialización ====================
 $(document).ready(function () {
     // Cargar plazas si estamos en la página de vacantes (index.php)
@@ -143,17 +154,35 @@ function inicializarMenuMovil() {
     toggleBtn.on('click', function (e) {
         e.stopPropagation();
         tabsWrapper.toggleClass('menu-fixed');
+        
+        // Toggle de clases del icono y del botón activo
+        const icon = toggleBtn.find('i');
+        if (tabsWrapper.hasClass('menu-fixed')) {
+            icon.removeClass('bi-list').addClass('bi-x');
+            toggleBtn.addClass('active');
+        } else {
+            icon.removeClass('bi-x').addClass('bi-list');
+            toggleBtn.removeClass('active');
+        }
     });
 
     $(document).on('click', function (e) {
         if (!$(e.target).closest('.navbar-menu-container').length) {
-            tabsWrapper.removeClass('menu-fixed');
+            if (tabsWrapper.hasClass('menu-fixed')) {
+                tabsWrapper.removeClass('menu-fixed');
+                toggleBtn.find('i').removeClass('bi-x').addClass('bi-list');
+                toggleBtn.removeClass('active');
+            }
         }
     });
 
     $(document).on('keydown', function (e) {
         if (e.key === 'Escape') {
-            tabsWrapper.removeClass('menu-fixed');
+            if (tabsWrapper.hasClass('menu-fixed')) {
+                tabsWrapper.removeClass('menu-fixed');
+                toggleBtn.find('i').removeClass('bi-x').addClass('bi-list');
+                toggleBtn.removeClass('active');
+            }
         }
     });
 }
@@ -431,6 +460,45 @@ function crearCardPlaza(plaza) {
     const today = new Date();
     const formattedDate = `${String(today.getDate()).padStart(2, '0')}/${String(today.getMonth() + 1).padStart(2, '0')}/${today.getFullYear()}`;
 
+    // Descripción breve (primeros ~120 caracteres)
+    let descHtml = '';
+    if (plaza.descripcion && plaza.descripcion.trim()) {
+        const descCorta = plaza.descripcion.length > 120
+            ? plaza.descripcion.substring(0, 120).trim() + '…'
+            : plaza.descripcion;
+        descHtml = `<p class="vacante-card-desc">${escapeHtml(descCorta)}</p>`;
+    }
+
+    // Responsabilidades (máximo 3 ítems)
+    let respHtml = '';
+    if (plaza.responsabilidades && plaza.responsabilidades.trim()) {
+        const items = plaza.responsabilidades.split('\n')
+            .map(i => i.trim())
+            .filter(i => i.length > 0)
+            .slice(0, 3);
+        if (items.length > 0) {
+            respHtml = `
+                <div class="vacante-card-section">
+                    <strong><i class="bi bi-list-check"></i> Responsabilidades</strong>
+                    <ul class="vacante-card-list">
+                        ${items.map(i => `<li>${escapeHtml(i)}</li>`).join('')}
+                    </ul>
+                </div>`;
+        }
+    }
+
+    // Botón de acción principal: Siempre redirige a los detalles de la plaza (vacante_detalle.php)
+    const leerMasBtn = `<a href="vacante_detalle.php?plaza=${plaza.id}" class="btn-leer-mas">
+            <i class="bi bi-book-fill"></i> Leer Más
+       </a>`;
+
+    // Botón Ver Plaza (solo si tiene banner)
+    const verPlazaBtn = plaza.ruta_banner_cargo
+        ? `<button class="btn-vr-plaza" onclick="abrirBannerPlaza('${plaza.ruta_banner_cargo}')">
+                <i class="bi bi-eye-fill"></i> Ver Plaza
+           </button>`
+        : '';
+
     return `
         <div class="vacante-card">
             <div class="vigente-box">
@@ -448,15 +516,12 @@ function crearCardPlaza(plaza) {
                 ${plaza.departamento}
             </div>
 
+            ${descHtml}
+            ${respHtml}
+
             <div class="vacante-actions">
-                <button class="btn-vr-plaza" onclick="abrirBannerPlaza('${plaza.ruta_banner_cargo || ''}')">
-                    <i class="bi bi-eye-fill"></i> Ver Plaza
-                </button>
-                
-                <button class="btn-postular" onclick="postularDirecto(${plaza.id}, ${plaza.cargo_id}, ${plaza.sucursal_id})">
-                    <i class="bi bi-send-fill"></i>
-                    Postular Ahora
-                </button>
+                ${leerMasBtn}
+                ${verPlazaBtn}
             </div>
         </div>
     `;

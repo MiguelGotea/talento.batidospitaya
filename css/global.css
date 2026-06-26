@@ -557,6 +557,60 @@ body {
   box-shadow: var(--sombra-sm);
 }
 
+/* Enriquecimiento de Tarjetas de Vacantes */
+.vacante-card-desc {
+  font-size: 0.9rem;
+  color: var(--color-texto-secundario);
+  margin-bottom: var(--espaciado-sm);
+  line-height: 1.4;
+}
+
+.vacante-card-section {
+  font-size: 0.85rem;
+  color: var(--color-texto);
+  margin-bottom: var(--espaciado-sm);
+}
+
+.vacante-card-section strong {
+  color: var(--color-header);
+  display: block;
+  margin-bottom: 4px;
+  font-size: 0.9rem;
+}
+
+.vacante-card-list {
+  padding-left: 1.1rem;
+  margin-bottom: 0;
+  color: var(--color-texto-secundario);
+}
+
+.vacante-card-list li {
+  margin-bottom: 2px;
+}
+
+.btn-leer-mas {
+  width: 100%;
+  background: white;
+  color: var(--color-header);
+  border: 2px solid var(--color-header);
+  padding: 0.75rem;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  text-decoration: none;
+}
+
+.btn-leer-mas:hover {
+  background: rgba(14, 84, 76, 0.05);
+  color: var(--color-header);
+  transform: translateY(-2px);
+  box-shadow: var(--sombra-sm);
+}
+
 .btn-postular {
   width: 100%;
   background: var(--color-principal);
@@ -819,11 +873,12 @@ body {
   }
 
   /* Footer: añadir separación entre columnas apiladas */
-  .footer .row > div {
+  .footer .row>div {
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     padding-bottom: 1.25rem;
   }
-  .footer .row > div:last-child {
+
+  .footer .row>div:last-child {
     border-bottom: none;
   }
 }
@@ -872,6 +927,7 @@ body {
 
 /* Móviles muy pequeños (≤400px) */
 @media (max-width: 400px) {
+
   /* Navbar: comprimir aún más para pantallas tipo Galaxy Fold / iPhone SE */
   .nav-tab-btn {
     padding: 0.4rem 0.65rem;
@@ -898,7 +954,8 @@ body {
 
   /* Botón aplicar: texto más compacto */
   .apply-float-btn span {
-    display: none; /* Solo ícono en pantallas muy pequeñas */
+    display: none;
+    /* Solo ícono en pantallas muy pequeñas */
   }
 
   .apply-float-btn {
@@ -1113,6 +1170,12 @@ body {
     border-color: white;
   }
 
+  .navbar-toggle-btn.active {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: white;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+  }
+
   .navbar-nav-tabs-wrapper {
     position: absolute;
     top: 100%;
@@ -1224,16 +1287,21 @@ body {
   padding-bottom: 28%;
   border-radius: 12px;
   background: linear-gradient(90deg,
-    rgba(81, 184, 172, 0.08) 25%,
-    rgba(81, 184, 172, 0.18) 50%,
-    rgba(81, 184, 172, 0.08) 75%);
+      rgba(81, 184, 172, 0.08) 25%,
+      rgba(81, 184, 172, 0.18) 50%,
+      rgba(81, 184, 172, 0.08) 75%);
   background-size: 200% 100%;
   animation: skeletonShimmer 1.6s infinite linear;
 }
 
 @keyframes skeletonShimmer {
-  0%   { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
+  0% {
+    background-position: 200% 0;
+  }
+
+  100% {
+    background-position: -200% 0;
+  }
 }
 
 /* Badge superpuesto en la parte inferior de la imagen (~10% desde el fondo) */
@@ -1451,7 +1519,8 @@ body {
 /* ==================== Botón Flotante "Aplicar" ==================== */
 .apply-float {
   position: fixed;
-  bottom: 90px; /* apilado encima del botón de WhatsApp */
+  bottom: 90px;
+  /* apilado encima del botón de WhatsApp */
   right: 20px;
   z-index: 999;
 }
@@ -1767,4 +1836,690 @@ body {
   color: var(--color-texto-secundario);
   line-height: 1.6;
   margin: 0;
+}
+
+/* ==================== Página de Detalle de Vacante ==================== */
+.vacante-detalle-section {
+  padding: var(--espaciado-lg) 0 var(--espaciado-xl);
+}
+
+.vacante-breadcrumb {
+  font-size: 0.9rem;
+}
+
+.vacante-breadcrumb a {
+  color: var(--color-principal);
+  text-decoration: none;
+}
+
+.vacante-breadcrumb a:hover {
+  text-decoration: underline;
+}
+
+.vacante-detalle-card {
+  background: var(--color-blanco);
+  border-radius: 16px;
+  padding: var(--espaciado-lg);
+  box-shadow: var(--sombra-md);
+  border: 1px solid var(--color-borde);
+}
+
+.vacante-detalle-header {
+  border-bottom: 2px solid var(--color-borde);
+  padding-bottom: var(--espaciado-md);
+  margin-bottom: var(--espaciado-md);
+}
+
+.vacante-detalle-titulo {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 700;
+  color: var(--color-header);
+  margin: 0.5rem 0 1rem;
+  line-height: 1.3;
+}
+
+.vacante-detalle-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.meta-item {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.9rem;
+  color: var(--color-texto-secundario);
+}
+
+.meta-item i {
+  color: var(--color-principal);
+}
+
+.badge-urgencia {
+  padding: 0.35rem 0.8rem;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.8rem;
+}
+
+.urgencia-badge-1 {
+  background: rgba(40, 167, 69, 0.12);
+  color: #1a7a30;
+}
+
+.urgencia-badge-2 {
+  background: rgba(255, 193, 7, 0.15);
+  color: #856404;
+}
+
+.urgencia-badge-3 {
+  background: rgba(253, 126, 20, 0.12);
+  color: #a04500;
+}
+
+.urgencia-badge-4 {
+  background: rgba(220, 53, 69, 0.12);
+  color: #961c28;
+}
+
+.vacante-seccion {
+  margin-bottom: var(--espaciado-md);
+  padding-bottom: var(--espaciado-md);
+  border-bottom: 1px solid var(--color-borde);
+}
+
+.vacante-seccion:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+}
+
+.vacante-seccion-titulo {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--color-header);
+  margin-bottom: 0.85rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.vacante-seccion-titulo i {
+  color: var(--color-principal);
+}
+
+.vacante-seccion-texto {
+  color: var(--color-texto);
+  line-height: 1.7;
+  font-size: 0.95rem;
+}
+
+.vacante-lista {
+  padding-left: 1.25rem;
+  color: var(--color-texto);
+  line-height: 1.8;
+  font-size: 0.95rem;
+}
+
+.vacante-lista li {
+  margin-bottom: 0.4rem;
+}
+
+.vacante-habilidades-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.vacante-habilidad-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: rgba(81, 184, 172, 0.1);
+  color: var(--color-header);
+  border: 1px solid rgba(81, 184, 172, 0.3);
+  border-radius: 20px;
+  padding: 0.35rem 0.85rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.vacante-habilidad-badge i {
+  color: var(--color-principal);
+}
+
+/* Sidebar de vacante detalle */
+.vacante-sidebar {
+  position: sticky;
+  top: 80px;
+}
+
+.sidebar-card {
+  background: var(--color-blanco);
+  border-radius: 16px;
+  padding: var(--espaciado-md);
+  box-shadow: var(--sombra-md);
+  border: 1px solid var(--color-borde);
+}
+
+.sidebar-salario {
+  text-align: center;
+  padding-bottom: var(--espaciado-sm);
+  border-bottom: 1px solid var(--color-borde);
+}
+
+.salario-label {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--color-texto-secundario);
+  margin-bottom: 0.25rem;
+}
+
+.salario-monto {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--color-header);
+}
+
+.salario-periodo {
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--color-texto-secundario);
+}
+
+.sidebar-section-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-header);
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.sidebar-section-title i {
+  color: var(--color-principal);
+}
+
+.sidebar-info-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar-info-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  font-size: 0.9rem;
+  color: var(--color-texto);
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--color-borde);
+}
+
+.sidebar-info-list li:last-child {
+  border-bottom: none;
+}
+
+.sidebar-info-list li i {
+  color: var(--color-principal);
+  margin-top: 0.1rem;
+  flex-shrink: 0;
+}
+
+@media (max-width: 991px) {
+  .vacante-sidebar {
+    position: static;
+  }
+}
+
+/* ==================== Carrusel de Colaboradores (equipo.php) ==================== */
+.colaboradores-section {
+  background: linear-gradient(135deg, rgba(81, 184, 172, 0.06) 0%, rgba(14, 84, 76, 0.04) 100%);
+  border-top: 1px solid var(--color-borde);
+}
+
+.colaboradores-carousel {
+  padding-bottom: 60px;
+  /* espacio para indicadores */
+  position: relative;
+}
+
+/* Tarjeta de colaborador */
+.colaborador-card {
+  background: var(--color-blanco);
+  border-radius: 20px;
+  padding: 2rem 1.5rem 1.75rem;
+  box-shadow: var(--sombra-md);
+  border: 1px solid var(--color-borde);
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.colaborador-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--sombra-lg);
+}
+
+/* Foto circular */
+.colaborador-foto-wrapper {
+  margin-bottom: 1.25rem;
+}
+
+.colaborador-foto {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid var(--color-principal);
+  box-shadow: 0 4px 16px rgba(81, 184, 172, 0.25);
+}
+
+/* Avatar placeholder con iniciales */
+.colaborador-avatar-placeholder {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.2rem;
+  font-weight: 700;
+  border: 4px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  letter-spacing: 0.05em;
+  margin: 0 auto;
+}
+
+/* Info del colaborador */
+.colaborador-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.colaborador-nombre {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--color-header);
+  margin-bottom: 0.25rem;
+}
+
+.colaborador-cargo {
+  display: inline-block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-principal);
+  background: rgba(81, 184, 172, 0.1);
+  padding: 0.2rem 0.75rem;
+  border-radius: 20px;
+  margin-bottom: 0.5rem;
+}
+
+.colaborador-dept {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.8rem;
+  color: var(--color-texto-secundario);
+  margin-bottom: 1rem;
+}
+
+.colaborador-dept i {
+  color: var(--color-principal);
+}
+
+.colaborador-testimonio {
+  font-size: 0.88rem;
+  font-style: italic;
+  color: var(--color-texto-secundario);
+  line-height: 1.6;
+  border-left: 3px solid var(--color-principal);
+  padding-left: 1rem;
+  text-align: left;
+  margin: 0;
+  width: 100%;
+}
+
+.colaborador-quote-icon {
+  font-size: 1.1rem;
+  color: var(--color-principal);
+  margin-right: 0.3rem;
+  opacity: 0.7;
+}
+
+/* Controles del carrusel */
+.colaboradores-prev,
+.colaboradores-next {
+  width: 44px;
+  height: 44px;
+  background: var(--color-blanco) !important;
+  border: 2px solid var(--color-principal) !important;
+  border-radius: 50% !important;
+  top: 45% !important;
+  box-shadow: var(--sombra-sm);
+  transition: all 0.2s ease;
+}
+
+.colaboradores-prev:hover,
+.colaboradores-next:hover {
+  background: var(--color-principal) !important;
+}
+
+.colaboradores-prev {
+  left: -20px;
+}
+
+.colaboradores-next {
+  right: -20px;
+}
+
+.colaboradores-prev .carousel-control-prev-icon,
+.colaboradores-next .carousel-control-next-icon {
+  filter: invert(0.4) sepia(1) saturate(3) hue-rotate(130deg);
+  width: 16px;
+  height: 16px;
+}
+
+.colaboradores-prev:hover .carousel-control-prev-icon,
+.colaboradores-next:hover .carousel-control-next-icon {
+  filter: brightness(0) invert(1);
+}
+
+/* Indicadores */
+.colaboradores-indicators {
+  bottom: 10px !important;
+}
+
+.colaboradores-indicators button {
+  width: 10px !important;
+  height: 10px !important;
+  border-radius: 50% !important;
+  background-color: var(--color-borde) !important;
+  border: none !important;
+  opacity: 1 !important;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.colaboradores-indicators button.active {
+  background-color: var(--color-principal) !important;
+  transform: scale(1.3);
+}
+
+/* ==================== Estilos de Detalle de Noticias (noticia_detalle.php) ==================== */
+.noticia-actions {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.btn-leer-mas-noticia {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-principal);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  transition: gap 0.2s ease, color 0.2s ease;
+}
+
+.btn-leer-mas-noticia:hover {
+  color: var(--color-principal-hover);
+  gap: 0.6rem;
+}
+
+.noticia-detalle-card {
+  background: var(--color-blanco);
+  border-radius: 20px;
+  padding: var(--espaciado-lg);
+  box-shadow: var(--sombra-md);
+  border: 1px solid var(--color-borde);
+}
+
+.noticia-detalle-header {
+  border-bottom: 1px solid var(--color-borde);
+  padding-bottom: var(--espaciado-md);
+}
+
+.noticia-detalle-titulo-h1 {
+  font-size: clamp(1.6rem, 4vw, 2.2rem);
+  font-weight: 800;
+  color: var(--color-header);
+  line-height: 1.3;
+}
+
+.noticia-detalle-meta {
+  color: var(--color-texto-secundario);
+  font-size: 0.9rem;
+}
+
+/* Portada / Banner */
+.noticia-detalle-portada-wrapper {
+  position: relative;
+  width: 100%;
+  height: clamp(200px, 35vw, 420px);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: var(--sombra-sm);
+}
+
+.noticia-detalle-portada-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.noticia-detalle-portada-fallback {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.noticia-detalle-portada-fallback i {
+  font-size: 6rem;
+  opacity: 0.7;
+}
+
+/* Contenido */
+.noticia-detalle-contenido {
+  color: var(--color-texto);
+  line-height: 1.8;
+  font-size: 1.05rem;
+}
+
+.noticia-detalle-contenido p {
+  margin-bottom: 1.25rem;
+}
+
+.noticia-detalle-contenido strong {
+  color: var(--color-header);
+}
+
+/* Galería de fotos */
+.galeria-titulo {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-header);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.galeria-item-card {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  aspect-ratio: 4 / 3;
+  border: 1px solid var(--color-borde);
+  box-shadow: var(--sombra-sm);
+}
+
+.galeria-thumb-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.galeria-item-hover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(14, 84, 76, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  color: white;
+  font-size: 1.5rem;
+}
+
+.galeria-item-card:hover .galeria-thumb-img {
+  transform: scale(1.1);
+}
+
+.galeria-item-card:hover .galeria-item-hover {
+  opacity: 1;
+}
+
+/* Ajustes de Lightbox en SweetAlert2 */
+.lightbox-swal-popup {
+  padding: 1.5rem !important;
+  border-radius: 16px !important;
+  border: 1px solid var(--color-principal) !important;
+}
+
+.lightbox-swal-image {
+  border-radius: 8px !important;
+  max-height: 70vh !important;
+  object-fit: contain !important;
+  margin: 1rem auto !important;
+  box-shadow: var(--sombra-sm) !important;
+}
+
+/* ==================== Estilos de la Sección de Beneficios (beneficios.php) ==================== */
+.beneficios-hero {
+  background: linear-gradient(135deg, rgba(81, 184, 172, 0.05) 0%, rgba(14, 84, 76, 0.03) 100%);
+  border-bottom: 1px solid var(--color-borde);
+}
+
+.bg-light-brand {
+  background-color: rgba(81, 184, 172, 0.04) !important;
+}
+
+/* Tarjetas de beneficios */
+.beneficio-card {
+  background: var(--color-blanco);
+  border-radius: 16px;
+  padding: 2.25rem 1.75rem;
+  box-shadow: var(--sombra-sm);
+  border: 1px solid var(--color-borde);
+  height: 100%;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.beneficio-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--sombra-md);
+}
+
+.beneficio-icon-box {
+  width: 54px;
+  height: 54px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.25rem;
+  font-size: 1.5rem;
+}
+
+.beneficio-title-h3 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--color-header);
+  margin-bottom: 0.75rem;
+}
+
+.beneficio-text {
+  font-size: 0.92rem;
+  color: var(--color-texto-secundario);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Clases de colores de iconos blandos */
+.bg-teal-soft { background-color: rgba(81, 184, 172, 0.12); }
+.text-teal { color: #2e8b7f; }
+
+.bg-orange-soft { background-color: rgba(255, 107, 0, 0.1); }
+.text-orange { color: #d45900; }
+
+.bg-green-soft { background-color: rgba(33, 136, 56, 0.1); }
+.text-green { color: #1e7e34; }
+
+.bg-blue-soft { background-color: rgba(0, 123, 255, 0.1); }
+.text-blue { color: #0056b3; }
+
+.bg-purple-soft { background-color: rgba(111, 66, 193, 0.1); }
+.text-purple { color: #5a349c; }
+
+.bg-red-soft { background-color: rgba(220, 53, 69, 0.1); }
+.text-red { color: #b21f2d; }
+
+/* Cultura list items */
+.cultura-item-icon {
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
+.cultura-banner-card {
+  background: linear-gradient(135deg, var(--color-principal) 0%, var(--color-principal-hover) 100%);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: var(--sombra-md);
+  position: relative;
+}
+
+.cultura-banner-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at 80% 20%, rgba(255,255,255,0.15) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.cultura-banner-content blockquote {
+  font-style: italic;
+  line-height: 1.6;
+}
+
+.tracking-wide {
+  letter-spacing: 0.1em;
+}
+
+.beneficios-cta-section {
+  background: linear-gradient(135deg, rgba(14, 84, 76, 0.02) 0%, rgba(81, 184, 172, 0.05) 100%);
+  border-top: 1px solid var(--color-borde);
 }

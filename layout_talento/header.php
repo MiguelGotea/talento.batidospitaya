@@ -78,6 +78,9 @@
                         <a href="nosotros.php" class="nav-tab-btn <?php echo (isset($active_tab) && $active_tab === 'nosotros') ? 'active' : ''; ?>" id="btn-tab-nosotros">
                             Sobre Nosotros
                         </a>
+                        <a href="beneficios.php" class="nav-tab-btn <?php echo (isset($active_tab) && $active_tab === 'beneficios') ? 'active' : ''; ?>" id="btn-tab-beneficios">
+                            Beneficios
+                        </a>
                         <a href="index.php" class="nav-tab-btn <?php echo (isset($active_tab) && $active_tab === 'unete') ? 'active' : ''; ?>" id="btn-tab-unete">
                             Únete al Equipo
                         </a>
@@ -89,6 +92,8 @@
                         </a>
                     </div>
                 </div>
+
+
 
                 <!-- Botón de Aplicar (se muestra condicionalmente) -->
                 <a href="index.php#vacantes" class="btn-aplicar-header" id="btn-aplicar-header" <?php echo (isset($active_tab) && $active_tab === 'unete') ? 'style="display: none;"' : ''; ?>>

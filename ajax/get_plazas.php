@@ -45,7 +45,11 @@ try {
             pc.salario_propuesto,
             pc.nivel_urgencia,
             pc.fecha_creacion,
-            pc.ruta_banner_cargo
+            pc.ruta_banner_cargo,
+            pc.descripcion,
+            pc.responsabilidades,
+            pc.requisitos,
+            pc.habilidades
         FROM plazas_cargos pc
         INNER JOIN NivelesCargos nc ON nc.CodNivelesCargos = pc.cargo
         INNER JOIN sucursales s ON s.codigo = CAST(pc.sucursal AS CHAR)
@@ -160,7 +164,11 @@ try {
                     'cantidad_cubierta' => intval($cantidad_cubierta),
                     'cantidad_necesaria' => intval($row['cantidad_real']),
                     'cantidad_adicional' => intval($row['cantidad_adicional']),
-                    'ruta_banner_cargo' => $row['ruta_banner_cargo'] ?? ''
+                    'ruta_banner_cargo' => $row['ruta_banner_cargo'] ?? '',
+                    'descripcion' => $row['descripcion'] ?: '',
+                    'responsabilidades' => $row['responsabilidades'] ?: '',
+                    'requisitos' => $row['requisitos'] ?: '',
+                    'habilidades' => $row['habilidades'] ?: ''
                 ];
 
                 // Incrementar conteo de categoría (solo una vez por tarjeta/grupo)
