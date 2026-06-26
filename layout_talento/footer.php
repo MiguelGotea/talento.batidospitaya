@@ -15,22 +15,22 @@
                 <div class="col-md-4 mb-4 mb-md-0">
                     <h5 class="footer-title">Contacto</h5>
                     <ul class="footer-links">
-                        <li><i class="bi bi-envelope"></i> <span class="email-protected" data-user="seleccion"
-                                data-domain="batidospitaya.com"></span></li>
-                        <li><i class="bi bi-telephone"></i> +505 8852 0629</li>
+                        <li><i class="bi bi-envelope"></i> <span class="email-protected" data-user="<?php echo htmlspecialchars(obtener_config('email_reclutamiento', 'seleccion')); ?>"
+                                data-domain="<?php echo htmlspecialchars(obtener_config('email_reclutamiento_dom', 'batidospitaya.com')); ?>"></span></li>
+                        <li><i class="bi bi-telephone"></i> <?php echo htmlspecialchars(obtener_config('telefono_principal', '+505 8852 0629')); ?></li>
                         <!-- URL de búsqueda general en Google Maps — muestra todas las sucursales y sugiere la más cercana al usuario -->
-                        <li><i class="bi bi-geo-alt"></i> <a href="https://www.google.com/maps/search/Batidos+Pitaya+Nicaragua/"
+                        <li><i class="bi bi-geo-alt"></i> <a href="<?php echo htmlspecialchars(obtener_config('url_maps_ubicaciones', 'https://www.google.com/maps/search/Batidos+Pitaya+Nicaragua/')); ?>"
                                 target="_blank" rel="noopener noreferrer" class="text-white">Ver ubicaciones</a></li>
                     </ul>
                 </div>
                 <div class="col-md-4">
                     <h5 class="footer-title">Síguenos</h5>
                     <div class="social-links">
-                        <a href="https://www.facebook.com/BatidosPitaya" target="_blank" rel="noopener noreferrer"
+                        <a href="<?php echo htmlspecialchars(obtener_config('url_facebook', 'https://www.facebook.com/BatidosPitaya')); ?>" target="_blank" rel="noopener noreferrer"
                             class="social-link" title="Facebook"><i class="bi bi-facebook"></i></a>
-                        <a href="https://www.instagram.com/batidospitaya/" target="_blank" rel="noopener noreferrer"
+                        <a href="<?php echo htmlspecialchars(obtener_config('url_instagram', 'https://www.instagram.com/batidospitaya/')); ?>" target="_blank" rel="noopener noreferrer"
                             class="social-link" title="Instagram"><i class="bi bi-instagram"></i></a>
-                        <a href="https://www.linkedin.com/company/batidospitaya/posts/?feedView=all" target="_blank"
+                        <a href="<?php echo htmlspecialchars(obtener_config('url_linkedin', 'https://www.linkedin.com/company/batidospitaya/posts/?feedView=all')); ?>" target="_blank"
                             rel="noopener noreferrer" class="social-link" title="LinkedIn"><i
                                 class="bi bi-linkedin"></i></a>
                     </div>

@@ -298,20 +298,16 @@ CREATE TABLE IF NOT EXISTS noticias_fotos_talento (
 
 ---
 
-## FASE 3 — Nueva Sección Beneficios ⏳ FUTURO
+## FASE 3 — Nueva Sección Beneficios ✅ COMPLETADA
 
 > **Origen:** Notas de la Gerencia de Marketing y Operaciones (3er Etapa).
-> **Prioridad:** Media. No bloquea las fases anteriores.
 
-Crear una sección/página independiente que destaque los **beneficios de trabajar en Batidos Pitaya**.
+Sección `beneficios.php` creada con íconos animados, diseño visual premium, grid de beneficios y sección de cultura.
 
-#### Archivos a crear / modificar
-- **[NEW]** `beneficios.php` — Página de beneficios con íconos animados, visual premium
-- **[MODIFY]** `layout_talento/header.php` — Agregar pestaña "Beneficios" al menú
-- **[MODIFY]** `css/global.css` — Estilos para la sección de beneficios
-
-> [!NOTE]
-> El contenido puede ser estático inicialmente (plan de carrera, ambiente de trabajo, alimentación, reconocimientos, etc.). En el futuro se puede administrar desde una tabla `beneficios_talento` in BD.
+### Lo que se hizo
+- **`beneficios.php`** — Página premium de beneficios con hero section, grid de 6 tarjetas de beneficios (íconos + colores temáticos), sección de cultura con checklist y bloque de cita motivacional, y CTA hacia vacantes.
+- **`layout_talento/header.php`** — Pestaña "Beneficios" activa en la navbar.
+- **`css/global.css`** — Estilos completos de la sección de beneficios (`.beneficio-card`, `.cultura-bienestar-section`, `.cultura-banner-card`, etc.).
 
 ---
 
@@ -349,42 +345,84 @@ Guardar todos en `\GitHub Pitaya\SQL\` y aplicar en Hostinger **antes** de activ
 
 ---
 
-## FASE 4 — ERP: Módulo de Administración de Contenido del Portal de Talento ⏳ PENDIENTE (AL FINAL DEL PLAN)
+## FASE 4 — ERP: Módulo de Administración de Contenido del Portal de Talento ✅ COMPLETADA
 
 > **Origen:** Propuesta de control interno del administrador.
-> **Prioridad:** Media-Baja (después de las fases de frontend 2C y 3).
-> **Herramienta ERP a registrar:** `talento_contenido`
+> **Prioridad:** Media-Baja.
+> **Herramienta ERP registrada:** `talento_contenido`
 
-### Especificación del Módulo ERP
+### Lo que se hizo
 
-Se creará una nueva sección en `erp.batidospitaya/modulos/talento_contenido/` para permitir que el personal administrativo con permisos gestione el carrusel de colaboradores y el catálogo de habilidades sin tocar directamente la base de datos.
+Se creó un panel de administración en `erp.batidospitaya/modulos/talento_contenido/` para gestionar el portal dinámicamente sin tocar la base de datos:
 
-#### Páginas y Flujos
-1. **`colaboradores.php`** (Gestión de Colaboradores):
-   - Grid/Lista de colaboradores registrados (`colaboradores_talento`).
-   - Botón para agregar y formulario modal para editar (Nombre, Cargo, Departamento, Testimonio, Orden, Activo y Foto).
-   - Manejo de subida de imágenes a la ruta compartida `talento.batidospitaya/uploads/equipo/`.
-2. **`habilidades.php`** (Gestión del Catálogo de Habilidades):
-   - Lista de habilidades predefinidas (`habilidades_talento`) agrupadas por categoría.
-   - Formulario modal para crear y editar habilidades (Nombre, Categoría, Activo).
+1. **`colaboradores.php`** (Nuestro Equipo):
+   - Grid interactivo de colaboradores destacados (`colaboradores_talento`).
+   - Modal de creación/edición con campos de Nombre, Cargo, Departamento, Testimonio, Orden, Estado y Foto.
+   - Procesa y comprime automáticamente las imágenes y las almacena en la carpeta pública del portal `uploads/equipo/`.
+2. **`habilidades.php`** (Catálogo de Habilidades):
+   - Catálogo global de habilidades requeridas para las vacantes (`habilidades_talento`), agrupadas por categoría (Blandas, Técnicas, Idiomas, etc.).
+   - Modal de CRUD de habilidades.
 
-#### Permisos del ERP (Administración vía `gestion_permisos.php`)
+#### Permisos del ERP creados
 - **Herramienta:** `talento_contenido`
-- **Acciones:**
-  - `vista` (acceso a las páginas de gestión)
-  - `crear` (guardar registros nuevos)
-  - `editar` (actualizar existentes y subir fotos)
-  - `eliminar` (ocultar/eliminar del portal)
+- **Acciones:** `vista`, `crear`, `editar`, `eliminar` (registrados vía script `016_talento_contenido_permisos.sql`).
 
-#### Archivos a crear en el ERP
-- **[NEW]** `erp.batidospitaya/modulos/talento_contenido/colaboradores.php` — Interfaz de colaboradores
-- **[NEW]** `erp.batidospitaya/modulos/talento_contenido/habilidades.php` — Interfaz de catálogo de habilidades
-- **[NEW]** `erp.batidospitaya/modulos/talento_contenido/js/talento_contenido.js` — Lógica frontend, peticiones AJAX y modales
-- **[NEW]** `erp.batidospitaya/modulos/talento_contenido/ajax/get_colaboradores.php` — Obtener lista o detalle
-- **[NEW]** `erp.batidospitaya/modulos/talento_contenido/ajax/guardar_colaborador.php` — Guardar/actualizar y subir foto
-- **[NEW]** `erp.batidospitaya/modulos/talento_contenido/ajax/eliminar_colaborador.php` — Desactivar o eliminar colaborador
-- **[NEW]** `erp.batidospitaya/modulos/talento_contenido/ajax/get_habilidades.php` — Obtener catálogo de habilidades
-- **[NEW]** `erp.batidospitaya/modulos/talento_contenido/ajax/guardar_habilidad.php` — Guardar/actualizar habilidad
-- **[NEW]** `erp.batidospitaya/modulos/talento_contenido/ajax/eliminar_habilidad.php` — Desactivar o eliminar habilidad
-- **[NEW]** `SQL/016_talento_contenido_permisos.sql` — Script para inicializar la herramienta `talento_contenido` y sus acciones en el sistema de permisos del ERP
+---
 
+## FASE 5 — ERP: Gestión de Noticias y Galería de Fotos ✅ COMPLETADA
+
+> **Herramienta ERP:** `talento_contenido` (mismos permisos).
+
+### Lo que se hizo
+
+- **`noticias.php`** — Panel interactivo con tabla de noticias, modal de creación/edición (Título, Categoría, Estado, Fecha Publicación, Autor, Resumen, Contenido HTML, Foto de Portada) y modal secundario de Galería de Fotos con subida directa y eliminación en tiempo real.
+- **AJAX endpoints creados:**
+  - `ajax/get_noticias.php` — Consulta de noticias con joins de auditoría.
+  - `ajax/guardar_noticia.php` — Guarda noticia + procesa y mueve portada.
+  - `ajax/eliminar_noticia.php` — Elimina noticia y archivos físicos.
+  - `ajax/get_galeria.php` — Consulta fotos de galería de una noticia.
+  - `ajax/guardar_galeria.php` — Sube foto a galería.
+  - `ajax/eliminar_galeria.php` — Elimina foto de galería y archivo físico.
+- **Sub-menú de navegación** actualizado en `colaboradores.php` y `habilidades.php`.
+
+---
+
+## FASE 6 — Contenido Institucional Dinámico (Nosotros, Beneficios, Configuración) ✅ COMPLETADA
+
+> **Origen:** Requerimiento de administrar todo el contenido del portal desde el ERP sin tocar código ni BD directamente.
+> **Script SQL:** `017_talento_auditoria_y_contenido_estatico.sql`
+
+### Lo que se hizo
+
+#### Portal (talento.batidospitaya)
+- **`nosotros.php`** — Convertida a dinámica: párrafos, valores corporativos y estadísticas cargados desde BD. Las estadísticas conservan la animación de contadores con `data-target` / `data-suffix`. El icono especial de pitaya se referencia como `svg:pitaya` en BD.
+- **`beneficios.php`** — Convertida a dinámica: hero section, tarjetas de beneficios y lista de cultura con checkmarks cargados desde BD. Textos de encabezado via `obtener_config()`.
+- **`layout_talento/footer.php`** — Teléfono, email, mapa y redes sociales obtenidos desde `talento_configuracion` vía `obtener_config()`.
+- **`layout_talento/header.php`** — Incluye `conexion.php`, carga `talento_configuracion` y define la función global `obtener_config($clave, $default)`.
+
+#### ERP (erp.batidospitaya)
+- **`modulos/talento_contenido/nosotros.php`** — Panel con:
+  - Formulario de edición de los 3 párrafos de ¿Quiénes Somos? y el texto de Nuestro Propósito.
+  - Tabla CRUD de Valores Corporativos (icono Bootstrap Icons, título, descripción, orden, activo) con modales y auditoría visible.
+  - Tabla CRUD de Estadísticas/Indicadores (icono, número, sufijo, etiqueta, orden, activo) con soporte para `svg:pitaya`.
+- **`modulos/talento_contenido/configuracion.php`** — Panel con:
+  - Formulario de Configuración General: email, teléfono, Google Maps, Facebook, Instagram, LinkedIn, textos del hero de Beneficios, título/subtítulo/cita de Cultura.
+  - Tabla CRUD de Beneficios del Colaborador (icono, color tema, título, descripción).
+  - Tabla CRUD de Checklist de Cultura.
+- **Pestañas de navegación** actualizadas en todos los archivos del módulo (Colaboradores, Habilidades, Noticias, Nosotros, Beneficios y Config.).
+
+#### AJAX endpoints creados
+- `ajax/get_textos_nosotros.php` + `guardar_textos_nosotros.php`
+- `ajax/get_valores.php` + `guardar_valor.php` + `eliminar_valor.php`
+- `ajax/get_estadisticas.php` + `guardar_estadistica.php` + `eliminar_estadistica.php`
+- `ajax/get_beneficios.php` + `guardar_beneficio.php` + `eliminar_beneficio.php`
+- `ajax/get_culturas.php` + `guardar_cultura.php` + `eliminar_cultura.php`
+- `ajax/get_configuracion.php` + `guardar_configuracion.php`
+
+#### Auditoría
+- Todas las tablas nuevas tienen `usuario_creador`, `fecha_creacion`, `usuario_modifica`, `fecha_modificacion`.
+- Las tablas existentes (`colaboradores_talento`, `habilidades_talento`, `noticias_talento`, `noticias_fotos_talento`) recibieron los campos de auditoría vía `ALTER TABLE`.
+- Los campos de auditoría se muestran en los modales de edición del ERP (informativo, no editable).
+
+#### Corrección de menú hamburguesa móvil
+- Se eliminó la regla CSS `.navbar-menu-container:hover .navbar-nav-tabs-wrapper` dentro del media query de móviles/tablets en `css/global.css`, corrigiendo el bug de hover persistente (sticky hover) tras cerrar el menú con la X.
