@@ -1193,8 +1193,7 @@ body {
     z-index: 1001;
   }
 
-  /* Desplegado por hover sobre el contenedor o clase menu-fixed */
-  .navbar-menu-container:hover .navbar-nav-tabs-wrapper,
+  /* Desplegado por la clase menu-fixed */
   .navbar-nav-tabs-wrapper.menu-fixed {
     opacity: 1;
     visibility: visible;
@@ -1485,7 +1484,8 @@ body {
   transition: background 0.3s ease;
 }
 
-.corp-stat-icon-wrapper i {
+.corp-stat-icon-wrapper i,
+.corp-stat-icon-wrapper svg {
   font-size: 1.5rem;
   color: var(--color-header);
   transition: color 0.3s ease;
@@ -1495,7 +1495,8 @@ body {
   background: linear-gradient(135deg, #51B8AC, #0E544C);
 }
 
-.corp-stat-card:hover .corp-stat-icon-wrapper i {
+.corp-stat-card:hover .corp-stat-icon-wrapper i,
+.corp-stat-card:hover .corp-stat-icon-wrapper svg {
   color: #fff;
 }
 

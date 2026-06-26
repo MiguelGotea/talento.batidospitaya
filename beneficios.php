@@ -15,10 +15,10 @@ include 'layout_talento/header.php';
     <!-- Hero Banner Premium -->
     <section class="beneficios-hero py-5">
         <div class="container text-center py-4">
-            <span class="nosotros-subtitle-brand">¿Por qué unirte a nosotros?</span>
-            <h2 class="section-title-custom">La Experiencia Batidos Pitaya</h2>
+            <span class="nosotros-subtitle-brand"><?php echo htmlspecialchars(obtener_config('hero_beneficios_sub', '¿Por qué unirte a nosotros?')); ?></span>
+            <h2 class="section-title-custom"><?php echo htmlspecialchars(obtener_config('hero_beneficios_titulo', 'La Experiencia Batidos Pitaya')); ?></h2>
             <p class="section-desc-custom mx-auto" style="max-width: 700px;">
-                No solo ofrecemos un empleo, sino un espacio donde puedes crecer profesionalmente, divertirte, promover el bienestar y ser parte de una cultura WOW.
+                <?php echo htmlspecialchars(obtener_config('hero_beneficios_desc', 'No solo ofrecemos un empleo...')); ?>
             </p>
         </div>
     </section>
@@ -27,85 +27,28 @@ include 'layout_talento/header.php';
     <section class="beneficios-grid-section pb-5">
         <div class="container">
             <div class="row g-4">
-                
-                <!-- Beneficio 1: Plan de Carrera -->
-                <div class="col-md-4">
-                    <div class="beneficio-card">
-                        <div class="beneficio-icon-box bg-teal-soft">
-                            <i class="bi bi-graph-up-arrow text-teal"></i>
+                <?php
+                try {
+                    $stmtBeneficios = $conn->query("SELECT icono, color_tema, titulo, descripcion FROM talento_beneficios WHERE activo = 1 ORDER BY orden ASC, id ASC");
+                    while ($ben = $stmtBeneficios->fetch()) {
+                        ?>
+                        <div class="col-md-4">
+                            <div class="beneficio-card">
+                                <div class="beneficio-icon-box bg-<?php echo htmlspecialchars($ben['color_tema']); ?>-soft">
+                                    <i class="bi <?php echo htmlspecialchars($ben['icono']); ?> text-<?php echo htmlspecialchars($ben['color_tema']); ?>"></i>
+                                </div>
+                                <h3 class="beneficio-title-h3"><?php echo htmlspecialchars($ben['titulo']); ?></h3>
+                                <p class="beneficio-text">
+                                    <?php echo htmlspecialchars($ben['descripcion']); ?>
+                                </p>
+                            </div>
                         </div>
-                        <h3 class="beneficio-title-h3">Crecimiento Profesional</h3>
-                        <p class="beneficio-text">
-                            Contamos con planes de carrera claros y capacitación continua. El 80% de nuestros líderes y supervisores iniciaron en puestos operativos.
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Beneficio 2: Excelente Clima -->
-                <div class="col-md-4">
-                    <div class="beneficio-card">
-                        <div class="beneficio-icon-box bg-orange-soft">
-                            <i class="bi bi-emoji-smile text-orange"></i>
-                        </div>
-                        <h3 class="beneficio-title-h3">Clima Laboral WOW</h3>
-                        <p class="beneficio-text">
-                            Fomentamos un ambiente de trabajo dinámico, enérgico, de mutuo respeto y colaboración. Aquí trabajamos felices y motivados.
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Beneficio 3: Descuentos y Alimentación -->
-                <div class="col-md-4">
-                    <div class="beneficio-card">
-                        <div class="beneficio-icon-box bg-green-soft">
-                            <i class="bi bi-cup-straw text-green"></i>
-                        </div>
-                        <h3 class="beneficio-title-h3">Alimentación Saludable</h3>
-                        <p class="beneficio-text">
-                            Disfruta de un batido diario gratis de fruta natural durante tu jornada laboral y descuentos especiales para ti y tu familia directa.
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Beneficio 4: Beneficios de Ley -->
-                <div class="col-md-4">
-                    <div class="beneficio-card">
-                        <div class="beneficio-icon-box bg-blue-soft">
-                            <i class="bi bi-shield-check text-blue"></i>
-                        </div>
-                        <h3 class="beneficio-title-h3">Estabilidad y Ley</h3>
-                        <p class="beneficio-text">
-                            Garantizamos todas las prestaciones de ley desde el primer día (INSS, vacaciones, aguinaldo) y el pago puntual de tu salario.
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Beneficio 5: Bienestar & Salud -->
-                <div class="col-md-4">
-                    <div class="beneficio-card">
-                        <div class="beneficio-icon-box bg-purple-soft">
-                            <i class="bi bi-heart-pulse text-purple"></i>
-                        </div>
-                        <h3 class="beneficio-title-h3">Bienestar Integral</h3>
-                        <p class="beneficio-text">
-                            Promovemos hábitos de vida saludables con actividades deportivas, charlas de nutrición y chequeos preventivos para el personal.
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Beneficio 6: Reconocimientos -->
-                <div class="col-md-4">
-                    <div class="beneficio-card">
-                        <div class="beneficio-icon-box bg-red-soft">
-                            <i class="bi bi-trophy text-red"></i>
-                        </div>
-                        <h3 class="beneficio-title-h3">Premios y Logros</h3>
-                        <p class="beneficio-text">
-                            Reconocemos el esfuerzo extraordinario de nuestra gente a través del premio al Colaborador WOW del mes y bonos por desempeño.
-                        </p>
-                    </div>
-                </div>
-
+                        <?php
+                    }
+                } catch (Exception $e) {
+                    error_log("Error al cargar beneficios: " . $e->getMessage());
+                }
+                ?>
             </div>
         </div>
     </section>
@@ -116,41 +59,32 @@ include 'layout_talento/header.php';
             <div class="row align-items-center g-5">
                 <div class="col-lg-6">
                     <div class="cultura-badge mb-3">Nuestra Cultura</div>
-                    <h2 class="section-title-custom text-start mb-4">¿Qué significa ser parte del equipo?</h2>
+                    <h2 class="section-title-custom text-start mb-4"><?php echo htmlspecialchars(obtener_config('cultura_titulo', '¿Qué significa ser parte del equipo?')); ?></h2>
                     <p class="lead mb-4">
-                        En Batidos Pitaya, creemos que la felicidad de nuestros clientes comienza con la felicidad de nuestros colaboradores.
+                        <?php echo htmlspecialchars(obtener_config('cultura_subtitulo', 'En Batidos Pitaya...')); ?>
                     </p>
                     
                     <div class="cultura-list">
-                        <div class="cultura-item d-flex gap-3 mb-4">
-                            <div class="cultura-item-icon">
-                                <i class="bi bi-check-circle-fill text-teal"></i>
-                            </div>
-                            <div>
-                                <h4 class="h5 fw-bold text-header mb-1">Pasión por el Servicio</h4>
-                                <p class="text-muted mb-0">Hacer que cada interacción cuente y brindar una Experiencia WOW inolvidable.</p>
-                            </div>
-                        </div>
-
-                        <div class="cultura-item d-flex gap-3 mb-4">
-                            <div class="cultura-item-icon">
-                                <i class="bi bi-check-circle-fill text-teal"></i>
-                            </div>
-                            <div>
-                                <h4 class="h5 fw-bold text-header mb-1">Trabajo en Equipo</h4>
-                                <p class="text-muted mb-0">Nos apoyamos mutuamente. Los logros de uno son los triunfos de todo el equipo.</p>
-                            </div>
-                        </div>
-
-                        <div class="cultura-item d-flex gap-3">
-                            <div class="cultura-item-icon">
-                                <i class="bi bi-check-circle-fill text-teal"></i>
-                            </div>
-                            <div>
-                                <h4 class="h5 fw-bold text-header mb-1">Energía Natural</h4>
-                                <p class="text-muted mb-0">Contagiamos optimismo, promovemos un estilo de vida saludable y cuidamos el medio ambiente.</p>
-                            </div>
-                        </div>
+                        <?php
+                        try {
+                            $stmtCultura = $conn->query("SELECT titulo, descripcion FROM talento_cultura WHERE activo = 1 ORDER BY orden ASC, id ASC");
+                            while ($cult = $stmtCultura->fetch()) {
+                                ?>
+                                <div class="cultura-item d-flex gap-3 mb-4">
+                                    <div class="cultura-item-icon">
+                                        <i class="bi bi-check-circle-fill text-teal"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="h5 fw-bold text-header mb-1"><?php echo htmlspecialchars($cult['titulo']); ?></h4>
+                                        <p class="text-muted mb-0"><?php echo htmlspecialchars($cult['descripcion']); ?></p>
+                                    </div>
+                                </div>
+                                <?php
+                            }
+                        } catch (Exception $e) {
+                            error_log("Error al cargar ítems de cultura: " . $e->getMessage());
+                        }
+                        ?>
                     </div>
                 </div>
                 
@@ -159,7 +93,7 @@ include 'layout_talento/header.php';
                         <div class="cultura-banner-content text-center text-white py-5 px-4">
                             <i class="bi bi-quote fs-1 d-block mb-3"></i>
                             <blockquote class="fs-4 fw-light italic mb-4">
-                                "El mejor beneficio es levantarse cada día sabiendo que tu trabajo contribuye a mejorar la salud y la energía de miles de nicas."
+                                "<?php echo htmlspecialchars(obtener_config('cultura_cita', 'El mejor beneficio...')); ?>"
                             </blockquote>
                             <span class="d-block fw-bold tracking-wide text-uppercase">Equipo Batidos Pitaya</span>
                         </div>

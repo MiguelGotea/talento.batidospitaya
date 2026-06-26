@@ -1,6 +1,23 @@
 <?php
 // layout_talento/header.php
 // Plantilla de cabecera compartida para el portal de Talento de Batidos Pitaya
+require_once 'core/database/conexion.php';
+
+// Obtener configuraciones globales del portal
+$global_config = [];
+try {
+    $stmtConfig = $conn->query("SELECT clave, valor FROM talento_configuracion");
+    while ($rowConfig = $stmtConfig->fetch()) {
+        $global_config[$rowConfig['clave']] = $rowConfig['valor'];
+    }
+} catch (Exception $e) {
+    error_log("Error al cargar configuración de talento: " . $e->getMessage());
+}
+
+function obtener_config($clave, $default = '') {
+    global $global_config;
+    return isset($global_config[$clave]) ? $global_config[$clave] : $default;
+}
 ?>
 <!DOCTYPE html>
 <html lang="es">

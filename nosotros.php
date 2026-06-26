@@ -20,13 +20,13 @@ include 'layout_talento/header.php';
                     <div class="nosotros-group-skeleton" id="grupo-svg-skeleton"></div>
                     <!-- data-src: la imagen NO se descarga hasta que el JS la active -->
                     <img id="grupo-svg"
-                        data-src="assets/img/grupo_pitaya.svg"
-                        alt="Líderes de Tienda Batidos Pitaya"
+                        data-src="<?php echo htmlspecialchars(obtener_config('imagen_nosotros', 'assets/img/grupo_pitaya.svg')); ?>"
+                        alt="<?php echo htmlspecialchars(obtener_config('imagen_nosotros_alt', 'Líderes de Tienda Batidos Pitaya')); ?>"
                         class="nosotros-group-svg"
                         style="display:none;">
                     <div class="nosotros-group-badge" id="grupo-svg-badge" style="display:none;">
                         <i class="bi bi-stars"></i>
-                        <span>Líderes que hacen posible la Experiencia WOW</span>
+                        <span><?php echo htmlspecialchars(obtener_config('imagen_nosotros_badge', 'Líderes que hacen posible la Experiencia WOW')); ?></span>
                     </div>
                 </div>
             </div>
@@ -37,16 +37,34 @@ include 'layout_talento/header.php';
                     <span class="nosotros-subtitle-brand">¿Quiénes Somos?</span>
                     <h2 class="nosotros-title-main">Batidos Pitaya Nicaragua</h2>
 
+                    <?php
+                    // Cargar textos de nosotros
+                    $nosotros_textos = [];
+                    try {
+                        $stmtTextos = $conn->query("SELECT clave, valor FROM talento_textos_nosotros");
+                        while ($rowTxt = $stmtTextos->fetch()) {
+                            $nosotros_textos[$rowTxt['clave']] = $rowTxt['valor'];
+                        }
+                    } catch (Exception $e) {
+                        error_log("Error al obtener textos de nosotros: " . $e->getMessage());
+                    }
+
+                    function obtener_texto_nosotros($clave, $default = '') {
+                        global $nosotros_textos;
+                        return isset($nosotros_textos[$clave]) ? $nosotros_textos[$clave] : $default;
+                    }
+                    ?>
+
                     <p class="nosotros-paragraph">
-                        En Batidos Pitaya creemos que llevar un estilo de vida saludable puede ser sencillo y delicioso. Elaboramos batidos de pura fruta e ingredientes naturales para acompañar a las personas con opciones prácticas, frescas y llenas de energía.
+                        <?php echo obtener_texto_nosotros('parrafo_1', 'En Batidos Pitaya creemos...'); ?>
                     </p>
 
                     <p class="nosotros-paragraph">
-                        Nos mueve el compromiso de crear experiencias memorables, actuando con integridad, innovación y un fuerte espíritu de trabajo en equipo. Cada interacción es una oportunidad para sorprender y generar un impacto positivo.
+                        <?php echo obtener_texto_nosotros('parrafo_2', 'Nos mueve el compromiso...'); ?>
                     </p>
 
                     <p class="nosotros-paragraph">
-                        Hoy seguimos creciendo con una visión clara: convertirnos en el referente de batidos de pura fruta en Centroamérica, impulsados por el talento de nuestra gente y la pasión por hacer las cosas bien.
+                        <?php echo obtener_texto_nosotros('parrafo_3', 'Hoy seguimos creciendo...'); ?>
                     </p>
                 </div>
 
@@ -54,30 +72,24 @@ include 'layout_talento/header.php';
                 <div class="nosotros-col-valores">
                     <h3 class="valores-title">Nuestros Valores</h3>
                     <div class="valores-grid mb-4">
-                        <!-- Valor 1 -->
-                        <div class="valor-card">
-                            <div class="valor-header">
-                                <span class="valor-icon"><i class="bi bi-stars"></i></span>
-                                <h4 class="valor-title-name">Factor WOW</h4>
-                            </div>
-                            <p class="valor-desc">En cada interacción, superando expectativas y creando momentos memorables.</p>
-                        </div>
-                        <!-- Valor 2 -->
-                        <div class="valor-card">
-                            <div class="valor-header">
-                                <span class="valor-icon"><i class="bi bi-shield-check"></i></span>
-                                <h4 class="valor-title-name">Integridad</h4>
-                            </div>
-                            <p class="valor-desc">En cada acción, guiados por la honestidad, la transparencia y la coherencia.</p>
-                        </div>
-                        <!-- Valor 3 -->
-                        <div class="valor-card">
-                            <div class="valor-header">
-                                <span class="valor-icon"><i class="bi bi-people-fill"></i></span>
-                                <h4 class="valor-title-name">Todos Ganamos</h4>
-                            </div>
-                            <p class="valor-desc">Sumando esfuerzos para que el crecimiento y el éxito sean de todos.</p>
-                        </div>
+                        <?php
+                        try {
+                            $stmtValores = $conn->query("SELECT icono, titulo, descripcion FROM talento_valores WHERE activo = 1 ORDER BY orden ASC, id ASC");
+                            while ($val = $stmtValores->fetch()) {
+                                ?>
+                                <div class="valor-card">
+                                    <div class="valor-header">
+                                        <span class="valor-icon"><i class="bi <?php echo htmlspecialchars($val['icono']); ?>"></i></span>
+                                        <h4 class="valor-title-name"><?php echo htmlspecialchars($val['titulo']); ?></h4>
+                                    </div>
+                                    <p class="valor-desc"><?php echo htmlspecialchars($val['descripcion']); ?></p>
+                                </div>
+                                <?php
+                            }
+                        } catch (Exception $e) {
+                            error_log("Error al cargar valores: " . $e->getMessage());
+                        }
+                        ?>
                     </div>
 
                     <!-- Nuevo Apartado: Nuestro Propósito -->
@@ -86,10 +98,10 @@ include 'layout_talento/header.php';
                         <div class="proposito-card">
                             <div class="proposito-header">
                                 <span class="proposito-icon"><i class="bi bi-heart-pulse-fill"></i></span>
-                                <h4 class="proposito-title-name">Impulsar Bienestar y Felicidad</h4>
+                                <h4 class="proposito-title-name"><?php echo htmlspecialchars(obtener_texto_nosotros('proposito_titulo', 'Impulsar Bienestar y Felicidad')); ?></h4>
                             </div>
                             <p class="proposito-desc">
-                                Inspirar hábitos saludables a través de la frescura de la fruta natural y crear momentos WOW que alegren el día de cada cliente, colaborador y comunidad en Nicaragua.
+                                <?php echo obtener_texto_nosotros('proposito_desc', 'Inspirar hábitos saludables...'); ?>
                             </p>
                         </div>
                     </div>
@@ -98,38 +110,33 @@ include 'layout_talento/header.php';
 
             <!-- Estadísticas de Impacto (Indicadores Destacados) -->
             <div class="corp-stats-grid">
-                <!-- Fundación -->
-                <div class="corp-stat-card">
-                    <div class="corp-stat-icon-wrapper">
-                        <i class="bi bi-calendar-check-fill"></i>
-                    </div>
-                    <div class="corp-stat-number" id="stat-fundacion" data-target="2016" data-suffix="">0</div>
-                    <div class="corp-stat-label">Fundado en</div>
-                </div>
-                <!-- Sucursales -->
-                <div class="corp-stat-card">
-                    <div class="corp-stat-icon-wrapper">
-                        <i class="bi bi-shop"></i>
-                    </div>
-                    <div class="corp-stat-number" id="stat-sucursales" data-target="14" data-suffix="">0</div>
-                    <div class="corp-stat-label">Sucursales</div>
-                </div>
-                <!-- Fruta Natural -->
-                <div class="corp-stat-card">
-                    <div class="corp-stat-icon-wrapper">
-                        <i class="bi bi-droplet-fill"></i>
-                    </div>
-                    <div class="corp-stat-number" id="stat-fruta" data-target="100" data-suffix="%">0%</div>
-                    <div class="corp-stat-label">Fruta Natural</div>
-                </div>
-                <!-- Colaboradores -->
-                <div class="corp-stat-card">
-                    <div class="corp-stat-icon-wrapper">
-                        <i class="bi bi-people-fill"></i>
-                    </div>
-                    <div class="corp-stat-number" id="stat-colaboradores" data-target="100" data-suffix="+">0+</div>
-                    <div class="corp-stat-label">Colaboradores</div>
-                </div>
+                <?php
+                try {
+                    $stmtStats = $conn->query("SELECT id, icono, valor_numero, sufijo, etiqueta FROM talento_estadisticas WHERE activo = 1 ORDER BY orden ASC, id ASC");
+                    while ($stat = $stmtStats->fetch()) {
+                        $isSvg = (strpos($stat['icono'], 'svg:') === 0);
+                        ?>
+                        <div class="corp-stat-card">
+                            <div class="corp-stat-icon-wrapper">
+                                <?php if ($isSvg): ?>
+                                    <?php if ($stat['icono'] === 'svg:pitaya'): ?>
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" style="width: 1.8rem; height: 1.8rem; vertical-align: middle;">
+                                            <path d="M12 2.5C7.2 2.5 3.5 6.5 3.5 11.5c0 4 2.5 7.5 6.5 8.5v1.5c0 .6.4 1 1 1s1-.4 1-1v-1.5c4-1 6.5-4.5 6.5-8.5 0-5-3.7-9-8.5-9zm3 8.5c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1zm-6 0c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1zm3 4c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1zm0-6c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1zm0 3c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1z" />
+                                        </svg>
+                                    <?php endif; ?>
+                                <?php else: ?>
+                                    <i class="bi <?php echo htmlspecialchars($stat['icono']); ?>"></i>
+                                <?php endif; ?>
+                            </div>
+                            <div class="corp-stat-number" id="stat-<?php echo $stat['id']; ?>" data-target="<?php echo intval($stat['valor_numero']); ?>" data-suffix="<?php echo htmlspecialchars($stat['sufijo']); ?>">0</div>
+                            <div class="corp-stat-label"><?php echo htmlspecialchars($stat['etiqueta']); ?></div>
+                        </div>
+                        <?php
+                    }
+                } catch (Exception $e) {
+                    error_log("Error al cargar estadísticas: " . $e->getMessage());
+                }
+                ?>
             </div>
         </div>
     </section>
