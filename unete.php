@@ -11,6 +11,20 @@ include 'layout_talento/header.php';
 
 <!-- ==================== SECCIÓN: ÚNETE AL EQUIPO (Vacantes) ==================== -->
 <div id="section-unete-equipo" class="tab-section-content active-tab">
+
+    <!-- ==================== BANNER ÚNETE AL EQUIPO ==================== -->
+    <!-- La imagen se administra desde el ERP → Talento Contenido → Beneficios y Config. -->
+    <?php
+    $bannerUnete = obtener_config('banner_unete', '');
+    if (!empty($bannerUnete)):
+    ?>
+    <div class="unete-banner-wrapper">
+        <img src="<?php echo htmlspecialchars($bannerUnete); ?>"
+             alt="Únete al equipo Batidos Pitaya Nicaragua"
+             class="unete-banner-img">
+    </div>
+    <?php endif; ?>
+
     <!-- Filtros y Búsqueda (Opcional, oculto por defecto según diseño previo) -->
     <section class="filters-section" style="display: none;">
         <div class="container">
