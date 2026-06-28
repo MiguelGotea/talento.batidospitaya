@@ -262,10 +262,7 @@ include 'layout_talento/header.php';
                                     <i class="bi bi-calendar3"></i>
                                     <span><strong>Publicado:</strong> <?= $fechaCreacion ?></span>
                                 </li>
-                                <li>
-                                    <i class="bi bi-clock-fill"></i>
-                                    <span><strong>Urgencia:</strong> <?= $urgenciaEmoji[$nivelUrgencia] ?? '' ?> <?= $urgenciaTexto ?></span>
-                                </li>
+
                             </ul>
                         </div>
 
