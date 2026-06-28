@@ -140,8 +140,16 @@ include 'layout_talento/header.php';
                                     <i class="bi <?php echo htmlspecialchars($stat['icono']); ?>"></i>
                                 <?php endif; ?>
                             </div>
+                            <?php if ($isFeatured): ?>
+                            <!-- Tarjeta destacada: ícono | [etiqueta encima / número abajo] -->
+                            <div class="corp-stat-featured-text">
+                                <div class="corp-stat-label"><?php echo htmlspecialchars($stat['etiqueta']); ?></div>
+                                <div class="corp-stat-number" id="stat-<?php echo $stat['id']; ?>" data-target="<?php echo intval($stat['valor_numero']); ?>" data-suffix="<?php echo htmlspecialchars($stat['sufijo']); ?>">0</div>
+                            </div>
+                            <?php else: ?>
                             <div class="corp-stat-number" id="stat-<?php echo $stat['id']; ?>" data-target="<?php echo intval($stat['valor_numero']); ?>" data-suffix="<?php echo htmlspecialchars($stat['sufijo']); ?>">0</div>
                             <div class="corp-stat-label"><?php echo htmlspecialchars($stat['etiqueta']); ?></div>
+                            <?php endif; ?>
                         </div>
                         <?php
                     }

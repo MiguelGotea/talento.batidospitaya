@@ -1448,18 +1448,32 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 3rem;
+  gap: 2rem;
   padding: 1.5rem 3rem;
   text-align: left;
 }
 
+/* Bloque de texto (etiqueta + número) agrupados verticalmente */
+.corp-stat-card.corp-stat-featured .corp-stat-featured-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
 .corp-stat-card.corp-stat-featured .corp-stat-icon-wrapper {
   margin-bottom: 0;
+  flex-shrink: 0;
 }
 
 .corp-stat-card.corp-stat-featured .corp-stat-label {
   margin-top: 0;
   max-width: none;
+  order: 0; /* Etiqueta primero */
+}
+
+.corp-stat-card.corp-stat-featured .corp-stat-number {
+  order: 1; /* Número debajo de la etiqueta */
+  margin-bottom: 0;
 }
 
 .corp-stat-card::after {
@@ -1624,6 +1638,10 @@ body {
     padding: 2rem 1.25rem 1.5rem;
     text-align: center;
   }
+
+  .corp-stat-card.corp-stat-featured .corp-stat-featured-text {
+    align-items: center;
+  }
 }
 
 @media (max-width: 576px) {
@@ -1646,6 +1664,10 @@ body {
     gap: 0.5rem;
     padding: 1.5rem 1rem;
     text-align: center;
+  }
+
+  .corp-stat-card.corp-stat-featured .corp-stat-featured-text {
+    align-items: center;
   }
 
   .corp-stat-number {
@@ -2156,7 +2178,9 @@ body {
 /* El padding-top compensa el margen negativo de la foto para que
    no sea recortada por el overflow:hidden del carousel-inner */
 .colaboradores-carousel .carousel-inner {
-  padding-top: 90px;
+  /* AJUSTE FOTO: Este valor = la mitad del diámetro de la foto (190px/2 = 95px).
+     Si cambias el tamaño de .colaborador-foto, actualiza también este valor. */
+  padding-top: 95px;
   overflow: visible;
 }
 
@@ -2169,7 +2193,9 @@ body {
   background: var(--color-blanco);
   border-radius: 20px;
   padding: 1.25rem 2rem 2rem;
-  padding-top: 90px; /* espacio para la foto que cuelga arriba */
+  /* AJUSTE FOTO: Este padding-top = la mitad del diámetro de la foto (190px/2 = 95px).
+     Si cambias el tamaño de .colaborador-foto, actualiza también este valor. */
+  padding-top: 95px;
   box-shadow: var(--sombra-md);
   border: 1px solid var(--color-borde);
   text-align: center;
@@ -2179,7 +2205,9 @@ body {
   flex-direction: column;
   align-items: center;
   position: relative;
-  margin-top: 90px;
+  /* AJUSTE FOTO: Este margin-top = la mitad del diámetro de la foto (190px/2 = 95px).
+     Si cambias el tamaño de .colaborador-foto, actualiza también este valor. */
+  margin-top: 95px;
 }
 
 .colaborador-card:hover {
@@ -2190,7 +2218,10 @@ body {
 /* Foto circular colgante */
 .colaborador-foto-wrapper {
   position: absolute;
-  top: -90px;
+  /* AJUSTE FOTO: Este valor = -1 * (diámetro / 2). Con 190px → top: -95px.
+     Si cambias el tamaño de .colaborador-foto, actualiza también este valor,
+     junto con padding-top, margin-top y padding-top del carousel-inner. */
+  top: -95px;
   left: 50%;
   transform: translateX(-50%);
   margin-bottom: 0;
@@ -2198,8 +2229,11 @@ body {
 }
 
 .colaborador-foto {
-  width: 160px;
-  height: 160px;
+  /* AJUSTE FOTO: Cambia estos dos valores para ajustar el tamaño de la foto.
+     Recuerda actualizar también top del wrapper, padding-top y margin-top de
+     .colaborador-card y padding-top de .colaboradores-carousel .carousel-inner. */
+  width: 190px;
+  height: 190px;
   border-radius: 50%;
   object-fit: cover;
   border: 5px solid var(--color-blanco);
@@ -2210,8 +2244,9 @@ body {
 
 /* Avatar placeholder con iniciales */
 .colaborador-avatar-placeholder {
-  width: 160px;
-  height: 160px;
+  /* AJUSTE FOTO: Debe coincidir con el width/height de .colaborador-foto */
+  width: 190px;
+  height: 190px;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -2611,4 +2646,18 @@ body {
 .beneficios-cta-section {
   background: linear-gradient(135deg, rgba(14, 84, 76, 0.02) 0%, rgba(81, 184, 172, 0.05) 100%);
   border-top: 1px solid var(--color-borde);
+}
+
+/* ==================== BANNER ÚNETE AL EQUIPO ==================== */
+.unete-banner-wrapper {
+  width: 100%;
+  line-height: 0; /* elimina espacio fantasma debajo del img */
+  box-shadow: 0 4px 18px rgba(14, 84, 76, 0.10);
+}
+
+.unete-banner-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
 }
