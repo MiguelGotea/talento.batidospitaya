@@ -118,7 +118,11 @@ include 'layout_talento/header.php';
                         // Aplicar color de fondo personalizado si está configurado
                         $colorFondo = !empty($stat['color_fondo']) ? $stat['color_fondo'] : '';
                         $cardStyle = '';
+                        $isFeatured = (stripos($stat['etiqueta'], 'desde') !== false);
                         $cardClass = 'corp-stat-card';
+                        if ($isFeatured) {
+                            $cardClass .= ' corp-stat-featured';
+                        }
                         if ($colorFondo) {
                             $cardStyle = "background:{$colorFondo}; --shadow-color:{$colorFondo};";
                             $cardClass .= ' has-custom-bg';

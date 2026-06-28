@@ -73,6 +73,49 @@ function obtener_config($clave, $default = '') {
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- ===== Personalización Visual Dinámica (desde talento_configuracion) ===== -->
+    <?php
+    $colorMarca      = htmlspecialchars(obtener_config('color_marca',      '#51B8AC'));
+    $colorMarcaHover = htmlspecialchars(obtener_config('color_marca_hover', '#0E544C'));
+    $colorHeader     = htmlspecialchars(obtener_config('color_header',     '#0E544C'));
+    $colorFooter     = htmlspecialchars(obtener_config('color_footer',     '#0E544C'));
+    $colorFondo      = htmlspecialchars(obtener_config('color_fondo',      '#ffffff'));
+    $colorTexto      = htmlspecialchars(obtener_config('color_texto',      '#1a1a2e'));
+    $imagenFondo     = obtener_config('imagen_fondo', '');
+    $fondoOpacidad   = obtener_config('imagen_fondo_opacidad', '0.08');
+    $fondoRepetir    = obtener_config('imagen_fondo_repetir',  'no-repeat');
+    $fondoSize       = obtener_config('imagen_fondo_size',     'cover');
+    ?>
+    <style>
+        :root {
+            --color-principal:   <?= $colorMarca ?>;
+            --color-hover:       <?= $colorMarcaHover ?>;
+            --color-header:      <?= $colorHeader ?>;
+            --color-footer:      <?= $colorFooter ?>;
+            --color-fondo-pagina: <?= $colorFondo ?>;
+            --color-texto-base:  <?= $colorTexto ?>;
+        }
+        body {
+            background-color: <?= $colorFondo ?>;
+            color: <?= $colorTexto ?>;
+        }
+        <?php if (!empty($imagenFondo)): ?>
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: url('<?= htmlspecialchars($imagenFondo) ?>');
+            background-size: <?= htmlspecialchars($fondoSize) ?>;
+            background-repeat: <?= htmlspecialchars($fondoRepetir) ?>;
+            background-position: center;
+            opacity: <?= floatval($fondoOpacidad) ?>;
+            pointer-events: none;
+            z-index: 0;
+        }
+        body > * { position: relative; z-index: 1; }
+        <?php endif; ?>
+    </style>
 </head>
 
 <body>
