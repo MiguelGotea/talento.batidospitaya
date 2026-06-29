@@ -72,11 +72,11 @@ $urgenciaTexto = $urgenciaMap[$nivelUrgencia] ?? 'No urgente';
 $urgenciaBadge = $urgenciaBadgeMap[$nivelUrgencia] ?? 'secondary';
 
 $responsabilidades = !empty($detalle['responsabilidades'])
-    ? array_filter(array_map('trim', explode("\n", $detalle['responsabilidades'])))
+    ? array_filter(array_map('trim', explode("\n", str_replace('|', "\n", $detalle['responsabilidades']))))
     : [];
 
 $requisitos = !empty($detalle['requisitos'])
-    ? array_filter(array_map('trim', explode("\n", $detalle['requisitos'])))
+    ? array_filter(array_map('trim', explode("\n", str_replace('|', "\n", $detalle['requisitos']))))
     : [];
 
 // Fecha legible
@@ -130,14 +130,7 @@ include 'layout_talento/header.php';
                                     <i class="bi bi-geo-alt-fill"></i>
                                     <?= htmlspecialchars($detalle['departamento']) ?>
                                 </span>
-                                <span class="meta-item">
-                                    <i class="bi bi-building"></i>
-                                    <?= htmlspecialchars($detalle['sucursal_nombre']) ?>
-                                </span>
-                                <span class="meta-item">
-                                    <i class="bi bi-calendar3"></i>
-                                    Publicado el <?= $fechaCreacion ?>
-                                </span>
+
                             </div>
                         </div>
 
@@ -216,15 +209,7 @@ include 'layout_talento/header.php';
 
                         <!-- Tarjeta de salario y postulación -->
                         <div class="sidebar-card">
-                            <?php if ($detalle['salario_propuesto'] > 0): ?>
-                            <div class="sidebar-salario">
-                                <span class="salario-label">Salario propuesto</span>
-                                <span class="salario-monto">
-                                    C$ <?= number_format($detalle['salario_propuesto'], 0, ',', '.') ?>
-                                    <span class="salario-periodo">/mes</span>
-                                </span>
-                            </div>
-                            <?php endif; ?>
+
 
                             <button
                                 class="btn-postular w-100 mt-3"
@@ -251,16 +236,8 @@ include 'layout_talento/header.php';
                                     <span><strong>Ubicación:</strong> <?= htmlspecialchars($detalle['departamento']) ?></span>
                                 </li>
                                 <li>
-                                    <i class="bi bi-building"></i>
-                                    <span><strong>Sucursal:</strong> <?= htmlspecialchars($detalle['sucursal_nombre']) ?></span>
-                                </li>
-                                <li>
                                     <i class="bi bi-briefcase-fill"></i>
                                     <span><strong>Área:</strong> <?= htmlspecialchars($detalle['especialidad_area'] ?: 'Operaciones') ?></span>
-                                </li>
-                                <li>
-                                    <i class="bi bi-calendar3"></i>
-                                    <span><strong>Publicado:</strong> <?= $fechaCreacion ?></span>
                                 </li>
 
                             </ul>
