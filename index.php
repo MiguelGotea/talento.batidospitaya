@@ -108,55 +108,65 @@ include 'layout_talento/header.php';
                 </div>
             </div>
 
-            <!-- Estadísticas de Impacto (Indicadores Destacados) -->
-            <div class="corp-stats-grid">
-                <?php
-                try {
-                    $stmtStats = $conn->query("SELECT id, icono, valor_numero, sufijo, etiqueta, color_fondo FROM talento_estadisticas WHERE activo = 1 ORDER BY orden ASC, id ASC");
-                    while ($stat = $stmtStats->fetch()) {
-                        $isSvg = (strpos($stat['icono'], 'svg:') === 0);
-                        // Aplicar color de fondo personalizado si está configurado
-                        $colorFondo = !empty($stat['color_fondo']) ? $stat['color_fondo'] : '';
-                        $cardStyle = '';
-                        $isFeatured = (stripos($stat['etiqueta'], 'desde') !== false);
-                        $cardClass = 'corp-stat-card';
-                        if ($isFeatured) {
-                            $cardClass .= ' corp-stat-featured';
-                        }
-                        if ($colorFondo) {
-                            $cardStyle = "background:{$colorFondo}; --shadow-color:{$colorFondo};";
-                            $cardClass .= ' has-custom-bg';
-                        }
-                        ?>
-                        <div class="<?= $cardClass ?>"<?= $cardStyle ? " style=\"{$cardStyle}\"" : '' ?>>
-                            <div class="corp-stat-icon-wrapper">
-                                <?php if ($isSvg): ?>
-                                    <?php if ($stat['icono'] === 'svg:pitaya'): ?>
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" style="width: 1.8rem; height: 1.8rem; vertical-align: middle;">
-                                            <path d="M12 2.5C7.2 2.5 3.5 6.5 3.5 11.5c0 4 2.5 7.5 6.5 8.5v1.5c0 .6.4 1 1 1s1-.4 1-1v-1.5c4-1 6.5-4.5 6.5-8.5 0-5-3.7-9-8.5-9zm3 8.5c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1zm-6 0c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1zm3 4c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1zm0-6c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1zm0 3c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1z" />
-                                        </svg>
+            <!-- Estadísticas de Impacto (Indicadores Destacados con Imagen Lateral) -->
+            <div class="corp-stats-wrapper">
+                <!-- Columna Izquierda: Imagen Ilustrativa -->
+                <div class="corp-stats-image-col">
+                    <img src="<?php echo htmlspecialchars(obtener_config('imagen_stats_nosotros', 'assets/img/stats_nosotros.png')); ?>" 
+                         alt="Batido Pitaya Natural" 
+                         class="corp-stats-side-img">
+                </div>
+
+                <!-- Columna Derecha: Indicadores Grid -->
+                <div class="corp-stats-grid">
+                    <?php
+                    try {
+                        $stmtStats = $conn->query("SELECT id, icono, valor_numero, sufijo, etiqueta, color_fondo FROM talento_estadisticas WHERE activo = 1 ORDER BY orden ASC, id ASC");
+                        while ($stat = $stmtStats->fetch()) {
+                            $isSvg = (strpos($stat['icono'], 'svg:') === 0);
+                            // Aplicar color de fondo personalizado si está configurado
+                            $colorFondo = !empty($stat['color_fondo']) ? $stat['color_fondo'] : '';
+                            $cardStyle = '';
+                            $isFeatured = (stripos($stat['etiqueta'], 'desde') !== false);
+                            $cardClass = 'corp-stat-card';
+                            if ($isFeatured) {
+                                $cardClass .= ' corp-stat-featured';
+                            }
+                            if ($colorFondo) {
+                                $cardStyle = "background:{$colorFondo}; --shadow-color:{$colorFondo};";
+                                $cardClass .= ' has-custom-bg';
+                            }
+                            ?>
+                            <div class="<?= $cardClass ?>"<?= $cardStyle ? " style=\"{$cardStyle}\"" : '' ?>>
+                                <div class="corp-stat-icon-wrapper">
+                                    <?php if ($isSvg): ?>
+                                        <?php if ($stat['icono'] === 'svg:pitaya'): ?>
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" style="width: 1.8rem; height: 1.8rem; vertical-align: middle;">
+                                                <path d="M12 2.5C7.2 2.5 3.5 6.5 3.5 11.5c0 4 2.5 7.5 6.5 8.5v1.5c0 .6.4 1 1 1s1-.4 1-1v-1.5c4-1 6.5-4.5 6.5-8.5 0-5-3.7-9-8.5-9zm3 8.5c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1zm-6 0c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1zm3 4c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1zm0-6c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1zm0 3c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1z" />
+                                            </svg>
+                                        <?php endif; ?>
+                                    <?php else: ?>
+                                        <i class="bi <?php echo htmlspecialchars($stat['icono']); ?>"></i>
                                     <?php endif; ?>
+                                </div>
+                                <?php if ($isFeatured): ?>
+                                <!-- Tarjeta destacada: ícono | [etiqueta encima / número abajo] -->
+                                <div class="corp-stat-featured-text">
+                                    <div class="corp-stat-label"><?php echo htmlspecialchars($stat['etiqueta']); ?></div>
+                                    <div class="corp-stat-number" id="stat-<?php echo $stat['id']; ?>" data-target="<?php echo intval($stat['valor_numero']); ?>" data-suffix="<?php echo htmlspecialchars($stat['sufijo']); ?>">0</div>
+                                </div>
                                 <?php else: ?>
-                                    <i class="bi <?php echo htmlspecialchars($stat['icono']); ?>"></i>
+                                <div class="corp-stat-number" id="stat-<?php echo $stat['id']; ?>" data-target="<?php echo intval($stat['valor_numero']); ?>" data-suffix="<?php echo htmlspecialchars($stat['sufijo']); ?>">0</div>
+                                <div class="corp-stat-label"><?php echo htmlspecialchars($stat['etiqueta']); ?></div>
                                 <?php endif; ?>
                             </div>
-                            <?php if ($isFeatured): ?>
-                            <!-- Tarjeta destacada: ícono | [etiqueta encima / número abajo] -->
-                            <div class="corp-stat-featured-text">
-                                <div class="corp-stat-label"><?php echo htmlspecialchars($stat['etiqueta']); ?></div>
-                                <div class="corp-stat-number" id="stat-<?php echo $stat['id']; ?>" data-target="<?php echo intval($stat['valor_numero']); ?>" data-suffix="<?php echo htmlspecialchars($stat['sufijo']); ?>">0</div>
-                            </div>
-                            <?php else: ?>
-                            <div class="corp-stat-number" id="stat-<?php echo $stat['id']; ?>" data-target="<?php echo intval($stat['valor_numero']); ?>" data-suffix="<?php echo htmlspecialchars($stat['sufijo']); ?>">0</div>
-                            <div class="corp-stat-label"><?php echo htmlspecialchars($stat['etiqueta']); ?></div>
-                            <?php endif; ?>
-                        </div>
-                        <?php
+                            <?php
+                        }
+                    } catch (Exception $e) {
+                        error_log("Error al cargar estadísticas: " . $e->getMessage());
                     }
-                } catch (Exception $e) {
-                    error_log("Error al cargar estadísticas: " . $e->getMessage());
-                }
-                ?>
+                    ?>
+                </div>
             </div>
         </div>
     </section>

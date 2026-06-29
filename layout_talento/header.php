@@ -94,6 +94,7 @@ function obtener_config($clave, $default = '') {
             --color-header:      <?= $colorHeader ?>;
             --color-footer:      <?= $colorFooter ?>;
             --color-fondo-pagina: <?= $colorFondo ?>;
+            --color-fondo:        <?= $colorFondo ?>; /* Sincroniza la variable global con la BD */
             --color-texto-base:  <?= $colorTexto ?>;
         }
         body {
@@ -114,6 +115,15 @@ function obtener_config($clave, $default = '') {
             z-index: 0;
         }
         body > * { position: relative; z-index: 1; }
+        
+        /* Forzar transparencia para permitir ver el fondo de pantalla */
+        .sobre-nosotros-section,
+        .equipo-section,
+        .noticias-section,
+        .tab-section-content {
+            background-color: transparent !important;
+            background: transparent !important;
+        }
         <?php endif; ?>
     </style>
 </head>
