@@ -1431,8 +1431,14 @@ body {
 }
 
 .corp-stats-image-col {
-  flex: 0 0 35%;
-  max-width: 35%;
+  /* =========================================================================
+     MANUAL TWEAK: TAMAÑO DE LA COLUMNA DE LA IMAGEN
+     - Ajusta el valor flex y max-width de la columna para agrandar/encoger la imagen.
+     - P. ej. 45% (actual) hace la imagen más grande, 35% más pequeña.
+     ========================================================================= */
+  flex: 0 0 45%;
+  max-width: 45%;
+  /* ========================================================================= */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -1440,7 +1446,13 @@ body {
 
 .corp-stats-side-img {
   width: 100%;
-  max-width: 340px;
+  /* =========================================================================
+     MANUAL TWEAK: ANCHO MÁXIMO DE LA IMAGEN
+     - Controla el tamaño límite de la imagen del batido (p. ej. 450px).
+     - Si la imagen se ve muy grande o borrosa, redúcelo (p. ej. a 380px o 340px).
+     ========================================================================= */
+  max-width: 450px; 
+  /* ========================================================================= */
   height: auto;
   object-fit: contain;
   filter: drop-shadow(0 12px 24px rgba(14, 84, 76, 0.1));
@@ -1454,10 +1466,26 @@ body {
 
 .corp-stats-grid {
   flex: 1;
-  display: grid;
-  grid-template-columns: repeat(12, 1fr);
+  display: flex;
+  flex-direction: column;
   gap: 1.25rem;
-  margin-top: 0;
+}
+
+.corp-stats-subgrid {
+  display: grid;
+  /* =========================================================================
+     MANUAL TWEAK: DISTRIBUCIÓN DE TARJETAS SECUNDARIAS
+     - El grid calcula automáticamente cuántas tarjetas caben en una fila.
+     - 'minmax(180px, 1fr)' significa que cada tarjeta mide al menos 180px de ancho
+       y se expandirá equitativamente para llenar la fila inferior.
+     ========================================================================= */
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1.25rem;
+  width: 100%;
+}
+
+.corp-stats-subgrid .corp-stat-card {
+  grid-column: auto !important; /* Anula el 'span 4' por defecto */
 }
 
 .corp-stat-card {
@@ -1669,16 +1697,20 @@ body {
 
   .corp-stats-grid {
     width: 100%;
-    grid-template-columns: repeat(2, 1fr);
     margin-top: 0.5rem;
   }
 
+  .corp-stats-subgrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+
   .corp-stat-card {
-    grid-column: span 1;
+    grid-column: auto !important;
   }
 
   .corp-stat-card.corp-stat-featured {
-    grid-column: span 2;
+    width: 100%;
     flex-direction: column;
     gap: 0.75rem;
     padding: 2rem 1.25rem 1.5rem;
@@ -1695,17 +1727,17 @@ body {
     grid-template-columns: 1fr;
   }
 
-  .corp-stats-grid {
+  .corp-stats-subgrid {
     grid-template-columns: repeat(2, 1fr);
     gap: 0.75rem;
   }
 
   .corp-stat-card {
-    grid-column: span 1;
+    grid-column: auto !important;
   }
 
   .corp-stat-card.corp-stat-featured {
-    grid-column: span 2;
+    width: 100%;
     flex-direction: column;
     gap: 0.5rem;
     padding: 1.5rem 1rem;
