@@ -1263,17 +1263,17 @@ body {
   display: inline-block;
   width: 100%;
   max-width: 1060px;
-  /* Recortar el espacio transparente superior del SVG */
-  overflow: hidden;
+  /* overflow visible para que cualquier imagen (SVG, JPG, PNG) se muestre completa */
+  overflow: visible;
 }
 
 .nosotros-group-svg {
   width: 100%;
   height: auto;
   display: block;
-  /* Subir la imagen para eliminar el espacio transparente superior */
-  margin-top: -18%;
-  /* drop-shadow preserva la transparencia del SVG */
+  margin-top: 0;
+  border-radius: 16px;
+  /* drop-shadow preserva la transparencia del SVG y funciona también en raster */
   filter: drop-shadow(0 6px 20px rgba(14, 84, 76, 0.12));
   /* Transición de aparición suave al cargar */
   transition: opacity 0.5s ease;
@@ -1432,12 +1432,17 @@ body {
 
 .corp-stats-image-col {
   /* =========================================================================
-     MANUAL TWEAK: TAMAÑO DE LA COLUMNA DE LA IMAGEN
-     - Ajusta el valor flex y max-width de la columna para agrandar/encoger la imagen.
-     - P. ej. 45% (actual) hace la imagen más grande, 35% más pequeña.
+     CONTROL: TAMAÑO DE LA COLUMNA DE LA IMAGEN
+     - Este % determina cuánto espacio ocupa la imagen dentro del bloque.
+     - El espacio restante (100% - este %) lo toma el bloque de indicadores.
+     - Reduce este % para dar MÁS espacio a los indicadores (p. ej. 40%).
+     - Aumenta este % para dar MÁS espacio a la imagen (p. ej. 60%).
+     - Cambia AMBOS valores (flex y max-width) al mismo tiempo.
      ========================================================================= */
-  flex: 0 0 45%;
-  max-width: 45%;
+  flex: 0 0 40%;
+  /* <-- CAMBIA ESTE % para agrandar/encoger la imagen */
+  max-width: 40%;
+  /* <-- IGUAL que el valor de arriba */
   /* ========================================================================= */
   display: flex;
   justify-content: center;
@@ -1448,10 +1453,10 @@ body {
   width: 100%;
   /* =========================================================================
      MANUAL TWEAK: ANCHO MÁXIMO DE LA IMAGEN
-     - Controla el tamaño límite de la imagen del batido (p. ej. 450px).
-     - Si la imagen se ve muy grande o borrosa, redúcelo (p. ej. a 380px o 340px).
+     - Controla el tamaño límite de la imagen del batido (p. ej. 520px).
+     - Si la imagen se ve muy grande o borrosa, redúcelo (p. ej. a 420px o 360px).
      ========================================================================= */
-  max-width: 450px; 
+  max-width: 520px;
   /* ========================================================================= */
   height: auto;
   object-fit: contain;
@@ -1460,41 +1465,73 @@ body {
 }
 
 @keyframes floatStatImg {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-8px);
+  }
 }
 
 .corp-stats-grid {
+  /* =========================================================================
+     CONTROL: BLOQUE DE INDICADORES (toma el espacio restante de la imagen)
+     - Con flex:1 este bloque ocupa TODO el ancho que la imagen no usa.
+     - Si quieres darle un ancho mínimo fijo (p. ej. 420px), añade: min-width: 420px;
+     ========================================================================= */
   flex: 1;
+  min-width: 0;
+  /* Permite que el grid se encoja sin romper el layout */
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
+  /* Espacio vertical entre la tarjeta grande y el subgrid */
 }
 
 .corp-stats-subgrid {
-  display: grid;
   /* =========================================================================
-     MANUAL TWEAK: DISTRIBUCIÓN DE TARJETAS SECUNDARIAS
-     - El grid calcula automáticamente cuántas tarjetas caben en una fila.
-     - 'minmax(180px, 1fr)' significa que cada tarjeta mide al menos 180px de ancho
-       y se expandirá equitativamente para llenar la fila inferior.
+     CONTROL: FILA DE LOS 4 INDICADORES SECUNDARIOS
+     - flex-wrap: nowrap  → siempre en una sola fila horizontal.
+     - gap                → espacio entre cada indicador.
      ========================================================================= */
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 1.25rem;
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 0.75rem;
+  /* <-- CAMBIA ESTE valor para más/menos separación entre tarjetas */
   width: 100%;
+  overflow: hidden;
+  /* Evita que el contenido desborde y fuerce un salto */
 }
 
 .corp-stats-subgrid .corp-stat-card {
-  grid-column: auto !important; /* Anula el 'span 4' por defecto */
+  flex: 1 1 0;
+  /* Cada tarjeta ocupa el mismo ancho proporcionalmente */
+  min-width: 0;
+  /* Permite que la tarjeta se encoja sin romper el flex */
+  grid-column: auto !important;
+  /* =========================================================================
+     CONTROL: PADDING INTERNO DE CADA TARJETA SECUNDARIA
+     - Reduce padding para ganar espacio interior si el texto se corta.
+     ========================================================================= */
+  padding: 1.6rem 0.8rem 1.4rem; /* Aumentado de 1.25rem 0.6rem 1rem */
+  /* arriba | izquierda-derecha | abajo */
 }
 
 .corp-stat-card {
   grid-column: span 4;
-  background: linear-gradient(145deg, #ffffff 0%, #f0faf9 100%);
-  padding: 2rem 1.25rem 1.5rem;
+  background: #FFC80C; /* Modificado a color de fondo #FFC80C */
+  /* =========================================================================
+     TAMAÑO VISUAL — PADDING DE TARJETA BASE (aplica a todas las tarjetas)
+     - Aumenta estos valores para hacer las tarjetas más altas/anchas.
+     - Formato: arriba | izquierda-derecha | abajo
+     ========================================================================= */
+  padding: 2.5rem 1.5rem 2rem; /* Aumentado de 2rem 1.25rem 1.5rem */
   border-radius: 20px;
   text-align: center;
-  border: 1px solid rgba(81, 184, 172, 0.2);
+  border: 1px solid rgba(14, 84, 76, 0.15); /* Ajustado color de borde para mejor contraste */
   box-shadow: 0 4px 16px rgba(14, 84, 76, 0.06);
   transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
@@ -1507,7 +1544,12 @@ body {
   align-items: center;
   justify-content: center;
   gap: 2rem;
-  padding: 1.5rem 3rem;
+  /* =========================================================================
+     TAMAÑO VISUAL — PADDING DE LA TARJETA GRANDE ("Batidos Servidos")
+     - Aumenta para hacer la tarjeta más alta.
+     - Formato: arriba | izquierda-derecha
+     ========================================================================= */
+  padding: 2.2rem 3.5rem; /* Aumentado de 1.5rem 3rem */
   text-align: left;
 }
 
@@ -1526,11 +1568,13 @@ body {
 .corp-stat-card.corp-stat-featured .corp-stat-label {
   margin-top: 0;
   max-width: none;
-  order: 0; /* Etiqueta primero */
+  order: 0;
+  /* Etiqueta primero */
 }
 
 .corp-stat-card.corp-stat-featured .corp-stat-number {
-  order: 1; /* Número debajo de la etiqueta */
+  order: 1;
+  /* Número debajo de la etiqueta */
   margin-bottom: 0;
 }
 
@@ -1557,32 +1601,33 @@ body {
   transform: scaleX(1);
 }
 
-/* Tarjeta de indicador con color de fondo personalizado (desde BD via inline style) */
+/* Tarjeta con color personalizado desde BD: se ignora el color de fondo
+   para que todas las tarjetas mantengan el mismo estilo visual uniforme */
 .corp-stat-card.has-custom-bg {
-  border-color: rgba(255, 255, 255, 0.18);
+  background: #FFC80C !important; /* Modificado a color de fondo #FFC80C */
+  border-color: rgba(14, 84, 76, 0.15) !important;
 }
 
 .corp-stat-card.has-custom-bg .corp-stat-number,
 .corp-stat-card.has-custom-bg .corp-stat-label {
-  color: #ffffff !important;
+  color: var(--color-header) !important; /* Asegura el color de texto corporativo verde oscuro */
 }
 
 .corp-stat-card.has-custom-bg .corp-stat-icon-wrapper {
-  background: rgba(255, 255, 255, 0.22);
+  background: linear-gradient(135deg, rgba(81, 184, 172, 0.15) 0%, rgba(14, 84, 76, 0.1) 100%);
 }
 
 .corp-stat-card.has-custom-bg .corp-stat-icon-wrapper i,
 .corp-stat-card.has-custom-bg .corp-stat-icon-wrapper svg {
-  color: #ffffff !important;
+  color: var(--color-header);
 }
 
 .corp-stat-card.has-custom-bg:hover {
-  box-shadow: 0 12px 30px var(--shadow-color, rgba(0,0,0,0.25));
-  opacity: 0.92;
+  box-shadow: 0 12px 30px rgba(14, 84, 76, 0.12);
 }
 
 .corp-stat-card.has-custom-bg::after {
-  background: rgba(255, 255, 255, 0.5);
+  background: linear-gradient(90deg, #51B8AC, #0E544C);
 }
 
 /* Contenedor circular del icono */
@@ -1616,7 +1661,11 @@ body {
 
 .corp-stat-number {
   font-family: 'Outfit', 'Inter', sans-serif;
-  font-size: 3rem;
+  /* =========================================================================
+     TAMAÑO VISUAL — NÚMERO DE LA TARJETA GRANDE ("Batidos Servidos")
+     - Cambia font-size para agrandar/encoger el número principal.
+     ========================================================================= */
+  font-size: 3.8rem;  /* <-- Aumentado de 3rem */
   font-weight: 800;
   color: var(--color-header);
   line-height: 1;
@@ -1624,11 +1673,41 @@ body {
 }
 
 .corp-stat-label {
-  font-size: 0.85rem;
-  color: var(--color-texto-secundario);
-  font-weight: 600;
+  font-size: 0.95rem; /* Aumentado de 0.85rem */
+  color: var(--color-header); /* Cambiado de var(--color-texto-secundario) a var(--color-header) para mejor contraste en fondo amarillo */
+  font-weight: 700; /* Aumentado de 600 */
   text-transform: uppercase;
   letter-spacing: 0.8px;
+}
+
+/* =============================================================================
+   TAMAÑO VISUAL — TARJETAS SECUNDARIAS (los 4 indicadores en fila)
+   Estos overrides controlan el tamaño visual de los 4 indicadores de la fila
+   inferior. Ajusta cada valor para agrandar o encoger:
+   - corp-stat-number : el número grande (2rem = actual, 2.5rem = más grande)
+   - corp-stat-label  : el texto de la etiqueta (0.72rem actual)
+   - corp-stat-icon-wrapper : el círculo del ícono (44px actual)
+   ============================================================================= */
+.corp-stats-subgrid .corp-stat-card .corp-stat-number {
+  font-size: 2.6rem;  /* <-- Aumentado de 2rem */
+}
+
+.corp-stats-subgrid .corp-stat-card .corp-stat-label {
+  font-size: 0.82rem;  /* <-- Aumentado de 0.72rem */
+  color: var(--color-header); /* Cambiado de var(--color-texto-secundario) a var(--color-header) para mejor contraste */
+  font-weight: 700;
+  letter-spacing: 0.4px;
+}
+
+.corp-stats-subgrid .corp-stat-card .corp-stat-icon-wrapper {
+  width: 50px;   /* <-- Aumentado de 44px */
+  height: 50px;  /* <-- IGUAL que el width */
+  margin-bottom: 0.6rem;
+}
+
+.corp-stats-subgrid .corp-stat-card .corp-stat-icon-wrapper i,
+.corp-stats-subgrid .corp-stat-card .corp-stat-icon-wrapper svg {
+  font-size: 1.4rem;  /* <-- Aumentado de 1.2rem */
 }
 
 /* ==================== Botón Flotante "Aplicar" ==================== */
@@ -1701,12 +1780,13 @@ body {
   }
 
   .corp-stats-subgrid {
-    grid-template-columns: repeat(2, 1fr);
+    flex-wrap: wrap;
+    /* En tablet: 2 por fila */
     gap: 0.75rem;
   }
 
-  .corp-stat-card {
-    grid-column: auto !important;
+  .corp-stats-subgrid .corp-stat-card {
+    flex: 1 1 calc(50% - 0.75rem);
   }
 
   .corp-stat-card.corp-stat-featured {
@@ -1728,12 +1808,13 @@ body {
   }
 
   .corp-stats-subgrid {
-    grid-template-columns: repeat(2, 1fr);
+    flex-wrap: wrap;
+    /* En móvil: 2 por fila */
     gap: 0.75rem;
   }
 
-  .corp-stat-card {
-    grid-column: auto !important;
+  .corp-stats-subgrid .corp-stat-card {
+    flex: 1 1 calc(50% - 0.75rem);
   }
 
   .corp-stat-card.corp-stat-featured {
@@ -2669,23 +2750,53 @@ body {
 }
 
 /* Clases de colores de iconos blandos */
-.bg-teal-soft { background-color: rgba(81, 184, 172, 0.12); }
-.text-teal { color: #2e8b7f; }
+.bg-teal-soft {
+  background-color: rgba(81, 184, 172, 0.12);
+}
 
-.bg-orange-soft { background-color: rgba(255, 107, 0, 0.1); }
-.text-orange { color: #d45900; }
+.text-teal {
+  color: #2e8b7f;
+}
 
-.bg-green-soft { background-color: rgba(33, 136, 56, 0.1); }
-.text-green { color: #1e7e34; }
+.bg-orange-soft {
+  background-color: rgba(255, 107, 0, 0.1);
+}
 
-.bg-blue-soft { background-color: rgba(0, 123, 255, 0.1); }
-.text-blue { color: #0056b3; }
+.text-orange {
+  color: #d45900;
+}
 
-.bg-purple-soft { background-color: rgba(111, 66, 193, 0.1); }
-.text-purple { color: #5a349c; }
+.bg-green-soft {
+  background-color: rgba(33, 136, 56, 0.1);
+}
 
-.bg-red-soft { background-color: rgba(220, 53, 69, 0.1); }
-.text-red { color: #b21f2d; }
+.text-green {
+  color: #1e7e34;
+}
+
+.bg-blue-soft {
+  background-color: rgba(0, 123, 255, 0.1);
+}
+
+.text-blue {
+  color: #0056b3;
+}
+
+.bg-purple-soft {
+  background-color: rgba(111, 66, 193, 0.1);
+}
+
+.text-purple {
+  color: #5a349c;
+}
+
+.bg-red-soft {
+  background-color: rgba(220, 53, 69, 0.1);
+}
+
+.text-red {
+  color: #b21f2d;
+}
 
 /* Cultura list items */
 .cultura-item-icon {
@@ -2708,7 +2819,7 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background: radial-gradient(circle at 80% 20%, rgba(255,255,255,0.15) 0%, transparent 50%);
+  background: radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.15) 0%, transparent 50%);
   pointer-events: none;
 }
 
@@ -2729,7 +2840,8 @@ body {
 /* ==================== BANNER ÚNETE AL EQUIPO ==================== */
 .unete-banner-wrapper {
   width: 100%;
-  line-height: 0; /* elimina espacio fantasma debajo del img */
+  line-height: 0;
+  /* elimina espacio fantasma debajo del img */
   box-shadow: 0 4px 18px rgba(14, 84, 76, 0.10);
 }
 
@@ -2738,4 +2850,4 @@ body {
   height: auto;
   display: block;
   object-fit: cover;
-}
+}

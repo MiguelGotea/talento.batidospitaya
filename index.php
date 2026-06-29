@@ -127,9 +127,10 @@ include 'layout_talento/header.php';
                         $featuredStat = null;
                         $normalStats = [];
                         
-                        foreach ($allStats as $stat) {
-                            $isFeatured = (stripos($stat['etiqueta'], 'desde') !== false);
-                            if ($isFeatured) {
+                        // El primer stat en orden es siempre el destacado (fila completa).
+                        // Los demás van en el subgrid de 4 en una fila.
+                        foreach ($allStats as $index => $stat) {
+                            if ($index === 0) {
                                 $featuredStat = $stat;
                             } else {
                                 $normalStats[] = $stat;
@@ -162,7 +163,7 @@ include 'layout_talento/header.php';
                                 </div>
                                 <div class="corp-stat-featured-text">
                                     <div class="corp-stat-label"><?php echo htmlspecialchars($stat['etiqueta']); ?></div>
-                                    <div class="corp-stat-number" id="stat-<?php echo $stat['id']; ?>" data-target="<?php echo intval($stat['valor_numero']); ?>" data-suffix="<?php echo htmlspecialchars($stat['sufijo']); ?>">0</div>
+                                    <div class="corp-stat-number" id="stat-<?php echo $stat['id']; ?>" data-target="<?php echo htmlspecialchars($stat['valor_numero']); ?>" data-suffix="<?php echo htmlspecialchars($stat['sufijo']); ?>">0</div>
                                 </div>
                             </div>
                             <?php
@@ -195,7 +196,7 @@ include 'layout_talento/header.php';
                                                 <i class="bi <?php echo htmlspecialchars($stat['icono']); ?>"></i>
                                             <?php endif; ?>
                                         </div>
-                                        <div class="corp-stat-number" id="stat-<?php echo $stat['id']; ?>" data-target="<?php echo intval($stat['valor_numero']); ?>" data-suffix="<?php echo htmlspecialchars($stat['sufijo']); ?>">0</div>
+                                        <div class="corp-stat-number" id="stat-<?php echo $stat['id']; ?>" data-target="<?php echo htmlspecialchars($stat['valor_numero']); ?>" data-suffix="<?php echo htmlspecialchars($stat['sufijo']); ?>">0</div>
                                         <div class="corp-stat-label"><?php echo htmlspecialchars($stat['etiqueta']); ?></div>
                                     </div>
                                     <?php

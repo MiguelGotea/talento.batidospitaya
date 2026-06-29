@@ -154,11 +154,11 @@ function obtener_config($clave, $default = '') {
                             Beneficios
                         </a>
                         <?php endif; ?>
-                        <a href="unete.php" class="nav-tab-btn <?php echo (isset($active_tab) && $active_tab === 'unete') ? 'active' : ''; ?>" id="btn-tab-unete">
-                            Únete al Equipo
-                        </a>
                         <a href="equipo.php" class="nav-tab-btn <?php echo (isset($active_tab) && $active_tab === 'equipo') ? 'active' : ''; ?>" id="btn-tab-equipo">
                             Nuestro Equipo
+                        </a>
+                        <a href="unete.php" class="nav-tab-btn <?php echo (isset($active_tab) && $active_tab === 'unete') ? 'active' : ''; ?>" id="btn-tab-unete">
+                            Únete al Equipo
                         </a>
                         <?php /* Noticias: oculto temporalmente — descomentar para activar */ ?>
                         <?php if (false): ?>

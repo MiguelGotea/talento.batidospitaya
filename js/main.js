@@ -254,10 +254,18 @@ function resetearContadoresCorporativos() {
         statsObserver = null;
     }
 
-    // Devolver cada contador a su valor inicial (0 + sufijo)
+    // Devolver cada contador a su valor inicial (0 + tempSuffix + sufijo)
     $('.corp-stat-number[data-target]').each(function () {
-        const sufijo = $(this).data('suffix') || '';
-        $(this).text('0' + sufijo);
+        const $el = $(this);
+        if ($el.data('anim-interval')) {
+            clearInterval($el.data('anim-interval'));
+            $el.removeData('anim-interval');
+        }
+        const targetStr = String($el.data('target')).trim();
+        const sufijo = $el.data('suffix') || '';
+        const match = targetStr.match(/^([0-9]+(?:\.[0-9]+)?)(.*)$/);
+        const tempSuffix = match ? match[2] : '';
+        $el.text('0' + tempSuffix + sufijo);
     });
 }
 
@@ -275,22 +283,46 @@ function animarContadoresCorporativos() {
     // Recorre cada elemento con la clase corp-stat-number que tenga data-target
     $('.corp-stat-number[data-target]').each(function () {
         const $el = $(this);
-        const valorFinal = parseInt($el.data('target'), 10);
+        const targetStr = String($el.data('target')).trim();
         const sufijo = $el.data('suffix') || ''; // Ej: '+', '%', o '' (vacío)
+
+        // Buscar si empieza con un número (entero o decimal)
+        const match = targetStr.match(/^([0-9]+(?:\.[0-9]+)?)(.*)$/);
+
+        if (!match) {
+            // Si no tiene formato numérico al principio, mostrar tal cual sin animación
+            $el.text(targetStr + sufijo);
+            return;
+        }
+
+        const valorFinal = parseFloat(match[1]);
+        const tempSuffix = match[2]; // Ej: 'M', 'K', etc.
+        
+        // Contar decimales del número original para mantener precisión durante el incremento
+        const decimalIndex = match[1].indexOf('.');
+        const decimals = decimalIndex >= 0 ? (match[1].length - decimalIndex - 1) : 0;
+
         let valorActual = 0;
         const incremento = valorFinal / pasos;
 
-        // Limpia cualquier intervalo previo en este elemento
+        // Limpia cualquier intervalo previo en este elemento si existe
+        if ($el.data('anim-interval')) {
+            clearInterval($el.data('anim-interval'));
+        }
+
         const intervalo = setInterval(function () {
             valorActual += incremento;
             if (valorActual >= valorFinal) {
                 // Llega al número exacto y detiene la animación
-                $el.text(valorFinal + sufijo);
+                $el.text(valorFinal.toFixed(decimals) + tempSuffix + sufijo);
                 clearInterval(intervalo);
+                $el.removeData('anim-interval');
             } else {
-                $el.text(Math.floor(valorActual) + sufijo);
+                $el.text(valorActual.toFixed(decimals) + tempSuffix + sufijo);
             }
         }, intervaloMs);
+
+        $el.data('anim-interval', intervalo);
     });
 }
 
@@ -481,24 +513,6 @@ function crearCardPlaza(plaza) {
         descHtml = `<p class="vacante-card-desc">${escapeHtml(descCorta)}</p>`;
     }
 
-    // Responsabilidades (máximo 3 ítems)
-    let respHtml = '';
-    if (plaza.responsabilidades && plaza.responsabilidades.trim()) {
-        const items = plaza.responsabilidades.split('\n')
-            .map(i => i.trim())
-            .filter(i => i.length > 0)
-            .slice(0, 3);
-        if (items.length > 0) {
-            respHtml = `
-                <div class="vacante-card-section">
-                    <strong><i class="bi bi-list-check"></i> Responsabilidades</strong>
-                    <ul class="vacante-card-list">
-                        ${items.map(i => `<li>${escapeHtml(i)}</li>`).join('')}
-                    </ul>
-                </div>`;
-        }
-    }
-
     // Botón de acción principal: Siempre redirige a los detalles de la plaza (vacante_detalle.php)
     const leerMasBtn = `<a href="vacante_detalle.php?plaza=${plaza.id}" class="btn-leer-mas">
             <i class="bi bi-book-fill"></i> Leer Más
@@ -526,7 +540,6 @@ function crearCardPlaza(plaza) {
             </div>
 
             ${descHtml}
-            ${respHtml}
 
             <div class="vacante-actions">
                 ${leerMasBtn}
