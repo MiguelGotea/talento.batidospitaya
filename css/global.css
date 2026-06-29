@@ -1516,22 +1516,26 @@ body {
      CONTROL: PADDING INTERNO DE CADA TARJETA SECUNDARIA
      - Reduce padding para ganar espacio interior si el texto se corta.
      ========================================================================= */
-  padding: 1.6rem 0.8rem 1.4rem; /* Aumentado de 1.25rem 0.6rem 1rem */
+  padding: 1.6rem 0.8rem 1.4rem;
+  /* Aumentado de 1.25rem 0.6rem 1rem */
   /* arriba | izquierda-derecha | abajo */
 }
 
 .corp-stat-card {
   grid-column: span 4;
-  background: #FFC80C; /* Modificado a color de fondo #FFC80C */
+  background: #FFC80C;
+  /* Modificado a color de fondo #FFC80C */
   /* =========================================================================
      TAMAÑO VISUAL — PADDING DE TARJETA BASE (aplica a todas las tarjetas)
      - Aumenta estos valores para hacer las tarjetas más altas/anchas.
      - Formato: arriba | izquierda-derecha | abajo
      ========================================================================= */
-  padding: 2.5rem 1.5rem 2rem; /* Aumentado de 2rem 1.25rem 1.5rem */
+  padding: 2.5rem 1.5rem 2rem;
+  /* Aumentado de 2rem 1.25rem 1.5rem */
   border-radius: 20px;
   text-align: center;
-  border: 1px solid rgba(14, 84, 76, 0.15); /* Ajustado color de borde para mejor contraste */
+  border: 1px solid rgba(14, 84, 76, 0.15);
+  /* Ajustado color de borde para mejor contraste */
   box-shadow: 0 4px 16px rgba(14, 84, 76, 0.06);
   transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
@@ -1549,7 +1553,8 @@ body {
      - Aumenta para hacer la tarjeta más alta.
      - Formato: arriba | izquierda-derecha
      ========================================================================= */
-  padding: 2.2rem 3.5rem; /* Aumentado de 1.5rem 3rem */
+  padding: 2.2rem 3.5rem;
+  /* Aumentado de 1.5rem 3rem */
   text-align: left;
 }
 
@@ -1604,13 +1609,15 @@ body {
 /* Tarjeta con color personalizado desde BD: se ignora el color de fondo
    para que todas las tarjetas mantengan el mismo estilo visual uniforme */
 .corp-stat-card.has-custom-bg {
-  background: #FFC80C !important; /* Modificado a color de fondo #FFC80C */
+  background: #FFC80C !important;
+  /* Modificado a color de fondo #FFC80C */
   border-color: rgba(14, 84, 76, 0.15) !important;
 }
 
 .corp-stat-card.has-custom-bg .corp-stat-number,
 .corp-stat-card.has-custom-bg .corp-stat-label {
-  color: var(--color-header) !important; /* Asegura el color de texto corporativo verde oscuro */
+  color: var(--color-header) !important;
+  /* Asegura el color de texto corporativo verde oscuro */
 }
 
 .corp-stat-card.has-custom-bg .corp-stat-icon-wrapper {
@@ -1665,7 +1672,8 @@ body {
      TAMAÑO VISUAL — NÚMERO DE LA TARJETA GRANDE ("Batidos Servidos")
      - Cambia font-size para agrandar/encoger el número principal.
      ========================================================================= */
-  font-size: 3.8rem;  /* <-- Aumentado de 3rem */
+  font-size: 3.8rem;
+  /* <-- Aumentado de 3rem */
   font-weight: 800;
   color: var(--color-header);
   line-height: 1;
@@ -1673,9 +1681,12 @@ body {
 }
 
 .corp-stat-label {
-  font-size: 0.95rem; /* Aumentado de 0.85rem */
-  color: var(--color-header); /* Cambiado de var(--color-texto-secundario) a var(--color-header) para mejor contraste en fondo amarillo */
-  font-weight: 700; /* Aumentado de 600 */
+  font-size: 0.95rem;
+  /* Aumentado de 0.85rem */
+  color: var(--color-header);
+  /* Cambiado de var(--color-texto-secundario) a var(--color-header) para mejor contraste en fondo amarillo */
+  font-weight: 700;
+  /* Aumentado de 600 */
   text-transform: uppercase;
   letter-spacing: 0.8px;
 }
@@ -1689,25 +1700,31 @@ body {
    - corp-stat-icon-wrapper : el círculo del ícono (44px actual)
    ============================================================================= */
 .corp-stats-subgrid .corp-stat-card .corp-stat-number {
-  font-size: 2.6rem;  /* <-- Aumentado de 2rem */
+  font-size: 2.6rem;
+  /* <-- Aumentado de 2rem */
 }
 
 .corp-stats-subgrid .corp-stat-card .corp-stat-label {
-  font-size: 0.82rem;  /* <-- Aumentado de 0.72rem */
-  color: var(--color-header); /* Cambiado de var(--color-texto-secundario) a var(--color-header) para mejor contraste */
+  font-size: 0.82rem;
+  /* <-- Aumentado de 0.72rem */
+  color: var(--color-header);
+  /* Cambiado de var(--color-texto-secundario) a var(--color-header) para mejor contraste */
   font-weight: 700;
   letter-spacing: 0.4px;
 }
 
 .corp-stats-subgrid .corp-stat-card .corp-stat-icon-wrapper {
-  width: 50px;   /* <-- Aumentado de 44px */
-  height: 50px;  /* <-- IGUAL que el width */
+  width: 50px;
+  /* <-- Aumentado de 44px */
+  height: 50px;
+  /* <-- IGUAL que el width */
   margin-bottom: 0.6rem;
 }
 
 .corp-stats-subgrid .corp-stat-card .corp-stat-icon-wrapper i,
 .corp-stats-subgrid .corp-stat-card .corp-stat-icon-wrapper svg {
-  font-size: 1.4rem;  /* <-- Aumentado de 1.2rem */
+  font-size: 1.4rem;
+  /* <-- Aumentado de 1.2rem */
 }
 
 /* ==================== Botón Flotante "Aplicar" ==================== */
@@ -2850,4 +2867,26 @@ body {
   height: auto;
   display: block;
   object-fit: cover;
+}
+
+/* ==================== Carrusel de Áreas (equipo.php) ==================== */
+.areas-carousel {
+  padding-bottom: 60px;
+  position: relative;
+}
+
+.areas-carousel .carousel-inner {
+  padding-top: 15px;
+  padding-bottom: 15px;
+  overflow: visible;
+}
+
+.areas-carousel .equipo-card {
+  margin-bottom: 0;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.areas-carousel .equipo-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--sombra-md);
 }
