@@ -151,12 +151,12 @@ include 'layout_talento/header.php';
                             ?>
                             <div class="<?= $cardClass ?>"<?= $cardStyle ? " style=\"{$cardStyle}\"" : '' ?>>
                                 <div class="corp-stat-icon-wrapper">
-                                    <?php if ($isSvg): ?>
-                                        <?php if ($stat['icono'] === 'svg:pitaya'): ?>
-                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" style="width: 1.8rem; height: 1.8rem; vertical-align: middle;">
-                                                <path d="M12 2.5C7.2 2.5 3.5 6.5 3.5 11.5c0 4 2.5 7.5 6.5 8.5v1.5c0 .6.4 1 1 1s1-.4 1-1v-1.5c4-1 6.5-4.5 6.5-8.5 0-5-3.7-9-8.5-9zm3 8.5c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1zm-6 0c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1zm3 4c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1zm0-6c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1zm0 3c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1z" />
-                                            </svg>
-                                        <?php endif; ?>
+                                    <?php if ($stat['icono'] === 'img:pitaya_icon'): ?>
+                                        <img src="assets/img/pitaya_icon.png" alt="Fruta Natural" style="width: 2.4rem; height: 2.4rem; object-fit: contain; vertical-align: middle; filter: drop-shadow(0 1px 3px rgba(0,0,0,0.15));">
+                                    <?php elseif ($isSvg && $stat['icono'] === 'svg:pitaya'): ?>
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" style="width: 1.8rem; height: 1.8rem; vertical-align: middle;">
+                                            <path d="M12 2.5C7.2 2.5 3.5 6.5 3.5 11.5c0 4 2.5 7.5 6.5 8.5v1.5c0 .6.4 1 1 1s1-.4 1-1v-1.5c4-1 6.5-4.5 6.5-8.5 0-5-3.7-9-8.5-9zm3 8.5c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1zm-6 0c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1zm3 4c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1zm0-6c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1zm0 3c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1z" />
+                                        </svg>
                                     <?php else: ?>
                                         <i class="bi <?php echo htmlspecialchars($stat['icono']); ?>"></i>
                                     <?php endif; ?>
@@ -186,12 +186,12 @@ include 'layout_talento/header.php';
                                     ?>
                                     <div class="<?= $cardClass ?>"<?= $cardStyle ? " style=\"{$cardStyle}\"" : '' ?>>
                                         <div class="corp-stat-icon-wrapper">
-                                            <?php if ($isSvg): ?>
-                                                <?php if ($stat['icono'] === 'svg:pitaya'): ?>
-                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" style="width: 1.8rem; height: 1.8rem; vertical-align: middle;">
-                                                        <path d="M12 2.5C7.2 2.5 3.5 6.5 3.5 11.5c0 4 2.5 7.5 6.5 8.5v1.5c0 .6.4 1 1 1s1-.4 1-1v-1.5c4-1 6.5-4.5 6.5-8.5 0-5-3.7-9-8.5-9zm3 8.5c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1zm-6 0c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1zm3 4c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1zm0-6c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1zm0 3c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1z" />
-                                                    </svg>
-                                                <?php endif; ?>
+                                            <?php if ($stat['icono'] === 'img:pitaya_icon'): ?>
+                                                <img src="assets/img/pitaya_icon.png" alt="Fruta Natural" style="width: 2.4rem; height: 2.4rem; object-fit: contain; vertical-align: middle; filter: drop-shadow(0 1px 3px rgba(0,0,0,0.15));">
+                                            <?php elseif ($isSvg && $stat['icono'] === 'svg:pitaya'): ?>
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" style="width: 1.8rem; height: 1.8rem; vertical-align: middle;">
+                                                    <path d="M12 2.5C7.2 2.5 3.5 6.5 3.5 11.5c0 4 2.5 7.5 6.5 8.5v1.5c0 .6.4 1 1 1s1-.4 1-1v-1.5c4-1 6.5-4.5 6.5-8.5 0-5-3.7-9-8.5-9zm3 8.5c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1zm-6 0c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1zm3 4c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1zm0-6c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1zm0 3c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1z" />
+                                                </svg>
                                             <?php else: ?>
                                                 <i class="bi <?php echo htmlspecialchars($stat['icono']); ?>"></i>
                                             <?php endif; ?>
