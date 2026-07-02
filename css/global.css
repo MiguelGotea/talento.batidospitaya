@@ -2354,9 +2354,8 @@ body {
 /* El padding-top compensa el margen negativo de la foto para que
    no sea recortada por el overflow:hidden del carousel-inner */
 .colaboradores-carousel .carousel-inner {
-  /* AJUSTE FOTO: Este valor = la mitad del diámetro de la foto (190px/2 = 95px).
-     Si cambias el tamaño de .colaborador-foto, actualiza también este valor. */
-  padding-top: 95px;
+  /* Ajustado para el nuevo tamaño de avatar de colaborador en 3D (diámetro del círculo 200px, altura del wrapper 220px) */
+  padding-top: 120px;
   overflow: visible;
 }
 
@@ -2364,14 +2363,13 @@ body {
   overflow: visible;
 }
 
-/* Tarjeta de colaborador con foto colgante */
+/* Tarjeta de colaborador con foto colgante 3D */
 .colaborador-card {
   background: var(--color-blanco);
   border-radius: 20px;
   padding: 1.25rem 2rem 2rem;
-  /* AJUSTE FOTO: Este padding-top = la mitad del diámetro de la foto (190px/2 = 95px).
-     Si cambias el tamaño de .colaborador-foto, actualiza también este valor. */
-  padding-top: 95px;
+  /* Altura del offset del avatar colgante en 3D */
+  padding-top: 110px;
   box-shadow: var(--sombra-md);
   border: 1px solid var(--color-borde);
   text-align: center;
@@ -2381,9 +2379,8 @@ body {
   flex-direction: column;
   align-items: center;
   position: relative;
-  /* AJUSTE FOTO: Este margin-top = la mitad del diámetro de la foto (190px/2 = 95px).
-     Si cambias el tamaño de .colaborador-foto, actualiza también este valor. */
-  margin-top: 95px;
+  /* Espacio superior para que el avatar no se superponga con el slide anterior/siguiente */
+  margin-top: 110px;
 }
 
 .colaborador-card:hover {
@@ -2391,49 +2388,74 @@ body {
   box-shadow: var(--sombra-lg);
 }
 
-/* Foto circular colgante */
+/* Foto circular colgante con efecto 3D Pop-out */
 .colaborador-foto-wrapper {
   position: absolute;
-  /* AJUSTE FOTO: Este valor = -1 * (diámetro / 2). Con 190px → top: -95px.
-     Si cambias el tamaño de .colaborador-foto, actualiza también este valor,
-     junto con padding-top, margin-top y padding-top del carousel-inner. */
-  top: -95px;
+  /* Coloca el contenedor colgando de la tarjeta */
+  top: -120px;
   left: 50%;
   transform: translateX(-50%);
+  width: 200px;
+  height: 220px;
   margin-bottom: 0;
   z-index: 2;
+  overflow: hidden; /* Recorta la imagen a lo largo de la curva inferior del contenedor */
+  border-radius: 0 0 100px 100px; /* Redondea solo la mitad inferior */
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
 }
 
-.colaborador-foto {
-  /* AJUSTE FOTO: Cambia estos dos valores para ajustar el tamaño de la foto.
-     Recuerda actualizar también top del wrapper, padding-top y margin-top de
-     .colaborador-card y padding-top de .colaboradores-carousel .carousel-inner. */
-  width: 190px;
-  height: 190px;
+/* Círculo de fondo que queda por detrás del colaborador */
+.colaborador-foto-wrapper::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200px;
+  height: 200px;
   border-radius: 50%;
-  object-fit: cover;
-  border: 5px solid var(--color-blanco);
-  outline: 3px solid var(--color-principal);
+  background: linear-gradient(135deg, var(--color-principal) 0%, var(--color-hover) 100%);
+  border: 4px solid var(--color-blanco);
   box-shadow: 0 8px 24px rgba(81, 184, 172, 0.35);
+  z-index: 1;
+}
+
+/* Foto del colaborador que sobresale del círculo */
+.colaborador-foto {
+  width: 200px;
+  height: 220px; /* Más alto que el círculo de fondo */
+  object-fit: cover;
+  object-position: top center;
   display: block;
+  position: relative;
+  z-index: 2;
+  transform: scale(1.08); /* Ligeramente más grande para salir de los bordes laterales */
+  transform-origin: bottom center;
+  transition: transform 0.3s ease;
+}
+
+/* Zoom y elevación al pasar el cursor sobre la tarjeta */
+.colaborador-card:hover .colaborador-foto {
+  transform: scale(1.18);
 }
 
 /* Avatar placeholder con iniciales */
 .colaborador-avatar-placeholder {
-  /* AJUSTE FOTO: Debe coincidir con el width/height de .colaborador-foto */
-  width: 190px;
-  height: 190px;
+  width: 200px;
+  height: 200px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 3.5rem;
+  font-size: 3.8rem;
   font-weight: 700;
-  border: 5px solid rgba(255, 255, 255, 0.5);
-  outline: 3px solid rgba(255, 255, 255, 0.3);
+  border: 4px solid var(--color-blanco);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
   letter-spacing: 0.05em;
-  margin: 0 auto;
+  position: relative;
+  z-index: 2;
 }
 
 /* Info del colaborador */
