@@ -113,6 +113,11 @@ function obtener_config($clave, $default = '') {
             opacity: <?= floatval($fondoOpacidad) ?>;
             pointer-events: none;
             z-index: 0;
+            will-change: transform;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            transform: translate3d(0,0,0);
+            -webkit-transform: translate3d(0,0,0);
         }
         body > * { position: relative; z-index: 1; }
         

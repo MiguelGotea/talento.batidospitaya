@@ -142,57 +142,104 @@ include 'layout_talento/header.php';
                             </div>
                         </header>
 
-                        <!-- Portada / Banner principal -->
-                        <div class="noticia-detalle-portada-wrapper my-4">
-                            <?php 
-                            $portadaUrl = !empty($noticia['imagen_principal']) ? 'uploads/noticias/' . htmlspecialchars($noticia['imagen_principal']) : null;
-                            if ($portadaUrl): 
-                            ?>
-                                <img src="<?= $portadaUrl ?>" alt="<?= htmlspecialchars($noticia['titulo']) ?>" class="noticia-detalle-portada-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
-                                <div class="noticia-detalle-portada-fallback" style="background: <?= obtenerGradientePorCategoria($noticia['categoria']) ?>; display: none;">
-                                    <i class="bi <?= obtenerIconoPorCategoria($noticia['categoria']) ?>"></i>
-                                </div>
-                            <?php else: ?>
-                                <div class="noticia-detalle-portada-fallback" style="background: <?= obtenerGradientePorCategoria($noticia['categoria']) ?>;">
-                                    <i class="bi <?= obtenerIconoPorCategoria($noticia['categoria']) ?>"></i>
-                                </div>
-                            <?php endif; ?>
-                        </div>
+                        <!-- Portada / Banner principal o Carrusel de Fotos -->
+                        <?php 
+                        $portadaUrl = !empty($noticia['imagen_principal']) ? 'uploads/noticias/' . htmlspecialchars($noticia['imagen_principal']) : null;
+                        $fotosAdicionales = !empty($fotos);
+                        ?>
+                        
+                        <?php if ($fotosAdicionales): 
+                            // Compilamos todas las imágenes del carrusel: portada primero, luego galería
+                            $imagenesCarrusel = [];
+                            if ($portadaUrl) {
+                                $imagenesCarrusel[] = [
+                                    'url' => $portadaUrl,
+                                    'desc' => $noticia['titulo']
+                                ];
+                            }
+                            foreach ($fotos as $f) {
+                                $imagenesCarrusel[] = [
+                                    'url' => 'uploads/noticias/galeria/' . htmlspecialchars($f['ruta_foto']),
+                                    'desc' => htmlspecialchars($f['descripcion'] ?? '')
+                                ];
+                            }
+                        ?>
+                            <div id="carruselNoticiaDetalle" class="carousel slide noticia-detalle-portada-wrapper my-4" data-bs-ride="carousel" data-bs-interval="5000">
+                                <!-- Indicadores -->
+                                <?php if (count($imagenesCarrusel) > 1): ?>
+                                    <div class="carousel-indicators">
+                                        <?php foreach ($imagenesCarrusel as $index => $img): ?>
+                                            <button type="button" data-bs-target="#carruselNoticiaDetalle" data-bs-slide-to="<?= $index ?>" <?= $index === 0 ? 'class="active" aria-current="true"' : '' ?> aria-label="Slide <?= $index + 1 ?>"></button>
+                                        <?php endforeach; ?>
+                                    </div>
+                                <?php endif; ?>
 
-                        <!-- Contenido -->
-                        <section class="noticia-detalle-contenido py-3">
-                            <?= $noticia['contenido'] ?>
-                        </section>
-
-                        <!-- Galería de Fotos Relacionadas -->
-                        <?php if (!empty($fotos)): ?>
-                            <footer class="noticia-detalle-galeria mt-5 pt-4 border-top">
-                                <h3 class="galeria-titulo mb-4">
-                                    <i class="bi bi-images"></i> Galería de Fotos
-                                </h3>
-                                <div class="row g-3">
-                                    <?php foreach ($fotos as $f): 
-                                        $fUrl = 'uploads/noticias/galeria/' . htmlspecialchars($f['ruta_foto']);
-                                        $desc = htmlspecialchars($f['descripcion'] ?? '');
+                                <!-- Slides -->
+                                <div class="carousel-inner h-100">
+                                    <?php foreach ($imagenesCarrusel as $index => $img): 
+                                        $safeDesc = htmlspecialchars(str_replace("'", "\'", $img['desc'] ?? ''), ENT_QUOTES);
+                                        $isActive  = ($index === 0);
                                     ?>
-                                        <div class="col-6 col-sm-4 col-md-3">
-                                            <div class="galeria-item-card" onclick="verImagenLightbox('<?= $fUrl ?>', '<?= $desc ?>')">
-                                                <img src="<?= $fUrl ?>" alt="<?= $desc ?: 'Imagen de galería' ?>" class="galeria-thumb-img" loading="lazy">
-                                                <div class="galeria-item-hover">
-                                                    <i class="bi bi-zoom-in"></i>
-                                                </div>
-                                            </div>
+                                        <div class="carousel-item h-100 <?= $isActive ? 'active' : '' ?>" onclick="verImagenLightbox('<?= $img['url'] ?>', '<?= $safeDesc ?>')">
+                                            <?php if ($isActive): ?>
+                                                <!-- Primera imagen: carga inmediata -->
+                                                <img src="<?= $img['url'] ?>" alt="<?= $safeDesc ?>" class="noticia-detalle-portada-img">
+                                            <?php else: ?>
+                                                <!-- Imágenes siguientes: lazy load -->
+                                                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                                                     data-src="<?= $img['url'] ?>"
+                                                     alt="<?= $safeDesc ?>"
+                                                     class="noticia-detalle-portada-img lazy-carousel-img">
+                                            <?php endif; ?>
                                         </div>
                                     <?php endforeach; ?>
                                 </div>
-                            </footer>
+
+                                <!-- Controles -->
+                                <?php if (count($imagenesCarrusel) > 1): ?>
+                                    <button class="carousel-control-prev" type="button" data-bs-target="#carruselNoticiaDetalle" data-bs-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Anterior</span>
+                                    </button>
+                                    <button class="carousel-control-next" type="button" data-bs-target="#carruselNoticiaDetalle" data-bs-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Siguiente</span>
+                                    </button>
+                                <?php endif; ?>
+                            </div>
+                        <?php else: ?>
+                            <!-- Portada estática tradicional (sin fotos adicionales) -->
+                            <div class="noticia-detalle-portada-wrapper my-4">
+                                <?php if ($portadaUrl): 
+                                    $safeTitle = htmlspecialchars(str_replace("'", "\'", $noticia['titulo'] ?? ''), ENT_QUOTES);
+                                ?>
+                                    <img src="<?= $portadaUrl ?>" alt="<?= htmlspecialchars($noticia['titulo']) ?>" class="noticia-detalle-portada-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" onclick="verImagenLightbox('<?= $portadaUrl ?>', '<?= $safeTitle ?>')">
+                                    <div class="noticia-detalle-portada-fallback" style="background: <?= obtenerGradientePorCategoria($noticia['categoria']) ?>; display: none;">
+                                        <i class="bi <?= obtenerIconoPorCategoria($noticia['categoria']) ?>"></i>
+                                    </div>
+                                <?php else: ?>
+                                    <div class="noticia-detalle-portada-fallback" style="background: <?= obtenerGradientePorCategoria($noticia['categoria']) ?>;">
+                                        <i class="bi <?= obtenerIconoPorCategoria($noticia['categoria']) ?>"></i>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
                         <?php endif; ?>
 
-                        <!-- Botón de regreso -->
-                        <div class="text-center mt-5">
+                        <!-- Contenido (con saltos de línea nl2br) -->
+                        <section class="noticia-detalle-contenido py-3">
+                            <?= nl2br($noticia['contenido']) ?>
+                        </section>
+
+
+                        <!-- Botones de acción -->
+                        <div class="text-center mt-5 d-flex justify-content-center gap-3 flex-wrap">
                             <a href="noticias.php" class="btn-leer-mas">
                                 <i class="bi bi-arrow-left"></i> Volver a Noticias
                             </a>
+                            <button id="btnCompartirNoticia" class="btn-compartir" onclick="copiarEnlaceNoticia()" title="Copiar enlace">
+                                <i class="bi bi-share" id="iconoCompartir"></i>
+                                <span id="textoCompartir">Copiar enlace</span>
+                            </button>
                         </div>
 
                     </article>
@@ -219,9 +266,48 @@ function verImagenLightbox(url, descripcion) {
             }
         });
     } else {
-        // Fallback básico si SweetAlert falla
         window.open(url, '_blank');
     }
+}
+
+// Lazy loading para imágenes del carrusel
+(function () {
+    const carrusel = document.getElementById('carruselNoticiaDetalle');
+    if (!carrusel) return;
+
+    carrusel.addEventListener('slide.bs.carousel', function (e) {
+        const slidingTo = e.relatedTarget;
+        if (!slidingTo) return;
+        const lazyImg = slidingTo.querySelector('img.lazy-carousel-img');
+        if (lazyImg && lazyImg.dataset.src) {
+            lazyImg.src = lazyImg.dataset.src;
+            lazyImg.removeAttribute('data-src');
+            lazyImg.classList.remove('lazy-carousel-img');
+        }
+    });
+})();
+
+// Copiar enlace al portapapeles
+function copiarEnlaceNoticia() {
+    const btn    = document.getElementById('btnCompartirNoticia');
+    const icono  = document.getElementById('iconoCompartir');
+    const texto  = document.getElementById('textoCompartir');
+
+    navigator.clipboard.writeText(window.location.href).then(function () {
+        // Feedback visual
+        icono.className  = 'bi bi-check-lg';
+        texto.textContent = '¡Enlace copiado!';
+        btn.classList.add('btn-compartir--copiado');
+
+        setTimeout(function () {
+            icono.className  = 'bi bi-share';
+            texto.textContent = 'Copiar enlace';
+            btn.classList.remove('btn-compartir--copiado');
+        }, 2000);
+    }).catch(function () {
+        // Fallback para navegadores sin soporte (muy raro hoy en día)
+        prompt('Copia el enlace:', window.location.href);
+    });
 }
 </script>
 

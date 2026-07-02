@@ -21,7 +21,7 @@
   --color-fondo: #f8f9fa;
   --color-blanco: #ffffff;
   --color-texto: #212529;
-  --color-texto-secundario: #6c757d;
+  --color-texto-secundario: #000000;
   --color-borde: #dee2e6;
 
   /* Sombras */
@@ -1880,19 +1880,19 @@ body {
 }
 
 .proposito-card {
-  background: linear-gradient(135deg, rgba(81, 184, 172, 0.04) 0%, rgba(14, 84, 76, 0.04) 100%);
-  border: 1px solid rgba(81, 184, 172, 0.12);
-  border-left: 5px solid var(--color-principal);
+  background: var(--color-fondo);
+  border-left: 4px solid var(--color-principal);
   padding: var(--espaciado-md);
   border-radius: 12px;
+  box-shadow: var(--sombra-sm);
   transition: all 0.3s ease;
 }
 
 .proposito-card:hover {
   transform: translateY(-3px);
-  background: linear-gradient(135deg, rgba(81, 184, 172, 0.07) 0%, rgba(14, 84, 76, 0.07) 100%);
-  border-left-color: var(--color-header);
   box-shadow: var(--sombra-md);
+  border-left-color: var(--color-header);
+  background-color: var(--color-blanco);
 }
 
 .proposito-header {
@@ -2890,3 +2890,100 @@ body {
   transform: translateY(-5px);
   box-shadow: var(--sombra-md);
 }
+
+/* ==================== Estilos Carrusel Unificado Noticia Detalle ==================== */
+.noticia-detalle-portada-wrapper.carousel {
+  height: clamp(200px, 35vw, 420px);
+}
+.noticia-detalle-portada-wrapper .carousel-inner {
+  height: 100%;
+}
+.noticia-detalle-portada-wrapper .carousel-item {
+  height: 100%;
+  cursor: pointer;
+}
+.noticia-detalle-portada-wrapper .carousel-control-prev,
+.noticia-detalle-portada-wrapper .carousel-control-next {
+  width: 44px;
+  height: 44px;
+  background: rgba(81, 184, 172, 0.6) !important;
+  border-radius: 50% !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  margin: 0 15px;
+  border: none !important;
+  opacity: 0.8;
+  transition: all 0.2s ease;
+}
+.noticia-detalle-portada-wrapper .carousel-control-prev:hover,
+.noticia-detalle-portada-wrapper .carousel-control-next:hover {
+  background: rgba(14, 84, 76, 0.9) !important;
+  opacity: 1;
+}
+.noticia-detalle-portada-wrapper .carousel-indicators {
+  bottom: 15px;
+}
+.noticia-detalle-portada-wrapper .carousel-indicators [data-bs-target] {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: var(--color-blanco);
+  opacity: 0.5;
+  border: none;
+  margin: 0 4px;
+  transition: all 0.2s ease;
+}
+.noticia-detalle-portada-wrapper .carousel-indicators .active {
+  opacity: 1;
+  background-color: var(--color-principal);
+  transform: scale(1.2);
+}
+
+/* ==================== Optimización de Transiciones y Anti-Flicker ==================== */
+.carousel,
+.carousel-inner,
+.carousel-item {
+  will-change: transform;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  transform: translate3d(0, 0, 0);
+  -webkit-transform: translate3d(0, 0, 0);
+}
+
+/* ==================== Botón Compartir Noticia ==================== */
+.btn-compartir {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.55rem 1.4rem;
+  border: 2px solid var(--color-principal);
+  border-radius: 50px;
+  background: transparent;
+  color: var(--color-principal);
+  font-family: var(--fuente-principal);
+  font-size: 0.92rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease, transform 0.15s ease;
+  text-decoration: none;
+}
+.btn-compartir:hover {
+  background: var(--color-principal);
+  color: var(--color-blanco);
+  transform: translateY(-2px);
+}
+.btn-compartir--copiado {
+  background: #2e7d52;
+  border-color: #2e7d52;
+  color: var(--color-blanco);
+}
+
+/* ==================== Sortable Drag & Drop (Galería ERP) ==================== */
+.sortable-ghost {
+  opacity: 0.4;
+}
+.sortable-chosen {
+  box-shadow: 0 0 0 3px rgba(81, 184, 172, 0.55);
+  border-radius: 8px;
+}
+
