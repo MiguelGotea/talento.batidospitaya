@@ -97,6 +97,10 @@ function obtener_config($clave, $default = '') {
             --color-fondo:        <?= $colorFondo ?>; /* Sincroniza la variable global con la BD */
             --color-texto-base:  <?= $colorTexto ?>;
         }
+        html, body {
+            overflow-x: hidden;
+            width: 100%;
+        }
         body {
             background-color: <?= $colorFondo ?>;
             color: <?= $colorTexto ?>;
