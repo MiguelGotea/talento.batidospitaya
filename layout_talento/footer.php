@@ -17,7 +17,11 @@
                     <ul class="footer-links">
                         <li><i class="bi bi-envelope"></i> <span class="email-protected" data-user="<?php echo htmlspecialchars(obtener_config('email_reclutamiento', 'seleccion')); ?>"
                                 data-domain="<?php echo htmlspecialchars(obtener_config('email_reclutamiento_dom', 'batidospitaya.com')); ?>"></span></li>
-                        <li><i class="bi bi-telephone"></i> <?php echo htmlspecialchars(obtener_config('telefono_principal', '+505 8852 0629')); ?></li>
+                        <?php 
+                        $tel_original = obtener_config('telefono_principal', '+505 8852 0629');
+                        $tel_limpio = preg_replace('/[^0-9]/', '', $tel_original);
+                        ?>
+                        <li><i class="bi bi-telephone"></i> <a href="https://wa.me/<?php echo $tel_limpio; ?>" target="_blank" rel="noopener noreferrer" class="text-white"><?php echo htmlspecialchars($tel_original); ?></a></li>
                         <!-- URL de búsqueda general en Google Maps — muestra todas las sucursales y sugiere la más cercana al usuario -->
                         <li><i class="bi bi-geo-alt"></i> <a href="<?php echo htmlspecialchars(obtener_config('url_maps_ubicaciones', 'https://www.google.com/maps/search/Batidos+Pitaya+Nicaragua/')); ?>"
                                 target="_blank" rel="noopener noreferrer" class="text-white">Ver ubicaciones</a></li>
