@@ -529,10 +529,16 @@ body {
 
 .vacante-actions {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   gap: 12px;
   margin-top: var(--espaciado-md);
   width: 100%;
+}
+
+.vacante-actions > a,
+.vacante-actions > button {
+  flex: 1;
+  min-width: 0;
 }
 
 .btn-vr-plaza {
@@ -1439,9 +1445,9 @@ body {
      - Aumenta este % para dar MÁS espacio a la imagen (p. ej. 60%).
      - Cambia AMBOS valores (flex y max-width) al mismo tiempo.
      ========================================================================= */
-  flex: 0 0 40%;
+  flex: 0 0 30%;
   /* <-- CAMBIA ESTE % para agrandar/encoger la imagen */
-  max-width: 40%;
+  max-width: 30%;
   /* <-- IGUAL que el valor de arriba */
   /* ========================================================================= */
   display: flex;
@@ -1456,7 +1462,7 @@ body {
      - Controla el tamaño límite de la imagen del batido (p. ej. 520px).
      - Si la imagen se ve muy grande o borrosa, redúcelo (p. ej. a 420px o 360px).
      ========================================================================= */
-  max-width: 520px;
+  max-width: 350px;
   /* ========================================================================= */
   height: auto;
   object-fit: contain;
@@ -2364,11 +2370,9 @@ body {
   position: relative;
 }
 
-/* El padding-top compensa el margen negativo de la foto para que
-   no sea recortada por el overflow:hidden del carousel-inner */
 .colaboradores-carousel .carousel-inner {
-  /* Ampliado para acomodar la foto que sobresale por arriba del círculo */
-  padding-top: 200px;
+  /* Pequeño espacio de seguridad para el zoom hover de la foto sin que se recorte */
+  padding-top: 15px;
   overflow: visible;
 }
 
@@ -3038,4 +3042,42 @@ body {
   box-shadow: 0 0 0 3px rgba(81, 184, 172, 0.55);
   border-radius: 8px;
 }
+
+/* ==================== Botón de llamado a la acción "Ver Plazas Disponibles" (equipo.php) ==================== */
+.equipo-cta-section {
+  padding: 4rem 1.5rem;
+  background: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn-ver-plazas-lg {
+  background-color: #FFC80C;
+  color: #0E544C; /* Verde oscuro para excelente legibilidad y contraste */
+  border: none;
+  font-weight: 700;
+  font-size: 1.15rem;
+  padding: 1rem 2.5rem;
+  border-radius: 50px;
+  text-decoration: none !important;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 14px rgba(255, 200, 12, 0.3);
+  cursor: pointer;
+}
+
+.btn-ver-plazas-lg:hover {
+  background-color: #e0b00a; /* Un tono un poco más oscuro de amarillo */
+  color: #0E544C;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(255, 200, 12, 0.45);
+}
+
+.btn-ver-plazas-lg:active {
+  transform: scale(0.97);
+}
+
 

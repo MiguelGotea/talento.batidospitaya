@@ -115,6 +115,17 @@ function inicializarEventos() {
         // Redirigir a formulario de postulación
         window.location.href = `postular.php?plaza=${plazaId}&cargo=${cargoId}&sucursal=${sucursalId}`;
     });
+
+    // Clic en la tarjeta de vacante para accionar "Ver Plaza"
+    $('#vacantesGrid').on('click', '.vacante-card', function (e) {
+        if ($(e.target).closest('.vacante-actions').length) {
+            return;
+        }
+        const btnVerPlaza = $(this).find('.btn-vr-plaza');
+        if (btnVerPlaza.length) {
+            btnVerPlaza.trigger('click');
+        }
+    });
 }
 
 /**
@@ -528,7 +539,7 @@ function crearCardPlaza(plaza) {
     return `
         <div class="vacante-card">
             
-            <div class="vacante-header">
+            <div class="vacante-header" style="display: none;">
                 <span class="vacante-categoria">${plaza.especialidad_area}</span>
             </div>
             

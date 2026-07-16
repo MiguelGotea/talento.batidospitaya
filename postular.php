@@ -56,13 +56,18 @@
                     <!-- Card del Formulario -->
                     <div class="formulario-card">
                         <div class="formulario-header">
-                            <h2 class="formulario-titulo">
+                            <!-- <h2 class="formulario-titulo">
                                 <i class="bi bi-file-person"></i>
                                 Postular a esta Plaza
-                            </h2>
+                            </h2> -->
                             <p class="formulario-subtitulo">
                                 Completa tus datos para iniciar el proceso de selección
                             </p>
+                            <div class="mt-3">
+                                <a href="https://wa.me/50588520629" target="_blank" rel="noopener noreferrer" class="btn btn-success btn-sm d-inline-flex align-items-center gap-2" style="background-color: #25D366; border-color: #25D366;">
+                                    <i class="bi bi-whatsapp"></i> ¿Tienes dudas? Escríbenos por WhatsApp
+                                </a>
+                            </div>
                         </div>
 
                         <form id="formPostulacion" enctype="multipart/form-data">
@@ -104,7 +109,7 @@
                                     </div>
 
                                     <div class="col-md-6 mb-3">
-                                        <label for="telefono" class="form-label">Teléfono <span
+                                        <label for="telefono" class="form-label">Celular WhatsApp <span
                                                 class="text-danger">*</span></label>
                                         <input type="tel" class="form-control" id="telefono" name="telefono" required
                                             placeholder="+505 8888-8888">
@@ -131,7 +136,7 @@
                                     </div>
 
                                     <div class="col-md-12 mb-3">
-                                        <label for="aspiracion" class="form-label">Aspiración Salarial (NIO) <span
+                                        <label for="aspiracion" class="form-label">Aspiración Salarial (Córdobas) <span
                                                 class="text-danger">*</span></label>
                                         <input type="number" class="form-control" id="aspiracion" name="aspiracion"
                                             required min="0" step="0.01" placeholder="Ej: 15000">
@@ -205,12 +210,11 @@
         </div>
     </section>
 
-    <!-- Footer -->
     <footer class="footer-simple">
         <div class="container text-center">
             <p class="mb-2">
                 <i class="bi bi-envelope"></i> seleccion@batidospitaya.com |
-                <i class="bi bi-telephone"></i> +505 8852 0629
+                <i class="bi bi-telephone"></i> <a href="https://wa.me/50588520629" target="_blank" rel="noopener noreferrer" class="text-secondary text-decoration-none">+505 8852 0629</a>
             </p>
             <p>&copy; Batidos Pitaya. Todos los derechos reservados.</p>
         </div>

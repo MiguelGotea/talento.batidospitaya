@@ -411,6 +411,15 @@ include 'layout_talento/header.php';
         </section>
     <?php endif; ?>
 
+    <!-- Sección de Llamado a la Acción (CTA) para ver plazas -->
+    <section class="equipo-cta-section text-center">
+        <div class="container">
+            <a href="unete.php#vacantes" class="btn-ver-plazas-lg">
+                <i class="bi bi-briefcase-fill"></i> Ver Plazas Disponibles
+            </a>
+        </div>
+    </section>
+
 </div>
 
 <?php include 'layout_talento/footer.php'; ?>

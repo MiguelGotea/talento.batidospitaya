@@ -73,10 +73,6 @@ function mostrarInfoPlaza() {
                 <i class="bi bi-geo-alt-fill"></i>
                 <span>${plazaData.departamento} - ${plazaData.sucursal_nombre}</span>
             </div>
-            <div class="detalle-item">
-                <i class="bi bi-tag-fill"></i>
-                <span>${plazaData.especialidad_area}</span>
-            </div>
         </div>
     `;
     $('#plazaInfo').html(html);
