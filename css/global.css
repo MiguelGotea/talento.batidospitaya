@@ -2406,6 +2406,12 @@ body {
   box-shadow: var(--sombra-lg);
 }
 
+@media (min-width: 768px) {
+  .colaboradores-carousel .colaborador-card {
+    height: calc(100% - 185px);
+  }
+}
+
 /* ---------------------------------------------------------------
    Foto colgante con efecto 3D Pop-out REAL:
    - El wrapper no tiene overflow:hidden → la parte superior
