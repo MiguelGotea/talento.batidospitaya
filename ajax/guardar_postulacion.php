@@ -83,10 +83,10 @@ try {
         throw new Exception('Solo se permiten archivos PDF');
     }
 
-    // Validar tamaño (10MB)
-    $maxTamanio = 10 * 1024 * 1024;
+    // Validar tamaño (25MB)
+    $maxTamanio = 25 * 1024 * 1024;
     if ($tamanioArchivo > $maxTamanio) {
-        throw new Exception('El archivo no debe superar los 10MB');
+        throw new Exception('El archivo no debe superar los 25MB');
     }
 
     // Verificar que la plaza existe y está disponible

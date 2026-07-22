@@ -113,12 +113,14 @@ include 'layout_talento/header.php';
             <div id="carruselAreasDesktop"
                 class="carousel slide areas-carousel d-none d-md-block"
                 data-bs-ride="carousel"
+                data-bs-pause="hover"
+                data-bs-touch="true"
                 data-bs-interval="6000">
 
                 <div class="carousel-inner">
                     <?php foreach ($slidesAreasDesktop as $slideIdx => $grupo): ?>
                         <div class="carousel-item <?= $slideIdx === 0 ? 'active' : '' ?>">
-                            <div class="row g-4 justify-content-center">
+                            <div class="row g-4 justify-content-center h-100">
                                 <?php foreach ($grupo as $area): ?>
                                     <div class="col-md-4">
                                         <div class="equipo-card h-100">
@@ -172,14 +174,16 @@ include 'layout_talento/header.php';
             <div id="carruselAreasMobile"
                 class="carousel slide areas-carousel d-block d-md-none"
                 data-bs-ride="carousel"
+                data-bs-pause="hover"
+                data-bs-touch="true"
                 data-bs-interval="5000">
 
                 <div class="carousel-inner">
                     <?php foreach ($slidesAreasMobile as $mIdx => $area): ?>
                         <div class="carousel-item <?= $mIdx === 0 ? 'active' : '' ?>">
-                            <div class="row g-4 justify-content-center">
+                            <div class="row g-4 justify-content-center h-100">
                                 <div class="col-12">
-                                    <div class="equipo-card">
+                                    <div class="equipo-card h-100">
                                         <div class="equipo-card-inner">
                                             <div class="equipo-icon-wrapper">
                                                 <i class="bi <?= htmlspecialchars($area['icono'] ?: 'bi-square') ?>"></i>
@@ -242,12 +246,14 @@ include 'layout_talento/header.php';
                 <div id="carruselColaboradoresDesktop"
                     class="carousel slide colaboradores-carousel d-none d-md-block"
                     data-bs-ride="carousel"
+                    data-bs-pause="hover"
+                    data-bs-touch="true"
                     data-bs-interval="5000">
 
                     <div class="carousel-inner">
                         <?php foreach ($slidesDesktop as $slideIdx => $grupo): ?>
                             <div class="carousel-item <?= $slideIdx === 0 ? 'active' : '' ?>">
-                                <div class="row g-4 justify-content-center">
+                                <div class="row g-4 justify-content-center h-100">
                                     <?php foreach ($grupo as $colIdx => $col):
                                         $colorIdx = ($slideIdx * 3 + $colIdx) % count($avatarColores);
                                         $color = $avatarColores[$colorIdx];
@@ -257,7 +263,7 @@ include 'layout_talento/header.php';
                                             : null;
                                     ?>
                                         <div class="col-md-4">
-                                            <div class="colaborador-card">
+                                            <div class="colaborador-card h-100">
                                                 <div class="colaborador-foto-wrapper">
                                                     <?php if ($fotoUrl): ?>
                                                         <img src="<?= $fotoUrl ?>"
@@ -330,6 +336,8 @@ include 'layout_talento/header.php';
                 <div id="carruselColaboradoresMobile"
                     class="carousel slide colaboradores-carousel d-block d-md-none"
                     data-bs-ride="carousel"
+                    data-bs-pause="hover"
+                    data-bs-touch="true"
                     data-bs-interval="4500">
 
                     <div class="carousel-inner">
@@ -342,7 +350,7 @@ include 'layout_talento/header.php';
                                 : null;
                         ?>
                             <div class="carousel-item <?= $mIdx === 0 ? 'active' : '' ?>">
-                                <div class="colaborador-card">
+                                <div class="colaborador-card h-100">
                                     <div class="colaborador-foto-wrapper">
                                         <?php if ($fotoUrl): ?>
                                             <img src="<?= $fotoUrl ?>"

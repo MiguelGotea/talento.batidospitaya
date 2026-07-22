@@ -121,6 +121,11 @@ $(document).ready(function () {
         formData.append('action', 'save_progress');
         formData.append('current_step', currentStep);
 
+        const btnNext = $('#btnNext');
+        const btnSaveDraft = $('#btnSaveDraft');
+        btnNext.prop('disabled', true);
+        btnSaveDraft.prop('disabled', true);
+
         if (manual) {
             Swal.fire({
                 title: 'Guardando...',
@@ -148,6 +153,9 @@ $(document).ready(function () {
             console.error('Error al guardar:', error);
             if (manual) Swal.fire('Error', 'Hubo un problema de conexión con el servidor.', 'error');
             return false;
+        } finally {
+            btnNext.prop('disabled', currentStep === totalSteps);
+            btnSaveDraft.prop('disabled', false);
         }
     }
 

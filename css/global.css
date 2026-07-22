@@ -2953,6 +2953,14 @@ body {
   box-shadow: var(--sombra-md);
 }
 
+/* ==================== Estabilidad de Altura en Carruseles ==================== */
+.carousel-inner {
+  transition: min-height 0.25s ease-in-out;
+}
+.carousel-item {
+  box-sizing: border-box;
+}
+
 /* ==================== Estilos Carrusel Unificado Noticia Detalle ==================== */
 .noticia-detalle-portada-wrapper.carousel {
   height: clamp(200px, 35vw, 420px);
@@ -3086,4 +3094,62 @@ body {
   transform: scale(0.97);
 }
 
+/* ==================== Skeleton Screen Loaders (unete.php) ==================== */
+.skeleton-card {
+  pointer-events: none;
+  user-select: none;
+  border: 1px solid var(--color-borde);
+  background: var(--color-blanco);
+  border-radius: 16px;
+  padding: var(--espaciado-md);
+  box-shadow: var(--sombra-sm);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.skeleton-line {
+  background: linear-gradient(90deg, #eef2f5 25%, #f7fafc 37%, #eef2f5 63%);
+  background-size: 400% 100%;
+  animation: skeleton-shimmer 1.4s ease infinite;
+  border-radius: 6px;
+  margin-bottom: 0.75rem;
+}
+
+.skeleton-title { height: 24px; width: 75%; }
+.skeleton-subtitle { height: 16px; width: 45%; }
+.skeleton-text { height: 14px; width: 100%; }
+.skeleton-text.short { width: 65%; margin-bottom: 1.5rem; }
+.skeleton-button { height: 42px; width: 100%; border-radius: 8px; margin-bottom: 0; }
+
+@keyframes skeleton-shimmer {
+  0% { background-position: 100% 0; }
+  100% { background-position: -100% 0; }
+}
+
+/* Prevención de doble envío: estado deshabilitado con spinner */
+.btn-loading {
+  opacity: 0.75;
+  cursor: not-allowed !important;
+  pointer-events: none !important;
+}
+
+/* ==================== Carruseles: altura uniforme sin saltos ==================== */
+
+/* Transición suave cuando el min-height cambia al recalcular */
+.carousel-inner {
+    transition: min-height 0.35s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Botón de compartir en WhatsApp: colores de marca */
+.style-wa-share {
+    color: #25D366 !important;
+    border-color: #25D366 !important;
+}
+.style-wa-share:hover {
+    background-color: #25D366 !important;
+    color: #fff !important;
+}
 

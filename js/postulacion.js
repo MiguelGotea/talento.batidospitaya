@@ -145,16 +145,28 @@ function inicializarUploadZone() {
  * Validar y mostrar archivo seleccionado
  */
 function validarYMostrarArchivo(file) {
-    // Validar tipo
-    if (file.type !== 'application/pdf') {
-        mostrarErrorCV('Solo se permiten archivos PDF');
+    const isPdf = file.type === 'application/pdf' || file.name.toLowerCase().endsWith('.pdf');
+    if (!isPdf) {
+        mostrarErrorCV('Solo se permiten archivos en formato PDF (.pdf)');
+        Swal.fire({
+            icon: 'warning',
+            title: 'Formato no permitido',
+            text: 'Por favor selecciona un archivo de currículum en formato PDF.',
+            confirmButtonColor: '#51B8AC'
+        });
         return;
     }
 
-    // Validar tamaño (10MB)
-    const maxSize = 10 * 1024 * 1024; // 10MB en bytes
+    // Validar tamaño (máximo 25MB)
+    const maxSize = 25 * 1024 * 1024; // 25MB
     if (file.size > maxSize) {
-        mostrarErrorCV('El archivo no debe superar los 10MB');
+        mostrarErrorCV('El archivo supera el límite de 25MB');
+        Swal.fire({
+            icon: 'warning',
+            title: 'Archivo muy pesado',
+            text: 'Tu archivo pesa ' + formatearTamanio(file.size) + '. El tamaño máximo permitido es 25MB.',
+            confirmButtonColor: '#51B8AC'
+        });
         return;
     }
 
@@ -206,6 +218,24 @@ function limpiarErrorCV() {
  */
 function inicializarFormulario() {
     const form = $('#formPostulacion');
+
+    // Auto-formato de teléfono: solo dígitos, máximo 8
+    const campoTel = $('#telefono');
+    if (campoTel.length) {
+        campoTel.on('input', function () {
+            let val = $(this).val().replace(/\D/g, '').slice(0, 8);
+            $(this).val(val);
+            if (val.length === 8) {
+                $(this).removeClass('is-invalid').addClass('is-valid');
+            } else if (val.length > 0) {
+                $(this).removeClass('is-valid').addClass('is-invalid');
+            } else {
+                $(this).removeClass('is-valid is-invalid');
+            }
+        });
+        campoTel.attr('placeholder', 'Ej: 87654321');
+        campoTel.attr('maxlength', '8');
+    }
 
     // Validación en tiempo real
     form.find('input, textarea, select').on('blur', function () {
@@ -303,7 +333,12 @@ function validarFormulario() {
  */
 async function enviarPostulacion() {
     const btnEnviar = $('#btnEnviar');
-    btnEnviar.prop('disabled', true).addClass('btn-loading');
+    const originalText = btnEnviar.html();
+
+    // Prevención de doble envío con delay de 10ms
+    setTimeout(() => {
+        btnEnviar.prop('disabled', true).addClass('btn-loading').html('<span class="spinner-border spinner-border-sm me-2" role="status"></span>Enviando postulación...');
+    }, 10);
 
     try {
         // Crear FormData
@@ -356,7 +391,7 @@ async function enviarPostulacion() {
             confirmButtonColor: '#51B8AC'
         });
     } finally {
-        btnEnviar.prop('disabled', false).removeClass('btn-loading');
+        btnEnviar.prop('disabled', false).removeClass('btn-loading').html(originalText);
     }
 }
 

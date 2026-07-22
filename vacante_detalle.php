@@ -91,10 +91,68 @@ $page_description = !empty($detalle['descripcion'])
     : "Aplica a la vacante de " . htmlspecialchars($detalle['cargo_nombre']) . " en Batidos Pitaya. Trabajá en un ambiente positivo y de crecimiento.";
 $page_keywords = "vacante " . htmlspecialchars($detalle['cargo_nombre']) . ", empleo batidos pitaya, trabajo " . htmlspecialchars($detalle['departamento']);
 $page_canonical = "vacante_detalle.php?plaza=" . $plaza_id;
+if (!empty($detalle['ruta_banner_cargo'])) {
+    $page_og_image = "https://talento.batidospitaya.com/uploads/banners/" . htmlspecialchars($detalle['ruta_banner_cargo']);
+}
 $active_tab = "unete";
 
 include 'layout_talento/header.php';
+
+// ---- Schema.org JobPosting (solo campos disponibles en la página) ----
+$schema_desc = !empty($detalle['descripcion'])
+    ? strip_tags(nl2br($detalle['descripcion']))
+    : "Vacante de " . $detalle['cargo_nombre'] . " en Batidos Pitaya Nicaragua.";
+
+$schema_qualifications = !empty($requisitos)
+    ? implode('. ', array_values($requisitos))
+    : '';
+
+$schema_responsibilities = !empty($responsabilidades)
+    ? implode('. ', array_values($responsabilidades))
+    : '';
+
+$schema_url = "https://talento.batidospitaya.com/vacante_detalle.php?plaza=" . $plaza_id;
+$schema_apply_url = "https://talento.batidospitaya.com/postular.php?plaza=" . $plaza_id
+    . "&cargo=" . intval($detalle['cargo'])
+    . "&sucursal=" . intval($detalle['sucursal']);
+$schema_date_posted = !empty($detalle['fecha_creacion'])
+    ? (new DateTime($detalle['fecha_creacion']))->format('Y-m-d')
+    : date('Y-m-d');
+$schema_logo = isset($page_og_image) ? $page_og_image : "https://talento.batidospitaya.com/assets/img/og-image.jpg";
 ?>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org/",
+  "@type": "JobPosting",
+  "title": "<?= addslashes(htmlspecialchars_decode($detalle['cargo_nombre'])) ?>",
+  "description": "<?= addslashes(str_replace(["\r\n", "\r", "\n"], ' ', $schema_desc)) ?>",
+  "datePosted": "<?= $schema_date_posted ?>",
+  "url": "<?= $schema_url ?>",
+  "directApply": true,
+  "employmentType": "FULL_TIME",
+  "hiringOrganization": {
+    "@type": "Organization",
+    "name": "Batidos Pitaya",
+    "sameAs": "https://talento.batidospitaya.com",
+    "logo": "<?= $schema_logo ?>"
+  },
+  "jobLocation": {
+    "@type": "Place",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "<?= addslashes($detalle['departamento']) ?>",
+      "addressCountry": "NI"
+    }
+  },
+  "occupationalCategory": "<?= addslashes($detalle['especialidad_area'] ?: 'Operaciones') ?>"<?php if ($schema_qualifications): ?>,
+  "qualifications": "<?= addslashes($schema_qualifications) ?>"<?php endif; ?><?php if ($schema_responsibilities): ?>,
+  "responsibilities": "<?= addslashes($schema_responsibilities) ?>"<?php endif; ?>,
+  "applicantLocationRequirements": {
+    "@type": "Country",
+    "name": "Nicaragua"
+  }
+}
+</script>
 
 <!-- ==================== DETALLE DE VACANTE ==================== -->
 <div id="section-vacante-detalle" class="tab-section-content active-tab">
@@ -223,6 +281,26 @@ include 'layout_talento/header.php';
                                 <i class="bi bi-arrow-left"></i>
                                 Ver otras vacantes
                             </a>
+
+                            <!-- Botones Compartir Lado a Lado -->
+                            <div class="d-flex gap-2 mt-3 pt-3 border-top">
+                                <?php
+                                $urlActual = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+                                $msgWhatsApp = rawurlencode("¡Hola! Mirá esta oportunidad de trabajo para *" . $detalle['cargo_nombre'] . "* en Batidos Pitaya (" . $detalle['departamento'] . "): " . $urlActual);
+                                ?>
+                                <a href="https://api.whatsapp.com/send?text=<?= $msgWhatsApp ?>"
+                                   target="_blank"
+                                   rel="noopener noreferrer"
+                                   class="btn btn-outline-success btn-sm flex-fill d-inline-flex align-items-center justify-content-center gap-1 style-wa-share">
+                                    <i class="bi bi-whatsapp"></i> Compartir
+                                </a>
+                                <button type="button"
+                                        class="btn btn-outline-secondary btn-sm flex-fill d-inline-flex align-items-center justify-content-center gap-1"
+                                        id="btnCopiarEnlace"
+                                        onclick="copiarEnlaceVacante()">
+                                    <i class="bi bi-link-45deg"></i> Copiar Link
+                                </button>
+                            </div>
                         </div>
 
                         <!-- Información general -->
@@ -259,6 +337,34 @@ function postularDesdeDetalle(plazaId, cargoId, sucursalId) {
         // Fallback: redirigir a index.php con parámetros
         window.location.href = `unete.php?postular=${plazaId}&cargo=${cargoId}&sucursal=${sucursalId}`;
     }
+}
+
+function copiarEnlaceVacante() {
+    const url = window.location.href;
+    navigator.clipboard.writeText(url).then(() => {
+        const btn = document.getElementById('btnCopiarEnlace');
+        if (btn) {
+            const originalHTML = btn.innerHTML;
+            btn.innerHTML = '<i class="bi bi-check2 text-success"></i> ¡Copiado!';
+            btn.classList.add('border-success');
+            setTimeout(() => {
+                btn.innerHTML = originalHTML;
+                btn.classList.remove('border-success');
+            }, 2500);
+        }
+        if (typeof Swal !== 'undefined') {
+            Swal.fire({
+                toast: true,
+                position: 'bottom-end',
+                icon: 'success',
+                title: '¡Enlace copiado al portapapeles!',
+                showConfirmButton: false,
+                timer: 2000
+            });
+        }
+    }).catch(err => {
+        console.error('Error al copiar:', err);
+    });
 }
 </script>
 

@@ -165,7 +165,7 @@
                                         <i class="bi bi-cloud-upload upload-icon"></i>
                                         <h6 class="upload-title">Arrastra tu CV aquí</h6>
                                         <p class="upload-subtitle">o haz clic para seleccionar</p>
-                                        <small class="text-muted">Solo archivos PDF, máximo 5MB</small>
+                                        <small class="text-muted">Solo archivos PDF, máximo 25MB</small>
                                     </div>
                                     <div class="upload-preview" id="uploadPreview" style="display: none;">
                                         <i class="bi bi-file-pdf-fill text-danger" style="font-size: 3rem;"></i>
