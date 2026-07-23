@@ -49,7 +49,7 @@ function obtener_config($clave, $default = '') {
     <!-- Open Graph -->
     <meta property="og:title" content="<?php echo isset($page_title) ? htmlspecialchars($page_title) : 'Trabaja en Batidos Pitaya'; ?>">
     <meta property="og:description" content="<?php echo isset($page_description) ? htmlspecialchars($page_description) : 'Impulsando energía natural, hábitos positivos y experiencia WOW.'; ?>">
-    <meta property="og:image" content="https://talento.batidospitaya.com/assets/img/og-image.jpg">
+    <meta property="og:image" content="<?php echo isset($page_og_image) ? $page_og_image : 'https://talento.batidospitaya.com/assets/img/og-image.jpg'; ?>">
     <meta property="og:url" content="https://talento.batidospitaya.com/<?php echo isset($page_canonical) ? htmlspecialchars($page_canonical) : ''; ?>">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="Batidos Pitaya - Portal de Empleo">
@@ -58,7 +58,7 @@ function obtener_config($clave, $default = '') {
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="<?php echo isset($page_title) ? htmlspecialchars($page_title) : 'Trabaja en Batidos Pitaya'; ?>">
     <meta name="twitter:description" content="<?php echo isset($page_description) ? htmlspecialchars($page_description) : 'Impulsando energía natural, hábitos positivos y experiencia WOW.'; ?>">
-    <meta name="twitter:image" content="https://talento.batidospitaya.com/assets/img/og-image.jpg">
+    <meta name="twitter:image" content="<?php echo isset($page_og_image) ? $page_og_image : 'https://talento.batidospitaya.com/assets/img/og-image.jpg'; ?>">
 
     <!-- Favicon -->
     <link rel="icon" href="assets/img/favicon.png" type="image/png">

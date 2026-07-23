@@ -52,6 +52,12 @@ $(document).ready(function () {
     // Inicializar comportamiento de menú hamburguesa móvil
     inicializarMenuMovil();
 
+    // Igualar alturas en todos los carruseles para evitar saltos de pantalla
+    equilibrarAlturasCarruseles();
+
+    // Habilitar gestos táctiles swipe para móviles en todos los carruseles
+    inicializarTouchSwipeCarruseles();
+
     // Scroll suave a vacantes si viene un hash en la URL
     if (window.location.hash === '#vacantes') {
         setTimeout(() => {
@@ -614,16 +620,12 @@ function crearContenidoModal(plaza) {
                 <p><i class="bi bi-geo-alt-fill text-primary"></i> ${plaza.departamento}</p>
             </div>
             <div class="col-md-6 mb-3">
-                <h6 class="text-muted">Salario Propuesto</h6>
-                <p class="h5 text-success">${formatearMoneda(plaza.salario_propuesto)}</p>
+                <h6 class="text-muted">Área</h6>
+                <p>${plaza.especialidad_area}</p>
             </div>
             <div class="col-md-6 mb-3">
                 <h6 class="text-muted">Plazas Disponibles</h6>
                 <p class="h5 text-primary">${plaza.plazas_disponibles}</p>
-            </div>
-            <div class="col-md-6 mb-3">
-                <h6 class="text-muted">Área</h6>
-                <p>${plaza.especialidad_area}</p>
             </div>
         </div>
         
@@ -764,14 +766,10 @@ function actualizarSchemaOrg() {
                 "addressCountry": "NI"
             }
         },
-        "baseSalary": {
-            "@type": "MonetaryAmount",
-            "currency": "NIO",
-            "value": {
-                "@type": "QuantitativeValue",
-                "value": plaza.salario_propuesto,
-                "unitText": "MONTH"
-            }
+        "directApply": true,
+        "applicantLocationRequirements": {
+            "@type": "Country",
+            "name": "Nicaragua"
         }
     }));
 
@@ -787,8 +785,23 @@ function actualizarSchemaOrg() {
 
 function mostrarLoader(mostrar) {
     if (mostrar) {
-        $('#loader').show();
-        $('#vacantesGrid').hide();
+        $('#loader').hide();
+        let skeletonHtml = '';
+        for (let i = 0; i < 6; i++) {
+            skeletonHtml += `
+                <div class="vacante-card skeleton-card">
+                    <div class="skeleton-line skeleton-title"></div>
+                    <div class="skeleton-line skeleton-subtitle"></div>
+                    <div class="skeleton-line skeleton-text"></div>
+                    <div class="skeleton-line skeleton-text short"></div>
+                    <div class="vacante-actions mt-3">
+                        <div class="skeleton-line skeleton-button"></div>
+                        <div class="skeleton-line skeleton-button"></div>
+                    </div>
+                </div>
+            `;
+        }
+        $('#vacantesGrid').html(skeletonHtml).show();
     } else {
         $('#loader').hide();
         $('#vacantesGrid').show();
@@ -867,4 +880,118 @@ $(document).ready(function () {
         }
     });
 });
+
+// ==================== Igualación de Alturas en Carruseles ====================
+
+/**
+ * Igualar la altura de todas las diapositivas de cada carrusel de la página.
+ * Mide el alto natural de todas las diapositivas de un carrusel (visibles e invisibles),
+ * detecta cuál es la más alta y aplica esa altura mínima fija al .carousel-inner
+ * y a cada .carousel-item. De este modo, la altura no salta ni cambia durante la rotación.
+ */
+function equilibrarAlturasCarruseles() {
+    $('.carousel').each(function () {
+        const carousel = $(this);
+        const items = carousel.find('.carousel-inner > .carousel-item');
+        if (items.length <= 1) return;
+
+        // Resetear min-height previo para medir altura real actual
+        carousel.find('.carousel-inner').css('min-height', '');
+        items.css('min-height', '');
+
+        let maxHeight = 0;
+
+        items.each(function () {
+            const item = $(this);
+            const isHidden = item.css('display') === 'none';
+
+            if (isHidden) {
+                // Mostrar temporalmente fuera de pantalla para medir altura sin parpadeo
+                item.css({
+                    'display': 'block',
+                    'visibility': 'hidden',
+                    'position': 'absolute',
+                    'top': '-9999px',
+                    'left': '0',
+                    'width': '100%'
+                });
+            }
+
+            const h = item.outerHeight(true);
+            if (h > maxHeight) {
+                maxHeight = h;
+            }
+
+            if (isHidden) {
+                // Restaurar propiedades
+                item.css({
+                    'display': '',
+                    'visibility': '',
+                    'position': '',
+                    'top': '',
+                    'left': '',
+                    'width': ''
+                });
+            }
+        });
+
+        if (maxHeight > 0) {
+            carousel.find('.carousel-inner').css('min-height', maxHeight + 'px');
+            items.css('min-height', maxHeight + 'px');
+        }
+    });
+}
+
+// Recalcular cuando todas las imágenes terminen de cargar
+$(window).on('load', function () {
+    equilibrarAlturasCarruseles();
+});
+
+// Recalcular al terminar cada transición de carrusel
+$(document).on('slid.bs.carousel', '.carousel', function () {
+    equilibrarAlturasCarruseles();
+});
+
+
+// Recalcular al cambiar el tamaño de ventana (con debounce)
+let resizeTimerCarrusel;
+$(window).on('resize', function () {
+    clearTimeout(resizeTimerCarrusel);
+    resizeTimerCarrusel = setTimeout(function () {
+        equilibrarAlturasCarruseles();
+    }, 150);
+});
+
+/**
+ * Inicializar gestos táctiles (swipe) para deslizar carruseles en móviles
+ */
+function inicializarTouchSwipeCarruseles() {
+    $('.carousel').each(function () {
+        const carouselEl = $(this);
+        let startX = 0;
+        let endX = 0;
+
+        carouselEl.on('touchstart', function (e) {
+            if (e.originalEvent.touches && e.originalEvent.touches.length === 1) {
+                startX = e.originalEvent.touches[0].clientX;
+            }
+        });
+
+        carouselEl.on('touchend', function (e) {
+            if (e.originalEvent.changedTouches && e.originalEvent.changedTouches.length === 1) {
+                endX = e.originalEvent.changedTouches[0].clientX;
+                const diffX = startX - endX;
+
+                if (Math.abs(diffX) > 40) {
+                    if (diffX > 0) {
+                        carouselEl.carousel('next');
+                    } else {
+                        carouselEl.carousel('prev');
+                    }
+                }
+            }
+        });
+    });
+}
+
 
