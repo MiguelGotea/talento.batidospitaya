@@ -3,7 +3,7 @@
 $page_title = "Noticias y Novedades - Batidos Pitaya Nicaragua";
 $page_description = "Mantente al día con las últimas noticias, aperturas de sucursales y eventos de Batidos Pitaya Nicaragua.";
 $page_keywords = "noticias batidos pitaya, eventos batidos pitaya, novedades batidos pitaya, expansion pitaya";
-$page_canonical = "noticias.php";
+$page_canonical = "noticias";
 $active_tab = "noticias";
 
 // Cargar la conexión

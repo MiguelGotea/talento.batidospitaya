@@ -3,7 +3,7 @@
 $page_title = "Sobre Nosotros - Batidos Pitaya Nicaragua";
 $page_description = "Conoce la historia, valores y el propósito de Batidos Pitaya Nicaragua. Impulsamos energía natural y la Experiencia WOW.";
 $page_keywords = "sobre nosotros batidos pitaya, historia batidos pitaya, valores batidos pitaya, proposito batidos pitaya";
-$page_canonical = "index.php";
+$page_canonical = "";
 $active_tab = "nosotros";
 
 include 'layout_talento/header.php';

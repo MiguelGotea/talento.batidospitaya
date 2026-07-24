@@ -93,7 +93,7 @@ $fechaPublicacion = formatearFechaEspanol($noticia['fecha_publicacion']);
 $page_title = htmlspecialchars($noticia['titulo']) . " — Noticias Batidos Pitaya Nicaragua";
 $page_description = htmlspecialchars(mb_substr(strip_tags($noticia['resumen']), 0, 155));
 $page_keywords = "noticia batidos pitaya, " . htmlspecialchars($noticia['categoria']) . ", eventos pitaya nicaragua";
-$page_canonical = "noticia_detalle.php?id=" . $noticia_id;
+$page_canonical = "noticia/" . $noticia_id;
 $active_tab = "noticias";
 
 include 'layout_talento/header.php';

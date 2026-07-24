@@ -119,7 +119,7 @@ function inicializarEventos() {
         const sucursalId = $(this).data('sucursal-id');
 
         // Redirigir a formulario de postulación
-        window.location.href = `postular.php?plaza=${plazaId}&cargo=${cargoId}&sucursal=${sucursalId}`;
+        window.location.href = `/postular/${plazaId}/${cargoId}/${sucursalId}`;
     });
 
     // Clic en la tarjeta de vacante para accionar "Ver Plaza"
@@ -642,7 +642,7 @@ function crearContenidoModal(plaza) {
  * Postular directamente (sin ver detalle)
  */
 function postularDirecto(plazaId, cargoId, sucursalId) {
-    window.location.href = `postular.php?plaza=${plazaId}&cargo=${cargoId}&sucursal=${sucursalId}`;
+    window.location.href = `/postular/${plazaId}/${cargoId}/${sucursalId}`;
 }
 
 /**

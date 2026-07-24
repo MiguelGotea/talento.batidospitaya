@@ -3,7 +3,7 @@
 $page_title = "Beneficios de Trabajar con Nosotros - Batidos Pitaya Nicaragua";
 $page_description = "Descubre los beneficios, el plan de carrera, clima laboral y ventajas de unirte al equipo de Batidos Pitaya Nicaragua.";
 $page_keywords = "beneficios batidos pitaya, trabajar en batidos pitaya, clima laboral batidos pitaya, plan de carrera nicaragua";
-$page_canonical = "beneficios.php";
+$page_canonical = "beneficios";
 $active_tab = "beneficios";
 
 include 'layout_talento/header.php';
