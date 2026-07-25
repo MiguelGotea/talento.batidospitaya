@@ -3,7 +3,7 @@
 $page_title = "Nuestro Equipo - Batidos Pitaya Nicaragua";
 $page_description = "Conoce al equipo que hace posible la Experiencia WOW en Batidos Pitaya. Personas apasionadas por el bienestar y la fruta natural en Nicaragua.";
 $page_keywords = "equipo batidos pitaya, colaboradores batidos pitaya, personal batidos pitaya, trabajo en equipo nicaragua";
-$page_canonical = "equipo.php";
+$page_canonical = "equipo";
 $active_tab = "equipo";
 
 // Cargar colaboradores y áreas desde la base de datos
@@ -422,7 +422,7 @@ include 'layout_talento/header.php';
     <!-- Sección de Llamado a la Acción (CTA) para ver plazas -->
     <section class="equipo-cta-section text-center">
         <div class="container">
-            <a href="unete.php#vacantes" class="btn-ver-plazas-lg">
+            <a href="unete#vacantes" class="btn-ver-plazas-lg">
                 <i class="bi bi-briefcase-fill"></i> Ver Plazas Disponibles
             </a>
         </div>

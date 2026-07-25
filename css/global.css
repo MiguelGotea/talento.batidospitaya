@@ -2365,6 +2365,7 @@ body {
 }
 
 .colaboradores-carousel {
+  padding-top: 185px;
   padding-bottom: 60px;
   /* espacio para indicadores */
   position: relative;
@@ -2397,19 +2398,13 @@ body {
   align-items: center;
   position: relative;
   /* Espacio para que la foto sobresalga arriba */
-  margin-top: 185px;
+  margin-top: 0;
   overflow: visible !important; /* ← Evita recortes del contenedor de la tarjeta */
 }
 
 .colaborador-card:hover {
   transform: translateY(-8px);
   box-shadow: var(--sombra-lg);
-}
-
-@media (min-width: 768px) {
-  .colaboradores-carousel .colaborador-card {
-    height: calc(100% - 185px);
-  }
 }
 
 /* ---------------------------------------------------------------

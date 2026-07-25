@@ -90,7 +90,7 @@ $page_description = !empty($detalle['descripcion'])
     ? htmlspecialchars(mb_substr($detalle['descripcion'], 0, 155))
     : "Aplica a la vacante de " . htmlspecialchars($detalle['cargo_nombre']) . " en Batidos Pitaya. Trabajá en un ambiente positivo y de crecimiento.";
 $page_keywords = "vacante " . htmlspecialchars($detalle['cargo_nombre']) . ", empleo batidos pitaya, trabajo " . htmlspecialchars($detalle['departamento']);
-$page_canonical = "vacante_detalle.php?plaza=" . $plaza_id;
+$page_canonical = "vacante/" . $plaza_id;
 if (!empty($detalle['ruta_banner_cargo'])) {
     $page_og_image = "https://talento.batidospitaya.com/uploads/banners/" . htmlspecialchars($detalle['ruta_banner_cargo']);
 }
@@ -111,10 +111,10 @@ $schema_responsibilities = !empty($responsabilidades)
     ? implode('. ', array_values($responsabilidades))
     : '';
 
-$schema_url = "https://talento.batidospitaya.com/vacante_detalle.php?plaza=" . $plaza_id;
-$schema_apply_url = "https://talento.batidospitaya.com/postular.php?plaza=" . $plaza_id
-    . "&cargo=" . intval($detalle['cargo'])
-    . "&sucursal=" . intval($detalle['sucursal']);
+$schema_url = "https://talento.batidospitaya.com/vacante/" . $plaza_id;
+$schema_apply_url = "https://talento.batidospitaya.com/postular/" . $plaza_id
+    . "/" . intval($detalle['cargo'])
+    . "/" . intval($detalle['sucursal']);
 $schema_date_posted = !empty($detalle['fecha_creacion'])
     ? (new DateTime($detalle['fecha_creacion']))->format('Y-m-d')
     : date('Y-m-d');
@@ -163,7 +163,7 @@ $schema_logo = isset($page_og_image) ? $page_og_image : "https://talento.batidos
             <nav aria-label="breadcrumb" class="mb-4">
                 <ol class="breadcrumb vacante-breadcrumb">
                     <li class="breadcrumb-item">
-                        <a href="unete.php"><i class="bi bi-house-fill"></i> Vacantes</a>
+                        <a href="unete"><i class="bi bi-house-fill"></i> Vacantes</a>
                     </li>
                     <li class="breadcrumb-item active" aria-current="page">
                         <?= htmlspecialchars($detalle['cargo_nombre']) ?>
@@ -277,7 +277,7 @@ $schema_logo = isset($page_og_image) ? $page_og_image : "https://talento.batidos
                                 Postular Ahora
                             </button>
 
-                            <a href="unete.php" class="btn-leer-mas w-100 mt-2">
+                            <a href="unete" class="btn-leer-mas w-100 mt-2">
                                 <i class="bi bi-arrow-left"></i>
                                 Ver otras vacantes
                             </a>

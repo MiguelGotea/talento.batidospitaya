@@ -11,7 +11,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 ?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
 
-    <!-- Página principal de Empleo -->
+    <!-- Página principal -->
     <url>
         <loc>https://talento.batidospitaya.com/</loc>
         <lastmod><?php echo date('Y-m-d'); ?></lastmod>
@@ -19,17 +19,9 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
         <priority>1.0</priority>
     </url>
 
-    <!-- Sobre Nosotros (ahora es la página principal) -->
-    <url>
-        <loc>https://talento.batidospitaya.com/index.php</loc>
-        <lastmod><?php echo date('Y-m-d'); ?></lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.9</priority>
-    </url>
-
     <!-- Únete al Equipo (Vacantes) -->
     <url>
-        <loc>https://talento.batidospitaya.com/unete.php</loc>
+        <loc>https://talento.batidospitaya.com/unete</loc>
         <lastmod><?php echo date('Y-m-d'); ?></lastmod>
         <changefreq>daily</changefreq>
         <priority>0.9</priority>
@@ -37,7 +29,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 
     <!-- Nuestro Equipo -->
     <url>
-        <loc>https://talento.batidospitaya.com/equipo.php</loc>
+        <loc>https://talento.batidospitaya.com/equipo</loc>
         <lastmod><?php echo date('Y-m-d'); ?></lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
@@ -45,22 +37,22 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 
     <!-- Noticias -->
     <url>
-        <loc>https://talento.batidospitaya.com/noticias.php</loc>
+        <loc>https://talento.batidospitaya.com/noticias</loc>
         <lastmod><?php echo date('Y-m-d'); ?></lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
 
-    <!-- Página de postulación -->
+    <!-- Beneficios -->
     <url>
-        <loc>https://talento.batidospitaya.com/postular.php</loc>
+        <loc>https://talento.batidospitaya.com/beneficios</loc>
         <lastmod><?php echo date('Y-m-d'); ?></lastmod>
         <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
+        <priority>0.7</priority>
     </url>
 
     <?php
-    // Obtener plazas activas para incluir en sitemap
+    // Plazas activas
     $sql = "
         SELECT DISTINCT pc.id, pc.fecha_creacion, pc.fecha_actualizacion
         FROM plazas_cargos pc
@@ -78,13 +70,13 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
         $lastmodFormatted = date('Y-m-d', strtotime($lastmod));
         ?>
         <url>
-            <loc>https://talento.batidospitaya.com/vacante_detalle.php?plaza=<?php echo $row['id']; ?></loc>
+            <loc>https://talento.batidospitaya.com/vacante/<?php echo $row['id']; ?></loc>
             <lastmod><?php echo $lastmodFormatted; ?></lastmod>
             <changefreq>weekly</changefreq>
-            <priority>0.7</priority>
+            <priority>0.9</priority>
         </url>
         <?php
     }
     ?>
 
-</urlset>
+</urlset>

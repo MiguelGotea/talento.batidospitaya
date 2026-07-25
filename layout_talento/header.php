@@ -145,7 +145,7 @@ function obtener_config($clave, $default = '') {
     <!-- ==================== BARRA DE NAVEGACIÓN (STICKY NAVBAR) ==================== -->
     <nav class="navbar-pitaya">
         <div class="container">
-            <a href="index.php" class="navbar-brand">
+            <a href="/" class="navbar-brand">
                 <img src="assets/img/logo.png" alt="Batidos Pitaya - Empleos" class="navbar-brand-img">
             </a>
             
@@ -154,24 +154,24 @@ function obtener_config($clave, $default = '') {
                 <!-- Envoltorio de pestañas (es un menú flotante en móviles) -->
                 <div class="navbar-nav-tabs-wrapper" id="navbarTabsWrapper">
                     <div class="navbar-nav-tabs" id="navbarTabs">
-                        <a href="index.php" class="nav-tab-btn <?php echo (isset($active_tab) && $active_tab === 'nosotros') ? 'active' : ''; ?>" id="btn-tab-nosotros">
+                        <a href="/" class="nav-tab-btn <?php echo (isset($active_tab) && $active_tab === 'nosotros') ? 'active' : ''; ?>" id="btn-tab-nosotros">
                             Sobre Nosotros
                         </a>
                         <?php /* Beneficios: oculto temporalmente — descomentar para activar */ ?>
                         <?php if (false): ?>
-                        <a href="beneficios.php" class="nav-tab-btn <?php echo (isset($active_tab) && $active_tab === 'beneficios') ? 'active' : ''; ?>" id="btn-tab-beneficios">
+                        <a href="beneficios" class="nav-tab-btn <?php echo (isset($active_tab) && $active_tab === 'beneficios') ? 'active' : ''; ?>" id="btn-tab-beneficios">
                             Beneficios
                         </a>
                         <?php endif; ?>
-                        <a href="equipo.php" class="nav-tab-btn <?php echo (isset($active_tab) && $active_tab === 'equipo') ? 'active' : ''; ?>" id="btn-tab-equipo">
+                        <a href="equipo" class="nav-tab-btn <?php echo (isset($active_tab) && $active_tab === 'equipo') ? 'active' : ''; ?>" id="btn-tab-equipo">
                             Nuestro Equipo
                         </a>
-                        <a href="unete.php" class="nav-tab-btn <?php echo (isset($active_tab) && $active_tab === 'unete') ? 'active' : ''; ?>" id="btn-tab-unete">
+                        <a href="unete" class="nav-tab-btn <?php echo (isset($active_tab) && $active_tab === 'unete') ? 'active' : ''; ?>" id="btn-tab-unete">
                             Únete al Equipo
                         </a>
                         <?php /* Noticias: oculto temporalmente — descomentar para activar */ ?>
                         <?php if (false): ?>
-                        <a href="noticias.php" class="nav-tab-btn <?php echo (isset($active_tab) && $active_tab === 'noticias') ? 'active' : ''; ?>" id="btn-tab-noticias">
+                        <a href="noticias" class="nav-tab-btn <?php echo (isset($active_tab) && $active_tab === 'noticias') ? 'active' : ''; ?>" id="btn-tab-noticias">
                             Noticias
                         </a>
                         <?php endif; ?>
@@ -181,7 +181,7 @@ function obtener_config($clave, $default = '') {
 
 
                 <!-- Botón de Aplicar (se muestra condicionalmente) -->
-                <a href="unete.php#vacantes" class="btn-aplicar-header" id="btn-aplicar-header" <?php echo (isset($active_tab) && $active_tab === 'unete') ? 'style="display: none;"' : ''; ?>>
+                <a href="unete#vacantes" class="btn-aplicar-header" id="btn-aplicar-header" <?php echo (isset($active_tab) && $active_tab === 'unete') ? 'style="display: none;"' : ''; ?>>
                     <i class="bi bi-briefcase-fill"></i> Aplicar
                 </a>
 

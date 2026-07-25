@@ -4,16 +4,58 @@
 # Página de error 404 personalizada
 ErrorDocument 404 /404.php
 
-# Forzar HTTPS (descomentar en producción)
-# RewriteEngine On
-# RewriteCond %{HTTPS} off
-# RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
-
-# Canonicalización: forzar www o no-www (elegir uno)
-# Opción 1: Forzar sin www
+# ==================== Motor de reescritura ====================
 RewriteEngine On
+
+# ----- 1. Forzar sin www -----
 RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
-RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
+RewriteRule ^(.*)$ https://%1/$1 [R=301,L]
+
+# ----- 2. Sitemap limpio: /sitemap.xml -----
+RewriteRule ^sitemap\.xml$ sitemap.xml.php [L]
+
+# ----- 3. Redireccionamientos 301: quitar la extensión .php de URLs directas -----
+# Vacante con ID: /vacante_detalle.php?plaza=X → /vacante/X
+RewriteCond %{THE_REQUEST} \s/vacante_detalle\.php\?plaza=([0-9]+) [NC]
+RewriteRule ^ /vacante/%1 [R=301,L]
+
+# Noticia con ID: /noticia_detalle.php?id=X → /noticia/X
+RewriteCond %{THE_REQUEST} \s/noticia_detalle\.php\?id=([0-9]+) [NC]
+RewriteRule ^ /noticia/%1 [R=301,L]
+
+# Postular con params: /postular.php?plaza=X&cargo=Y&sucursal=Z → /postular/X/Y/Z
+RewriteCond %{THE_REQUEST} \s/postular\.php\?plaza=([0-9]+)&cargo=([0-9]+)&sucursal=([0-9]+) [NC]
+RewriteRule ^ /postular/%1/%2/%3 [R=301,L]
+
+# Páginas simples (sin query string): /pagina.php → /pagina
+RewriteCond %{THE_REQUEST} \s/([^/?]+)\.php[\s?] [NC]
+RewriteCond %1 !^(ajax|core|index) [NC]
+RewriteRule ^ /%1 [R=301,L]
+
+# index.php → /
+RewriteCond %{THE_REQUEST} \s/index\.php[\s?] [NC]
+RewriteRule ^ / [R=301,L]
+
+# ----- 4. Reescritura interna: URL limpia → archivo real -----
+# No tocar archivos o directorios que existan físicamente
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Vacante: /vacante/123 → vacante_detalle.php?plaza=123
+RewriteRule ^vacante/([0-9]+)/?$ vacante_detalle.php?plaza=$1 [L,QSA]
+
+# Noticia: /noticia/123 → noticia_detalle.php?id=123
+RewriteRule ^noticia/([0-9]+)/?$ noticia_detalle.php?id=$1 [L,QSA]
+
+# Postular: /postular/plaza/cargo/sucursal → postular.php?plaza=X&cargo=Y&sucursal=Z
+RewriteRule ^postular/([0-9]+)/([0-9]+)/([0-9]+)/?$ postular.php?plaza=$1&cargo=$2&sucursal=$3 [L]
+
+# Páginas simples
+RewriteRule ^unete/?$ unete.php [L]
+RewriteRule ^equipo/?$ equipo.php [L]
+RewriteRule ^nosotros/?$ nosotros.php [L]
+RewriteRule ^beneficios/?$ beneficios.php [L]
+RewriteRule ^noticias/?$ noticias.php [L]
 
 # Headers de seguridad
 <IfModule mod_headers.c>

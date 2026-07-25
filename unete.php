@@ -3,7 +3,7 @@
 $page_title = "Trabaja en Batidos Pitaya Nicaragua - Vacantes Disponibles";
 $page_description = "Encuentra empleo en Batidos Pitaya. Vacantes en Managua, Granada, Masaya. Únete a nuestro equipo de energía natural y experiencia WOW.";
 $page_keywords = "empleo batidos pitaya, trabajo batidos pitaya nicaragua, vacantes batidos pitaya, empleo managua, trabajo managua, vacantes nicaragua 2026, trabajo pura fruta";
-$page_canonical = "unete.php";
+$page_canonical = "unete";
 $active_tab = "unete";
 
 include 'layout_talento/header.php';
