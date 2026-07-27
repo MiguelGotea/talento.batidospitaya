@@ -61,13 +61,13 @@ function obtener_config($clave, $default = '') {
     <meta name="twitter:image" content="<?php echo isset($page_og_image) ? $page_og_image : 'https://talento.batidospitaya.com/assets/img/og-image.jpg'; ?>">
 
     <!-- Favicon -->
-    <link rel="icon" href="assets/img/favicon.png" type="image/png">
+    <link rel="icon" href="/assets/img/favicon.png" type="image/png">
 
     <!-- CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="css/global.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="css/stats-modern.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/css/global.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/css/stats-modern.css?v=<?php echo time(); ?>">
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -83,6 +83,10 @@ function obtener_config($clave, $default = '') {
     $colorFondo      = htmlspecialchars(obtener_config('color_fondo',      '#ffffff'));
     $colorTexto      = htmlspecialchars(obtener_config('color_texto',      '#1a1a2e'));
     $imagenFondo     = obtener_config('imagen_fondo', '');
+    $imagenFondoUrl  = '';
+    if (!empty($imagenFondo)) {
+        $imagenFondoUrl = (preg_match('/^https?:\/\//i', $imagenFondo) || strpos($imagenFondo, '/') === 0) ? $imagenFondo : '/' . $imagenFondo;
+    }
     $fondoOpacidad   = obtener_config('imagen_fondo_opacidad', '0.08');
     $fondoRepetir    = obtener_config('imagen_fondo_repetir',  'no-repeat');
     $fondoSize       = obtener_config('imagen_fondo_size',     'cover');
@@ -110,7 +114,7 @@ function obtener_config($clave, $default = '') {
             content: '';
             position: fixed;
             inset: 0;
-            background-image: url('<?= htmlspecialchars($imagenFondo) ?>');
+            background-image: url('<?= htmlspecialchars($imagenFondoUrl) ?>');
             background-size: <?= htmlspecialchars($fondoSize) ?>;
             background-repeat: <?= htmlspecialchars($fondoRepetir) ?>;
             background-position: center;
@@ -146,7 +150,7 @@ function obtener_config($clave, $default = '') {
     <nav class="navbar-pitaya">
         <div class="container">
             <a href="/" class="navbar-brand">
-                <img src="assets/img/logo.png" alt="Batidos Pitaya - Empleos" class="navbar-brand-img">
+                <img src="/assets/img/logo.png" alt="Batidos Pitaya - Empleos" class="navbar-brand-img">
             </a>
             
             <!-- Contenedor del menú y acciones -->
@@ -159,19 +163,19 @@ function obtener_config($clave, $default = '') {
                         </a>
                         <?php /* Beneficios: oculto temporalmente — descomentar para activar */ ?>
                         <?php if (false): ?>
-                        <a href="beneficios" class="nav-tab-btn <?php echo (isset($active_tab) && $active_tab === 'beneficios') ? 'active' : ''; ?>" id="btn-tab-beneficios">
+                        <a href="/beneficios" class="nav-tab-btn <?php echo (isset($active_tab) && $active_tab === 'beneficios') ? 'active' : ''; ?>" id="btn-tab-beneficios">
                             Beneficios
                         </a>
                         <?php endif; ?>
-                        <a href="equipo" class="nav-tab-btn <?php echo (isset($active_tab) && $active_tab === 'equipo') ? 'active' : ''; ?>" id="btn-tab-equipo">
+                        <a href="/equipo" class="nav-tab-btn <?php echo (isset($active_tab) && $active_tab === 'equipo') ? 'active' : ''; ?>" id="btn-tab-equipo">
                             Nuestro Equipo
                         </a>
-                        <a href="unete" class="nav-tab-btn <?php echo (isset($active_tab) && $active_tab === 'unete') ? 'active' : ''; ?>" id="btn-tab-unete">
+                        <a href="/unete" class="nav-tab-btn <?php echo (isset($active_tab) && $active_tab === 'unete') ? 'active' : ''; ?>" id="btn-tab-unete">
                             Únete al Equipo
                         </a>
                         <?php /* Noticias: oculto temporalmente — descomentar para activar */ ?>
                         <?php if (false): ?>
-                        <a href="noticias" class="nav-tab-btn <?php echo (isset($active_tab) && $active_tab === 'noticias') ? 'active' : ''; ?>" id="btn-tab-noticias">
+                        <a href="/noticias" class="nav-tab-btn <?php echo (isset($active_tab) && $active_tab === 'noticias') ? 'active' : ''; ?>" id="btn-tab-noticias">
                             Noticias
                         </a>
                         <?php endif; ?>
@@ -181,7 +185,7 @@ function obtener_config($clave, $default = '') {
 
 
                 <!-- Botón de Aplicar (se muestra condicionalmente) -->
-                <a href="unete#vacantes" class="btn-aplicar-header" id="btn-aplicar-header" <?php echo (isset($active_tab) && $active_tab === 'unete') ? 'style="display: none;"' : ''; ?>>
+                <a href="/unete#vacantes" class="btn-aplicar-header" id="btn-aplicar-header" <?php echo (isset($active_tab) && $active_tab === 'unete') ? 'style="display: none;"' : ''; ?>>
                     <i class="bi bi-briefcase-fill"></i> Aplicar
                 </a>
 

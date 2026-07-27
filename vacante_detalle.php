@@ -5,7 +5,7 @@
 $plaza_id = isset($_GET['plaza']) ? intval($_GET['plaza']) : 0;
 
 if ($plaza_id <= 0) {
-    header('Location: unete.php');
+    header('Location: /unete');
     exit();
 }
 
@@ -46,7 +46,7 @@ try {
 }
 
 if (!$detalle) {
-    header('Location: unete.php');
+    header('Location: /unete');
     exit();
 }
 
@@ -163,7 +163,7 @@ $schema_logo = isset($page_og_image) ? $page_og_image : "https://talento.batidos
             <nav aria-label="breadcrumb" class="mb-4">
                 <ol class="breadcrumb vacante-breadcrumb">
                     <li class="breadcrumb-item">
-                        <a href="unete"><i class="bi bi-house-fill"></i> Vacantes</a>
+                        <a href="/unete"><i class="bi bi-house-fill"></i> Vacantes</a>
                     </li>
                     <li class="breadcrumb-item active" aria-current="page">
                         <?= htmlspecialchars($detalle['cargo_nombre']) ?>
@@ -277,7 +277,7 @@ $schema_logo = isset($page_og_image) ? $page_og_image : "https://talento.batidos
                                 Postular Ahora
                             </button>
 
-                            <a href="unete" class="btn-leer-mas w-100 mt-2">
+                            <a href="/unete" class="btn-leer-mas w-100 mt-2">
                                 <i class="bi bi-arrow-left"></i>
                                 Ver otras vacantes
                             </a>
@@ -334,8 +334,8 @@ function postularDesdeDetalle(plazaId, cargoId, sucursalId) {
     if (typeof postularDirecto === 'function') {
         postularDirecto(plazaId, cargoId, sucursalId);
     } else {
-        // Fallback: redirigir a index.php con parámetros
-        window.location.href = `unete.php?postular=${plazaId}&cargo=${cargoId}&sucursal=${sucursalId}`;
+        // Fallback: redirigir a unete con parámetros
+        window.location.href = `/unete?postular=${plazaId}&cargo=${cargoId}&sucursal=${sucursalId}`;
     }
 }
 

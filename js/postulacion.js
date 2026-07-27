@@ -29,7 +29,7 @@ async function cargarDatosPlaza() {
             text: 'No se especificó la plaza a postular',
             confirmButtonColor: '#51B8AC'
         }).then(() => {
-            window.location.href = 'unete.php';
+            window.location.href = '/unete';
         });
         return;
     }
@@ -40,7 +40,7 @@ async function cargarDatosPlaza() {
     $('#sucursalId').val(sucursalId || '');
 
     try {
-        const response = await fetch(`ajax/get_plaza_detalle.php?id=${plazaId}`);
+        const response = await fetch(`/ajax/get_plaza_detalle.php?id=${plazaId}`);
         const data = await response.json();
 
         if (data.success) {
@@ -57,7 +57,7 @@ async function cargarDatosPlaza() {
             text: 'No se pudo cargar la información de la plaza',
             confirmButtonColor: '#51B8AC'
         }).then(() => {
-            window.location.href = 'unete.php';
+            window.location.href = '/unete';
         });
     }
 }
@@ -356,7 +356,7 @@ async function enviarPostulacion() {
         formData.append('cv', archivoCV);
 
         // Enviar
-        const response = await fetch('ajax/guardar_postulacion.php', {
+        const response = await fetch('/ajax/guardar_postulacion.php', {
             method: 'POST',
             body: formData
         });
@@ -376,7 +376,7 @@ async function enviarPostulacion() {
                 confirmButtonColor: '#51B8AC',
                 confirmButtonText: 'Ver más vacantes'
             }).then(() => {
-                window.location.href = 'unete.php';
+                window.location.href = '/unete';
             });
         } else {
             throw new Error(data.error || 'Error al enviar la postulación');

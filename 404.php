@@ -11,7 +11,7 @@
     <!-- CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="/css/global.css">
 
     <style>
         .error-404 {
@@ -101,11 +101,11 @@
             </p>
 
             <div class="error-links">
-                <a href="index.php" class="error-link">
+                <a href="/" class="error-link">
                     <i class="bi bi-house-fill"></i>
                     Ir al inicio
                 </a>
-                <a href="index.php#vacantes" class="error-link">
+                <a href="/unete#vacantes" class="error-link">
                     <i class="bi bi-briefcase-fill"></i>
                     Ver vacantes
                 </a>
