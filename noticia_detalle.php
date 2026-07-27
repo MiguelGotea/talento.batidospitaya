@@ -5,7 +5,7 @@
 $noticia_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 
 if ($noticia_id <= 0) {
-    header('Location: noticias.php');
+    header('Location: /noticias');
     exit();
 }
 
@@ -24,7 +24,7 @@ try {
 }
 
 if (!$noticia) {
-    header('Location: noticias.php');
+    header('Location: /noticias');
     exit();
 }
 
@@ -108,7 +108,7 @@ include 'layout_talento/header.php';
             <nav aria-label="breadcrumb" class="mb-4">
                 <ol class="breadcrumb vacante-breadcrumb">
                     <li class="breadcrumb-item">
-                        <a href="noticias.php"><i class="bi bi-newspaper"></i> Noticias</a>
+                        <a href="/noticias"><i class="bi bi-newspaper"></i> Noticias</a>
                     </li>
                     <li class="breadcrumb-item active" aria-current="page">
                         <?= htmlspecialchars(mb_substr($noticia['titulo'], 0, 40)) ?><?= mb_strlen($noticia['titulo']) > 40 ? '...' : '' ?>
@@ -144,7 +144,7 @@ include 'layout_talento/header.php';
 
                         <!-- Portada / Banner principal o Carrusel de Fotos -->
                         <?php 
-                        $portadaUrl = !empty($noticia['imagen_principal']) ? 'uploads/noticias/' . htmlspecialchars($noticia['imagen_principal']) : null;
+                        $portadaUrl = !empty($noticia['imagen_principal']) ? '/uploads/noticias/' . htmlspecialchars($noticia['imagen_principal']) : null;
                         $fotosAdicionales = !empty($fotos);
                         ?>
                         
@@ -159,7 +159,7 @@ include 'layout_talento/header.php';
                             }
                             foreach ($fotos as $f) {
                                 $imagenesCarrusel[] = [
-                                    'url' => 'uploads/noticias/galeria/' . htmlspecialchars($f['ruta_foto']),
+                                    'url' => '/uploads/noticias/galeria/' . htmlspecialchars($f['ruta_foto']),
                                     'desc' => htmlspecialchars($f['descripcion'] ?? '')
                                 ];
                             }
@@ -233,7 +233,7 @@ include 'layout_talento/header.php';
 
                         <!-- Botones de acción -->
                         <div class="text-center mt-5 d-flex justify-content-center gap-3 flex-wrap">
-                            <a href="noticias.php" class="btn-leer-mas">
+                            <a href="/noticias" class="btn-leer-mas">
                                 <i class="bi bi-arrow-left"></i> Volver a Noticias
                             </a>
                             <button id="btnCompartirNoticia" class="btn-compartir" onclick="copiarEnlaceNoticia()" title="Copiar enlace">

@@ -135,7 +135,7 @@ $(document).ready(function () {
         }
 
         try {
-            const response = await fetch('ajax/solicitud_empleo_handler.php', {
+            const response = await fetch('/ajax/solicitud_empleo_handler.php', {
                 method: 'POST',
                 body: formData
             });

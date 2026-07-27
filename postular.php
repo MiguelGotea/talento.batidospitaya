@@ -8,13 +8,13 @@
     <meta name="robots" content="noindex, nofollow">
 
     <!-- Favicon -->
-    <link rel="icon" href="assets/img/favicon.png" type="image/png">
+    <link rel="icon" href="/assets/img/favicon.png" type="image/png">
 
     <!-- CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="css/global.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="css/postulacion.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/css/global.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/css/postulacion.css?v=<?php echo time(); ?>">
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -28,11 +28,11 @@
     <header class="postulacion-header">
         <div class="container">
             <div class="d-flex justify-content-between align-items-center">
-                <a href="unete" class="btn-volver">
+                <a href="/unete" class="btn-volver">
                     <i class="bi bi-arrow-left"></i> Volver a vacantes
                 </a>
                 <div class="logo">
-                    <img src="assets/img/logo.png" alt="Batidos Pitaya" style="height: 48px;">
+                    <img src="/assets/img/logo.png" alt="Batidos Pitaya" style="height: 48px;">
                 </div>
             </div>
         </div>
@@ -197,7 +197,7 @@
                                     <i class="bi bi-send-fill"></i>
                                     Enviar Postulación
                                 </button>
-                                <a href="unete" class="btn btn-outline-secondary">
+                                <a href="/unete" class="btn btn-outline-secondary">
                                     <i class="bi bi-x-circle"></i>
                                     Cancelar
                                 </a>
@@ -224,7 +224,7 @@
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="js/postulacion.js?v=<?php echo time(); ?>"></script>
+    <script src="/js/postulacion.js?v=<?php echo time(); ?>"></script>
 
 </body>
 

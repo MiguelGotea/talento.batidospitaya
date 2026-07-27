@@ -362,7 +362,7 @@ async function cargarPlazas() {
             por_pagina: registrosPorPagina
         });
 
-        const response = await fetch(`ajax/get_plazas.php?${params}`);
+        const response = await fetch(`/ajax/get_plazas.php?${params}`);
         const data = await response.json();
 
         if (data.success) {
@@ -580,7 +580,7 @@ function abrirBannerPlaza(rutaBanner) {
         return;
     }
 
-    const bannerUrl = `ajax/get_banner.php?archivo=${encodeURIComponent(rutaBanner)}`;
+    const bannerUrl = `/ajax/get_banner.php?archivo=${encodeURIComponent(rutaBanner)}`;
 
     const modalHtml = `
         <div id="modalBanner" class="banner-overlay" onclick="document.getElementById('modalBanner').remove()">
