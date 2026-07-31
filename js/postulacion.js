@@ -15,12 +15,27 @@ $(document).ready(function () {
 
 /**
  * Cargar datos de la plaza desde URL params
+ * Soporta ambos formatos:
+ *   - Query string: /postular.php?plaza=X&cargo=Y&sucursal=Z
+ *   - Segmentos de ruta: /postular/X/Y/Z
  */
 async function cargarDatosPlaza() {
     const urlParams = new URLSearchParams(window.location.search);
-    const plazaId = urlParams.get('plaza');
-    const cargoId = urlParams.get('cargo');
-    const sucursalId = urlParams.get('sucursal');
+    let plazaId    = urlParams.get('plaza');
+    let cargoId    = urlParams.get('cargo');
+    let sucursalId = urlParams.get('sucursal');
+
+    // Si no hay query string, intentar leer desde los segmentos del path
+    // Formato esperado: /postular/{plaza}/{cargo}/{sucursal}
+    if (!plazaId) {
+        const pathParts = window.location.pathname.replace(/^\/+|\/+$/g, '').split('/');
+        // pathParts[0] = 'postular', [1] = plaza, [2] = cargo, [3] = sucursal
+        if (pathParts.length >= 3 && pathParts[0] === 'postular') {
+            plazaId    = pathParts[1] || null;
+            cargoId    = pathParts[2] || null;
+            sucursalId = pathParts[3] || null;
+        }
+    }
 
     if (!plazaId || !cargoId) {
         Swal.fire({
