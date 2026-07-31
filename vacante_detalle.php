@@ -330,13 +330,8 @@ $schema_logo = isset($page_og_image) ? $page_og_image : "https://talento.batidos
 
 <script>
 function postularDesdeDetalle(plazaId, cargoId, sucursalId) {
-    // Redirigir al flujo de postulación estándar
-    if (typeof postularDirecto === 'function') {
-        postularDirecto(plazaId, cargoId, sucursalId);
-    } else {
-        // Fallback: redirigir a unete con parámetros
-        window.location.href = `/unete?postular=${plazaId}&cargo=${cargoId}&sucursal=${sucursalId}`;
-    }
+    // Redirigir directamente al formulario de postulación
+    window.location.href = `/postular/${plazaId}/${cargoId}/${sucursalId}`;
 }
 
 function copiarEnlaceVacante() {
