@@ -50,9 +50,12 @@ jobs:
           --exclude='.agent/' \
           --exclude='.scripts/' \
           --exclude='uploads/' \
+          --exclude='core/database/env.php' \
+          --exclude='core/database/env.production.php' \
           -e "ssh -o StrictHostKeyChecking=no -p 65002" \
           ./ \
           ${{ secrets.HOSTINGER_USER }}@${{ secrets.HOSTINGER_HOST }}:${{ secrets.HOSTINGER_PATH_TALENTO }}/
+
           
     - name: 🔧 Configurar permisos (v13)
       run: |
