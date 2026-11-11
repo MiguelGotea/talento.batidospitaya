@@ -147,9 +147,18 @@ function posTiendaAutenticada()
 
 /**
  * Retorna true si hay un colaborador activo en sesión (Etapa 2 completada).
+ * En DEV_MODE se considera siempre autenticado para facilitar el desarrollo.
  */
 function posColaboradorAutenticado()
 {
+    if (defined('POS_DEV_MODE') && POS_DEV_MODE === true) {
+        // Auto-poblar sesión de colaborador si no existe
+        if (!isset($_SESSION['pos_colaborador_id'])) {
+            $_SESSION['pos_colaborador_id'] = 0;
+            $_SESSION['pos_colaborador_nombre'] = 'DEV-Colaborador';
+        }
+        return true;
+    }
     return isset($_SESSION['pos_colaborador_id']);
 }
 
@@ -316,14 +325,14 @@ function posValidarColaborador($clave)
 
         // Poblar sesión igual que en producción, sin validar turno ni sucursal
         $ahora = time();
-        $_SESSION['pos_colaborador_id']     = $encontradoDev['CodOperario'];
+        $_SESSION['pos_colaborador_id'] = $encontradoDev['CodOperario'];
         $_SESSION['pos_colaborador_nombre'] = obtenerNombreCompletoOperario($encontradoDev);
-        $_SESSION['usuario_id']             = $encontradoDev['CodOperario'];
-        $_SESSION['usuario_nombre']         = $_SESSION['pos_colaborador_nombre'];
-        $_SESSION['login_time']             = $ahora;
-        $_SESSION['login_date']             = date('Y-m-d');
-        $_SESSION['last_activity']          = $ahora;
-        $_SESSION['cargo_cod']              = 2; // operario por defecto en DEV
+        $_SESSION['usuario_id'] = $encontradoDev['CodOperario'];
+        $_SESSION['usuario_nombre'] = $_SESSION['pos_colaborador_nombre'];
+        $_SESSION['login_time'] = $ahora;
+        $_SESSION['login_date'] = date('Y-m-d');
+        $_SESSION['last_activity'] = $ahora;
+        $_SESSION['cargo_cod'] = 2; // operario por defecto en DEV
         return ['status' => true];
     }
     // ===========================================================
@@ -512,4 +521,6 @@ function obtenerUsuarioActual()
         return null;
     }
 }
+
+
 ?>
