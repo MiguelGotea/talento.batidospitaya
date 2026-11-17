@@ -18,7 +18,7 @@ function renderPOSSidebar($activeModule = 'inicio')
         [
             'id' => 'marcacion',
             'titulo' => 'Marcacion',
-            'icon' => 'bi bi-registered',
+            'icon' => 'bi bi-fingerprint',
             'url' => '/',
             'sub' => []
         ],
@@ -39,7 +39,7 @@ function renderPOSSidebar($activeModule = 'inicio')
         [
             'id' => 'pedido-diario',
             'titulo' => 'Pedido Diario',
-            'icon' => 'bi ceipttered',
+            'icon' => 'bi bi-receipt',
             'url' => '/',
             'sub' => []
         ],
@@ -65,6 +65,13 @@ function renderPOSSidebar($activeModule = 'inicio')
             'sub' => []
         ],
         [
+            'id' => 'despacho',
+            'titulo' => 'Despachos',
+            'icon' => 'bi bi-truck',
+            'url' => '/',
+            'sub' => []
+        ],
+        [
             'id' => 'cierre',
             'titulo' => 'Cierre de Turno',
             'icon' => 'fas fa-lock',
@@ -84,6 +91,7 @@ function renderPOSSidebar($activeModule = 'inicio')
     ob_start();
     ?>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <style>
         :root {
             --sidebar-width: 70px;
